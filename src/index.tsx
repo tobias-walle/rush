@@ -1,9 +1,17 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { render } from 'react-dom'
+import { createStore } from 'redux';
 
-import { Hello } from "./components/Hello";
+import { todoApp } from "./reducers/index";
+import { Provider } from "react-redux";
+import { App } from "./components/app";
 
-ReactDOM.render(
-    <Hello compiler="TypeScript" framework="React"/>,
+let devtools: any = window['devToolsExtension'] ? window['devToolsExtension']() : (f:any)=>f;
+let store: any = devtools(createStore)(todoApp);
+
+render(
+    <Provider store={store}>
+        <App/>
+    </Provider>,
     document.getElementById('container')
 );

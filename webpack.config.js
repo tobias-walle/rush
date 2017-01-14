@@ -1,6 +1,7 @@
 module.exports = {
   entry: [
     'webpack/hot/only-dev-server',
+    'core-js/shim',
     './src/index.tsx',
   ],
   output: {
