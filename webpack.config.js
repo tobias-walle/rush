@@ -1,11 +1,20 @@
 module.exports = {
-  entry: './src/index.tsx',
+  entry: [
+    'webpack/hot/only-dev-server',
+    './src/index.tsx',
+  ],
   output: {
     filename: 'bundle.js',
-    path: __dirname + '/dist'
+    path: __dirname + '/dist',
+    publicPath: '/dist/'
   },
 
   devtool: 'source-maps',
+
+  devServer: {
+    progress: true,
+    contentBase: "./"
+  },
 
   resolve: {
     extensions: [
@@ -15,11 +24,11 @@ module.exports = {
 
   module: {
     loaders: [
-      { test: /\.tsx?$/, loader: 'awesome-typescript-loader' }
+      {test: /\.tsx?$/, loaders: ['awesome-typescript-loader']}
     ],
 
     preLoaders: [
-      { test: /\.js$/, loader: 'source-map-loader' }   
+      {test: /\.js$/, loader: 'source-map-loader'}
     ]
   },
 
