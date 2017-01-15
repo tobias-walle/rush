@@ -1,6 +1,6 @@
-import { AddTodoAction, addTodo } from "../actions/todo";
 import { connect } from 'react-redux';
-import { AddTodoForm, AddTodoFormProps } from "../components/add-todo-form";
+import { AddTodoAction, addTodo } from "../actions/add-todo";
+import { AddTodoFormProps, AddTodoForm } from "../components/add-todo-form";
 
 function mapDispatchToProps(dispatch: (action: AddTodoAction) => any): AddTodoFormProps {
     return {
@@ -10,4 +10,4 @@ function mapDispatchToProps(dispatch: (action: AddTodoAction) => any): AddTodoFo
     }
 }
 
-export const AddTodo = connect(null, mapDispatchToProps)(AddTodoForm);
+export const AddTodoContainer = connect(null, mapDispatchToProps)(AddTodoForm);

@@ -1,13 +1,13 @@
-import { Todo } from "../models/todo";
 import * as React from 'react';
-import { Todo as TodoComponent } from "./todo";
+import { TodoComponent as TodoComponent } from "./todo";
+import { Todo } from "../models/todo";
 
 export interface TodoListProps {
     todos?: Todo[],
     onTodoClick?: (todoId: number) => void,
 }
 
-export class TodoList extends React.Component<TodoListProps, any> {
+export class TodoListComponent extends React.Component<TodoListProps, any> {
 
     constructor(props: TodoListProps) {
         super(props);

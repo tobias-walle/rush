@@ -1,16 +1,16 @@
-import { Todo as TodoModel } from "../models/todo";
 import * as React from 'react';
 import * as classNames from 'classnames';
+import { Todo } from "../models/todo";
 
 const styles = require('./todo.scss');
 
 export interface TodoProps {
     key: number,
-    todo: TodoModel,
+    todo: Todo,
     onClick: () => void,
 }
 
-export class Todo extends React.Component<TodoProps, any> {
+export class TodoComponent extends React.Component<TodoProps, any> {
     constructor(props: TodoProps) {
         super(props);
     }

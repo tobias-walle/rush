@@ -1,7 +1,7 @@
-import { TodoListProps, TodoList } from "../components/todo-list";
-import { Todo } from "../models/todo";
-import { toggleTodo, ToggleTodoAction } from "../actions/todo";
 import { connect } from 'react-redux';
+import { TodoListProps, TodoListComponent } from "../components/todo-list";
+import { ToggleTodoAction, toggleTodo } from "../actions/toggle-todo";
+import { Todo } from "../models/todo";
 
 function getVisibleTodos(todos: Todo[], filter: string) {
     switch (filter) {
@@ -28,8 +28,8 @@ function mapDispatchToProps(dispatch: (action: ToggleTodoAction) => any): TodoLi
     }
 }
 
-export const VisibleTodoList = connect(
+export const VisibleTodoListContainer = connect(
     mapStateToProps,
     mapDispatchToProps,
-)(TodoList);
+)(TodoListComponent);
 

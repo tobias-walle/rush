@@ -1,13 +1,15 @@
+let CopyWebpackPlugin = require('copy-webpack-plugin');
+
 module.exports = {
   entry: [
     'webpack/hot/only-dev-server',
     'core-js/shim',
-    './src/index.tsx',
+    './src/client/index.tsx',
   ],
   output: {
     filename: 'bundle.js',
-    path: __dirname + '/dist',
-    publicPath: '/dist/'
+    path: __dirname + '/dist/client/',
+    publicPath: '/dist/client/'
   },
 
   devtool: 'source-maps',
@@ -26,20 +28,11 @@ module.exports = {
   module: {
     loaders: [
       {test: /\.tsx?$/, loaders: ['awesome-typescript-loader']},
-      {test: /\.scss?$/, loaders: ['style-loader', 'css-loader?sourceMap&modules', 'postcss-loader', 'sass-loader?sourceMap']}
-    ],
-
-    user: [
-      {
-        loader: 'postcss-loader',
-        options: {
-          plugins: function () {
-            return [
-              require('autoprefixer')
-            ]
-          }
-        }
-      }
+      {test: /\.scss?$/, loaders: [
+        'style-loader',
+        'css-loader?sourceMap&modules',
+        'sass-loader?sourceMap'
+      ]}
     ],
 
     preLoaders: [
@@ -50,5 +43,11 @@ module.exports = {
   externals: {
     'react': 'React',
     'react-dom': 'ReactDOM',
-  }
+  },
+
+  plugins: [
+    new CopyWebpackPlugin([
+      { from: 'src/client/assets', to: 'assets'}
+    ]),
+  ],
 };

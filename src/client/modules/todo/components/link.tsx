@@ -7,7 +7,7 @@ export interface LinkProps {
     onClick?: () => void,
 }
 
-export class Link extends React.Component<LinkProps, any> {
+export class LinkComponent extends React.Component<LinkProps, any> {
     constructor(props: LinkProps) {
         super(props);
     }
