@@ -25,7 +25,21 @@ module.exports = {
 
   module: {
     loaders: [
-      {test: /\.tsx?$/, loaders: ['awesome-typescript-loader']}
+      {test: /\.tsx?$/, loaders: ['awesome-typescript-loader']},
+      {test: /\.scss?$/, loaders: ['style-loader', 'css-loader?sourceMap&modules', 'postcss-loader', 'sass-loader?sourceMap']}
+    ],
+
+    user: [
+      {
+        loader: 'postcss-loader',
+        options: {
+          plugins: function () {
+            return [
+              require('autoprefixer')
+            ]
+          }
+        }
+      }
     ],
 
     preLoaders: [
@@ -37,4 +51,4 @@ module.exports = {
     'react': 'React',
     'react-dom': 'ReactDOM',
   }
-}
+};

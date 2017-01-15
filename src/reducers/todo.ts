@@ -16,7 +16,6 @@ export function todo(state: any = [], action: TodoAction): any {
             if (state.id !== action.id) {
                 return state;
             }
-
             return Object.assign({}, state, {
                 completed: !state.completed
             });
@@ -40,7 +39,7 @@ export function todos(state: any = [], action: TodoAction): any {
             ];
         case TOGGLE_TODO:
             return state.map((t: any) => {
-                todo(t, action)
+                return todo(t, action)
             });
         default:
             return state;

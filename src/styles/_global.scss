@@ -1,0 +1,27 @@
+@import "config/colors";
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Roboto', 'sans-serif';
+  background: $color-background-light-0;
+  color: $color-text-primary-dark;
+  font-size: 16px;
+}
+
+#container {
+  margin: auto;
+  max-width: 600px;
+  background: $color-background-light-2;
+  padding: 1rem;
+
+  @media (min-width: 600px) {
+    border-radius: .4rem;
+    margin-top: 3rem;
+  }
+}
+
+

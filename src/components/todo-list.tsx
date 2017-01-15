@@ -16,15 +16,15 @@ export class TodoList extends React.Component<TodoListProps, any> {
     public render(): JSX.Element {
         let { todos, onTodoClick } = this.props;
         if (todos.length === 0) {
-            return <div>Add Todos</div>
+            return <div></div>
         }
 
         return (
-            <ul>
+            <div>
                 {todos.map(todo =>
                     <TodoComponent key={todo.id} todo={todo} onClick={() => onTodoClick(todo.id)} />
                 )}
-            </ul>
+            </div>
         )
     }
 }

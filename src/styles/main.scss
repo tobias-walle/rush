@@ -1,0 +1,11 @@
+@import "../../node_modules/normalize-scss/sass/normalize";
+
+@import "config/module";
+@import "mixins/module";
+@import "init/module";
+
+:global {
+  @import "components/module";
+  @import "global";
+}
+

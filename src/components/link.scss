@@ -1,0 +1,18 @@
+@import "../styles/config/module";
+
+.link {
+  &, &Active {
+    margin-right: .5em;
+    padding: $input-padding;
+    border-radius: $input-border-radius;
+  }
+  & {
+    cursor: pointer;
+    color: $color-text-primary-dark;
+  }
+  &Active {
+    color: $color-text-primary-light;
+    background: $color-primary-dark;
+  }
+  text-decoration: none;
+}

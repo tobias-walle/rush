@@ -1,5 +1,8 @@
 import { Todo as TodoModel } from "../models/todo";
 import * as React from 'react';
+import * as classNames from 'classnames';
+
+const styles = require('./todo.scss');
 
 export interface TodoProps {
     key: number,
@@ -12,8 +15,14 @@ export class Todo extends React.Component<TodoProps, any> {
         super(props);
     }
 
+
     render(): JSX.Element {
         let {todo, onClick} = this.props;
-        return <p onClick={onClick}>{todo.text}</p>;
+
+        let conditionalClasses = {};
+        conditionalClasses[styles.todoCompleted] = todo.completed;
+
+        let className = classNames(styles.todo, conditionalClasses);
+        return <p className={className} onClick={onClick}>{todo.text}</p>;
     }
 }

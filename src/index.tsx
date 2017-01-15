@@ -9,6 +9,8 @@ import { App } from "./components/app";
 let devtools: any = window['devToolsExtension'] ? window['devToolsExtension']() : (f:any)=>f;
 let store: any = devtools(createStore)(todoApp);
 
+import './styles/main.scss';
+
 render(
     <Provider store={store}>
         <App/>

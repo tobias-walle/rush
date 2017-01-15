@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./dist/",
-    "lin": ["es2015", "dom"],
+    "lib": ["es2015", "dom"],
     "sourceMap": true,
     "module": "commonjs",
     "target": "es5",
