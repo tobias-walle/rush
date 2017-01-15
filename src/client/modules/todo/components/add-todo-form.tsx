@@ -20,6 +20,7 @@ export class AddTodoForm extends React.Component<AddTodoFormProps, any> {
                     onSubmit={e => {
                         this.props.onSubmit(input.value);
                         input.value = '';
+                        e.preventDefault();
                     }}>
                     <input
                         className={`${styles.input} input-text font-large`}
