@@ -2,7 +2,6 @@ let CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: [
-    'webpack/hot/only-dev-server',
     'core-js/shim',
     './src/client/index.tsx',
   ],
@@ -13,11 +12,6 @@ module.exports = {
   },
 
   devtool: 'source-maps',
-
-  devServer: {
-    progress: true,
-    contentBase: "./"
-  },
 
   resolve: {
     extensions: [
