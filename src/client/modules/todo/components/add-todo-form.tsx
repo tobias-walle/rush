@@ -17,7 +17,10 @@ export class AddTodoForm extends React.Component<AddTodoFormProps, any> {
             <div>
                 <form
                     className={styles.form}
-                    onSubmit={e => this.props.onSubmit(input.value)}>
+                    onSubmit={e => {
+                        this.props.onSubmit(input.value);
+                        input.value = '';
+                    }}>
                     <input
                         className={`${styles.input} input-text font-large`}
                         ref={node => {input = node}}/>
