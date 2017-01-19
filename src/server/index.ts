@@ -15,9 +15,6 @@ let publicPath = path.resolve(__dirname + '/../client');
 // Provide node modules
 app.use('/node_modules', express.static(path.resolve(__dirname + '/../../node_modules')));
 
-// Provide static files
-app.use('/', express.static(publicPath));
-
 app.get('/', (req, res) => {
     res.sendFile(path.resolve('index.html'));
 });
@@ -37,6 +34,9 @@ if (!isProduction) {
         })
     });
 }
+
+// Provide static files
+app.use('/', express.static(publicPath));
 
 app.listen(port, () => {
     console.log(`Server is running on ${host}:${port}/`);
