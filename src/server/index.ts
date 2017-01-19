@@ -9,14 +9,14 @@ let app: express.Application = express();
 
 let isProduction: boolean = process.env.NODE_ENV === 'production';
 let host = (process.env.HOST || 'localhost');
-let port = isProduction ? process.env.PORT : 3000;
+let port = isProduction && process.env.PORT !== undefined ? process.env.PORT : 3000;
 let publicPath = path.resolve(__dirname + '/../client');
 
 // Provide node modules
 app.use('/node_modules', express.static(path.resolve(__dirname + '/../../node_modules')));
 
 // Provide static files
-app.use('/dist/client/', express.static(publicPath));
+app.use('/', express.static(publicPath));
 
 app.get('/', (req, res) => {
     res.sendFile(path.resolve('index.html'));

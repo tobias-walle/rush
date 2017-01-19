@@ -5,8 +5,30 @@
   "main": "index.js",
   "scripts": {
     "start": "gulp start",
-    "build": "gulp build",
+    "start:production": "better-npm-run start:production",
+    "build:development": "better-npm-run build:development",
+    "build:production": "better-npm-run build:production",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "betterScripts": {
+    "start:production": {
+      "command": "gulp start",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
+    "build:development": {
+      "command": "gulp build",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    "build:production": {
+      "command": "gulp build",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
   },
   "author": "Tobias Walle",
   "license": "ISC",
@@ -20,6 +42,7 @@
     "@types/webpack-dev-server": "^1.12.5",
     "autoprefixer": "^6.6.1",
     "awesome-typescript-loader": "^3.0.0-beta.18",
+    "better-npm-run": "0.0.14",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.26.1",
     "gulp": "^3.9.1",
@@ -30,6 +53,7 @@
     "raw-loader": "^0.5.1",
     "react-hot-loader": "^1.3.1",
     "sass-loader": "^4.1.1",
+    "shelljs": "^0.7.6",
     "source-map-loader": "^0.1.6",
     "style-loader": "^0.13.1",
     "typescript": "^2.1.5",
