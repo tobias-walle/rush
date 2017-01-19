@@ -1,15 +1,21 @@
 import * as Webpack from 'webpack';
 import * as WebpackDevServer from 'webpack-dev-server';
 
-let webpackConfig = require('../../webpack.config.js');
-
 export class WebServer {
     private bundler: any;
 
-    host: string;
-    port: number;
+    readonly url: string;
+    readonly host: string;
+    readonly port: number;
 
-    constructor(host = 'localhost', port = 8080) {
+    constructor(host: string, port: number) {
+        let url = this.url = `http://${host}:${port}`;
+        let webpackConfig = require('../../webpack.config.js');
+        webpackConfig.entry.app.unshift(
+            `webpack-dev-server/client?${url}`,
+            'webpack/hot/only-dev-server',
+        );
+
         this.host = host;
         this.port = port;
 
@@ -26,13 +32,13 @@ export class WebServer {
         });
 
         this.bundler = new WebpackDevServer(compiler, {
-            publicPath: '/dist/client/',
+            publicPath: '/',
             contentBase: './dist/client/',
 
             hot: true,
 
             quiet: false,
-            noInfo: true,
+            noInfo: false,
             stats: {
                 colors: true
             }

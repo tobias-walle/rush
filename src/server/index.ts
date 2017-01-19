@@ -24,13 +24,16 @@ app.get('/', (req, res) => {
 
 if (!isProduction) {
     // Create and start the webpack dev server.
-    let webpackDevServer = new WebServer();
+    let webpackPort = port + 1;
+    let webpackHost = host;
+
+    let webpackDevServer = new WebServer(webpackHost, webpackPort);
     webpackDevServer.start();
 
     // Send all remaining request to the dev server
     app.all('/*', (req, res) => {
         proxy.web(req, res, {
-            target: 'http://localhost:8080'
+            target: `http://${webpackHost}:${webpackPort}/`
         })
     });
 }

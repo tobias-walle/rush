@@ -1,14 +1,21 @@
+let webpack = require('webpack');
 let CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  entry: [
-    'core-js/shim',
-    './src/client/index.tsx',
-  ],
+  entry: {
+    vendor: [
+      'core-js/shim',
+      'react',
+      'react-dom'
+    ],
+    app: [
+      './src/client/index.tsx',
+    ]
+  },
   output: {
     filename: 'bundle.js',
     path: __dirname + '/dist/client/',
-    publicPath: '/dist/client/'
+    publicPath: '/',
   },
 
   devtool: 'source-maps',
@@ -21,12 +28,14 @@ module.exports = {
 
   module: {
     loaders: [
-      {test: /\.tsx?$/, loaders: ['awesome-typescript-loader']},
-      {test: /\.scss?$/, loaders: [
+      {test: /\.tsx?$/, loaders: ['react-hot', 'awesome-typescript-loader']},
+      {
+        test: /\.scss?$/, loaders: [
         'style-loader',
         'css-loader?sourceMap&modules',
         'sass-loader?sourceMap'
-      ]}
+      ]
+      }
     ],
 
     preLoaders: [
@@ -34,14 +43,11 @@ module.exports = {
     ]
   },
 
-  externals: {
-    'react': 'React',
-    'react-dom': 'ReactDOM',
-  },
-
   plugins: [
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
     new CopyWebpackPlugin([
-      { from: 'src/client/assets', to: 'assets'}
+      {from: 'src/client/assets', to: 'assets'}
     ]),
+    new webpack.HotModuleReplacementPlugin(),
   ],
 };
