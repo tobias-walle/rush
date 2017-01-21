@@ -7,14 +7,17 @@
     "start": "concurrently --kill-others \"npm run start:dev\" \"npm run watch:server:dev\"",
     "start:dev": "bnr start:dev",
     "start:prod": "bnr start:prod",
+
     "build:server:dev": "webpack --config ./webpack/webpack.server.config.development.js",
     "build:server:prod": "webpack --config ./webpack/webpack.server.config.production.js",
     "build:client:dev": "webpack --config ./webpack/webpack.client.config.development.js",
     "build:client:prod": "webpack --config ./webpack/webpack.client.config.production.js",
+
     "watch:server:dev": "webpack --config ./webpack/webpack.server.config.development.js --watch",
     "watch:server:prod": "webpack --config ./webpack/webpack.server.config.production.js --watch",
     "watch:client:dev": "webpack --config ./webpack/webpack.client.config.development.js --watch",
     "watch:client:prod": "webpack --config ./webpack/webpack.client.config.production.js --watch",
+
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "betterScripts": {
