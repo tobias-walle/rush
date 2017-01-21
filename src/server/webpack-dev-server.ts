@@ -10,7 +10,7 @@ export class WebServer {
 
     constructor(host: string, port: number) {
         let url = this.url = `http://${host}:${port}`;
-        let webpackConfig = require('../../webpack/webpack.config.development.js');
+        let webpackConfig = require('../../webpack/webpack.client.config.development.js');
         webpackConfig.entry.app.unshift(
             `webpack-dev-server/client?${url}`,
             'webpack/hot/only-dev-server',
@@ -32,7 +32,7 @@ export class WebServer {
         });
 
         this.bundler = new WebpackDevServer(compiler, {
-            publicPath: '/dist',
+            publicPath: `/dist/`,
             contentBase: './dist/client/',
 
             hot: true,

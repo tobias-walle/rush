@@ -1,5 +1,8 @@
 let webpack = require('webpack');
 let CopyWebpackPlugin = require('copy-webpack-plugin');
+let path = require('path');
+
+let rootDir = path.resolve(__dirname, '..');
 
 module.exports = {
   entry: {
@@ -14,7 +17,7 @@ module.exports = {
   },
   output: {
     filename: 'bundle.js',
-    path: __dirname + '/dist/client/',
+    path: rootDir + '/dist/client/',
     publicPath: '/',
   },
 
