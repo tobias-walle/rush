@@ -15,10 +15,6 @@ let publicPath = path.resolve(__dirname + '/../client');
 // Provide node modules
 app.use('/node_modules', express.static(path.resolve(__dirname + '/../../node_modules')));
 
-app.get('/', (req, res) => {
-    res.sendFile(path.resolve('index.html'));
-});
-
 if (!isProduction) {
     // Create and start the webpack dev server.
     let webpackPort = port + 1;
@@ -28,15 +24,20 @@ if (!isProduction) {
     webpackDevServer.start();
 
     // Send all remaining request to the dev server
-    app.all('/*', (req, res) => {
+    app.all('/dist/*', (req, res) => {
         proxy.web(req, res, {
             target: `http://${webpackHost}:${webpackPort}/`
         })
     });
 }
 
-// Provide static files
-app.use('/', express.static(publicPath));
+// Provide static files under dist
+app.use('/dist', express.static(publicPath));
+
+// Send index.html in all remaining cases
+app.get('/*', (req, res) => {
+    res.sendFile(path.resolve('index.html'));
+});
 
 app.listen(port, () => {
     console.log(`Server is running on ${host}:${port}/`);

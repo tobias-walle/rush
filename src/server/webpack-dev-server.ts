@@ -32,13 +32,13 @@ export class WebServer {
         });
 
         this.bundler = new WebpackDevServer(compiler, {
-            publicPath: '/',
+            publicPath: '/dist',
             contentBase: './dist/client/',
 
             hot: true,
 
             quiet: false,
-            noInfo: false,
+            noInfo: true,
             stats: {
                 colors: true
             }
