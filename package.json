@@ -22,13 +22,13 @@
   },
   "betterScripts": {
     "start:prod": {
-      "command": "npm run build:server:prod && npm run build:client:prod && nodemon ./dist/server/server.js",
+      "command": "concurrently \"npm run build:server:prod\" \"npm run build:client:prod\" && nodemon ./dist/server/server.js",
       "env": {
         "NODE_ENV": "production"
       }
     },
     "start:dev": {
-      "command": "npm run build:server:dev && nodemon ./dist/server/server.js"
+      "command": "concurrently \"npm run build:server:dev\" \"npm run build:client:dev\" && nodemon ./dist/server/server.js"
     }
   },
   "author": "Tobias Walle",
