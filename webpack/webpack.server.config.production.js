@@ -14,13 +14,12 @@ module.exports = {
   target: 'node',
   entry: {
     app: [
-      './src/server/index.ts',
+      './src/server.ts',
     ]
   },
   output: {
     filename: 'server.js',
     path: rootDir + '/dist/server/',
-    publicPath: '/dist',
   },
 
   devtool: 'source-maps',

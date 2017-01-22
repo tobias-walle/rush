@@ -1,6 +1,6 @@
 import * as express from 'express';
 import * as path from 'path';
-import { WebServer } from './webpack-dev-server';
+import { WebServer } from './server/webpack-dev-server';
 
 // Fix dirname
 let rootDir = path.resolve();

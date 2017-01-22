@@ -12,7 +12,7 @@ module.exports = {
       'react-dom'
     ],
     app: [
-      './src/client/index.tsx',
+      './src/client.tsx',
     ]
   },
   output: {
@@ -42,7 +42,7 @@ module.exports = {
 
   plugins: [
     new CopyWebpackPlugin([
-      {from: 'src/client/assets', to: 'assets'}
+      {from: 'src/assets', to: 'assets'}
     ]),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')

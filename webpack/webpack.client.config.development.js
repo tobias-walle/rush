@@ -12,7 +12,7 @@ module.exports = {
       'react-dom'
     ],
     app: [
-      './src/client/index.tsx',
+      './src/client.tsx',
     ]
   },
   output: {
@@ -49,7 +49,7 @@ module.exports = {
   plugins: [
     new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
     new CopyWebpackPlugin([
-      {from: 'src/client/assets', to: 'assets'}
+      {from: 'src/assets', to: 'assets'}
     ]),
     new webpack.HotModuleReplacementPlugin(),
   ],
