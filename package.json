@@ -7,34 +7,32 @@
     "start": "concurrently --kill-others \"npm run start:dev\" \"npm run watch:server:dev\"",
     "start:dev": "bnr start:dev",
     "start:prod": "bnr start:prod",
-
     "build:server:dev": "webpack --config ./webpack/webpack.server.config.development.js",
     "build:server:prod": "webpack --config ./webpack/webpack.server.config.production.js",
     "build:client:dev": "webpack --config ./webpack/webpack.client.config.development.js",
     "build:client:prod": "webpack --config ./webpack/webpack.client.config.production.js",
-
     "watch:server:dev": "webpack --config ./webpack/webpack.server.config.development.js --watch",
     "watch:server:prod": "webpack --config ./webpack/webpack.server.config.production.js --watch",
     "watch:client:dev": "webpack --config ./webpack/webpack.client.config.development.js --watch",
     "watch:client:prod": "webpack --config ./webpack/webpack.client.config.production.js --watch",
-
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "betterScripts": {
     "start:prod": {
-      "command": "concurrently \"npm run build:server:prod\" \"npm run build:client:prod\" && nodemon ./dist/server/server.js",
+      "command": "concurrently \"npm run build:server:prod\" \"npm run build:client:prod\" && nodemon -w ./dist/server ./dist/server/server.js",
       "env": {
         "NODE_ENV": "production"
       }
     },
     "start:dev": {
-      "command": "concurrently \"npm run build:server:dev\" \"npm run build:client:dev\" && nodemon ./dist/server/server.js"
+      "command": "concurrently \"npm run build:server:dev\" \"npm run build:client:dev\" && nodemon -w ./dist/server ./dist/server/server.js"
     }
   },
   "author": "Tobias Walle",
   "license": "ISC",
   "devDependencies": {
     "@types/classnames": "0.0.32",
+    "@types/es6-shim": "^0.31.32",
     "@types/express": "^4.0.34",
     "@types/node": "^7.0.0",
     "@types/react": "^15.0.0",
@@ -61,15 +59,20 @@
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.6",
     "classnames": "^2.2.5",
-    "core-js": "^2.4.1",
+    "es6-shim": "^0.35.2",
     "express": "^4.14.0",
     "http-proxy": "^1.16.2",
+    "isomorphic-style-loader": "^1.1.0",
+    "isomorphic-style-loader-utils": "^1.0.0",
     "node-sass": "^4.3.0",
     "normalize-scss": "^6.0.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-helmet": "^4.0.0",
+    "react-inline-css": "^2.3.0",
     "react-redux": "^5.0.2",
     "react-router": "^3.0.2",
-    "redux": "^3.6.0"
+    "redux": "^3.6.0",
+    "serialize-javascript": "^1.3.0"
   }
 }

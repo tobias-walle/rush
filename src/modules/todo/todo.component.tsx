@@ -5,6 +5,10 @@ import { AddTodoContainer } from "./containers/add-todo";
 
 export class TodoAppComponent extends React.Component<void, any> {
 
+    constructor(...args) {
+        super(...args);
+    }
+
     render(): JSX.Element {
         return (
             <div>

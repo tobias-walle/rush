@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as classNames from 'classnames';
 import { Todo } from "../models/todo";
+import { WithStyles } from "isomorphic-style-loader-utils";
 
 const styles = require('./todo.scss');
 
@@ -10,6 +11,7 @@ export interface TodoProps {
     onClick: () => void,
 }
 
+@WithStyles(styles)
 export class TodoComponent extends React.Component<TodoProps, any> {
     constructor(props: TodoProps) {
         super(props);

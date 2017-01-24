@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
     "outDir": "./dist/server",
-    "lib": ["es2015", "dom"],
+    "lib": ["ES5", "dom"],
     "sourceMap": true,
     "module": "commonjs",
     "target": "es5",
-    "jsx": "react"
+    "jsx": "react",
+    "experimentalDecorators": true
   },
   "include": [
-    "./src/server/*"
+    "./src/*"
   ]
 }

@@ -1,13 +1,16 @@
 import * as React from 'react';
+import { WithStyles } from "isomorphic-style-loader-utils";
 const styles = require('./add-todo-form.scss');
 
 export interface AddTodoFormProps {
     onSubmit?: (inputValue: string) => void;
 }
 
+@WithStyles(styles)
 export class AddTodoForm extends React.Component<AddTodoFormProps, any> {
-    constructor(props: AddTodoFormProps) {
+    constructor(props: AddTodoFormProps, context) {
         super(props);
+        console.log('Got', context);
     }
 
     public render() {
@@ -25,7 +28,7 @@ export class AddTodoForm extends React.Component<AddTodoFormProps, any> {
                     <input
                         className={`${styles.input} input-text font-large`}
                         ref={node => {input = node}}/>
-                    <button className='button font-large' type='submit'> Add Todo </button>
+                    <button className='button font-large' type='submit'> Add Todo</button>
                 </form>
             </div>
         )

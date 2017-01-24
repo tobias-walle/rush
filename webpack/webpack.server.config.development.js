@@ -14,7 +14,7 @@ module.exports = {
   target: 'node',
   entry: {
     app: [
-      './src/server.ts',
+      './src/server.tsx',
     ]
   },
   output: {
@@ -33,6 +33,11 @@ module.exports = {
   module: {
     loaders: [
       {test: /\.tsx?$/, loaders: ['awesome-typescript-loader']},
+      {test: /\.scss?$/, loaders: [
+        'isomorphic-style-loader',
+        'css-loader?sourceMap&modules&localIdentName=[name]_[local]_[hash:base64:5]',
+        'sass-loader?sourceMap'
+      ]}
     ],
     preLoaders: [
       {test: /\.js$/, loader: 'source-map-loader'}

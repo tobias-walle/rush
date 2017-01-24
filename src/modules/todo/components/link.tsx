@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { WithStyles } from "isomorphic-style-loader-utils";
 let styles = require('./link.scss');
 
 export interface LinkProps {
@@ -7,6 +8,7 @@ export interface LinkProps {
     onClick?: () => void,
 }
 
+@WithStyles(styles)
 export class LinkComponent extends React.Component<LinkProps, any> {
     constructor(props: LinkProps) {
         super(props);

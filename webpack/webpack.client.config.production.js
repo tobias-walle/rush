@@ -7,7 +7,6 @@ let rootDir = path.resolve(__dirname, '..');
 module.exports = {
   entry: {
     vendor: [
-      'core-js/shim',
       'react',
       'react-dom'
     ],
@@ -32,8 +31,8 @@ module.exports = {
       {test: /\.tsx?$/, loaders: ['awesome-typescript-loader']},
       {
         test: /\.scss?$/, loaders: [
-        'style-loader',
-        'css-loader?modules',
+        'isomorphic-style-loader',
+        'css-loader?sourceMap&modules&localIdentName=[name]_[local]_[hash:base64:5]',
         'sass-loader'
       ]
       }
