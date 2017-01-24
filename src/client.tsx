@@ -28,7 +28,7 @@ if (RENDER_CSS_ON_CLIENT) {
 }
 
 // Render the app
-let App = () => (
+let AppComponent = () => (
     <Provider store={store}>
         <Router history={browserHistory} routes={routes}/>
     </Provider>
@@ -36,12 +36,12 @@ let App = () => (
 
 if (RENDER_CSS_ON_CLIENT) {
     // Add Component style context
-    let OldApp = App;
-    App = () => (
+    let OldAppComponent = AppComponent;
+    AppComponent = () => (
         <WithStylesContext onInsertCss={ styles => styles._insertCss()}>
-            <OldApp/>
+            <OldAppComponent/>
         </WithStylesContext>
     );
 }
 
-render(<App/>, document.getElementById('container'));
+render(<AppComponent/>, document.getElementById('container'));

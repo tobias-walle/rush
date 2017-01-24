@@ -48,7 +48,7 @@ if (!isProduction) {
 // Provide static files under dist
 app.use('/dist', express.static(publicPath));
 
-// Send App if route is matching
+// Send AppComponent if route is matching
 app.use((req, res) => {
     match({routes, location: req.originalUrl}, (error: any, nextLocation: Location, nextState: MatchState) => {
         if (error) {
@@ -60,7 +60,9 @@ app.use((req, res) => {
 
             let store = createStore(todoReducer, initialState);
             let history = createMemoryHistory();
-            let App = () => (
+
+            // Prepare app
+            let AppComponent = () => (
                 <Provider store={store}>
                     <Router history={history} routes={routes}/>
                 </Provider>
@@ -72,16 +74,16 @@ app.use((req, res) => {
                 css = [require('./styles/main.scss')._getCss()];
 
                 // Wrap app with style context
-                let OldApp = App;
-                App = () => (
+                let OldAppComponent = AppComponent;
+                AppComponent = () => (
                     <WithStylesContext onInsertCss={styles => css.push(styles._getCss())}>
-                        <OldApp/>
+                        <OldAppComponent/>
                     </WithStylesContext>
                 )
             }
 
             res.status(200).send(renderToString(
-                <HtmlComponent store={store} component={<App/>} styles={css}/>
+                <HtmlComponent store={store} component={<AppComponent/>} styles={css}/>
             ));
         } else {
             res.status(404).send('Not found');
