@@ -1,18 +1,11 @@
 # React with Redux Application
 
-A starting template for react with redux
+A starting template for an isomorphic react with redux application.
 
-## Commands
-
-To get started run:
+### Get Started
 
 ```bash
 npm install
 npm start
 ```
 
-To build the application run:
-
-```bash
-npm run build
-```
