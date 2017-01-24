@@ -6,13 +6,15 @@ import { todoReducer } from './modules/todo/todo.reducer';
 import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 import { routes } from "./routes";
+import { WithStylesContext } from "isomorphic-style-loader-utils";
+import { DEVELOPMENT, RENDER_CSS_ON_CLIENT } from "./utils/config";
 
 // Load initial state
 const initialState = window['__data'];
 
 // Create store
 let store: any;
-if (process.env.NODE_ENV !== 'production') {
+if (DEVELOPMENT) {
     // If not production, activate redux debug tools
     let devtools: any = window['devToolsExtension'] ? window['devToolsExtension']() : (f: any) => f;
     store = devtools(createStore)(todoReducer, initialState);
@@ -20,11 +22,26 @@ if (process.env.NODE_ENV !== 'production') {
     store = createStore(todoReducer, initialState);
 }
 
+// Main styles
+if (RENDER_CSS_ON_CLIENT) {
+    require('./styles/main.scss')._insertCss();
+}
+
 // Render the app
-render(
+let App = () => (
     <Provider store={store}>
         <Router history={browserHistory} routes={routes}/>
     </Provider>
-
-    , document.getElementById('container')
 );
+
+if (RENDER_CSS_ON_CLIENT) {
+    // Add Component style context
+    let OldApp = App;
+    App = () => (
+        <WithStylesContext onInsertCss={ styles => styles._insertCss()}>
+            <OldApp/>
+        </WithStylesContext>
+    );
+}
+
+render(<App/>, document.getElementById('container'));

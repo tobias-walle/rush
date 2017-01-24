@@ -13,6 +13,7 @@ import { todoReducer } from "./modules/todo/todo.reducer";
 import { Provider } from "react-redux";
 import { Router, createMemoryHistory } from "react-router";
 import { WithStylesContext } from "isomorphic-style-loader-utils";
+import { RENDER_CSS_ON_CLIENT } from "./utils/config";
 
 // Fix dirname
 let rootDir = path.resolve();
@@ -47,9 +48,6 @@ if (!isProduction) {
 // Provide static files under dist
 app.use('/dist', express.static(publicPath));
 
-// Load main styles as string
-let mainStyles = require('./styles/main.scss')._getCss();
-
 // Send App if route is matching
 app.use((req, res) => {
     match({routes, location: req.originalUrl}, (error: any, nextLocation: Location, nextState: MatchState) => {
@@ -61,17 +59,29 @@ app.use((req, res) => {
             let initialState = {};
 
             let store = createStore(todoReducer, initialState);
-            let css = [mainStyles];
             let history = createMemoryHistory();
-            let component = (
+            let App = () => (
                 <Provider store={store}>
-                    <WithStylesContext onInsertCss={styles => css.push(styles._getCss())}>
-                        <Router history={history} routes={routes}/>
-                    </WithStylesContext>
+                    <Router history={history} routes={routes}/>
                 </Provider>
             );
+
+            let css: string[];
+            if (!RENDER_CSS_ON_CLIENT) {
+                // Load main styles as string
+                css = [require('./styles/main.scss')._getCss()];
+
+                // Wrap app with style context
+                let OldApp = App;
+                App = () => (
+                    <WithStylesContext onInsertCss={styles => css.push(styles._getCss())}>
+                        <OldApp/>
+                    </WithStylesContext>
+                )
+            }
+
             res.status(200).send(renderToString(
-                <HtmlComponent store={store} component={component} styles={css}/>
+                <HtmlComponent store={store} component={<App/>} styles={css}/>
             ));
         } else {
             res.status(404).send('Not found');

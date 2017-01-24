@@ -19,13 +19,13 @@
   },
   "betterScripts": {
     "start:prod": {
-      "command": "concurrently \"npm run build:server:prod\" \"npm run build:client:prod\" && nodemon -w ./dist/server ./dist/server/server.js",
+      "command": "concurrently \"npm run build:server:prod\" \"npm run build:client:prod\" && node ./dist/server/server.js",
       "env": {
         "NODE_ENV": "production"
       }
     },
     "start:dev": {
-      "command": "concurrently \"npm run build:server:dev\" \"npm run build:client:dev\" && nodemon -w ./dist/server ./dist/server/server.js"
+      "command": "concurrently \"npm run build:server:dev\" \"npm run build:client:dev\" && node ./dist/server/server.js"
     }
   },
   "author": "Tobias Walle",

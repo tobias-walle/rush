@@ -20,6 +20,6 @@ export class LinkComponent extends React.Component<LinkProps, any> {
             return <span className={styles.linkActive}>{children}</span>;
         }
 
-        return <a className={styles.link} href="#" onClick={e => onClick()}>{ children }</a>;
+        return <span className={styles.link} onClick={e => onClick()}>{ children }</span>;
     }
 }

@@ -17,6 +17,7 @@ module.exports = {
       './src/server.tsx',
     ]
   },
+  debug: true,
   output: {
     filename: 'server.js',
     path: rootDir + '/dist/server/',

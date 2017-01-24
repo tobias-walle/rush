@@ -10,7 +10,6 @@ export interface AddTodoFormProps {
 export class AddTodoForm extends React.Component<AddTodoFormProps, any> {
     constructor(props: AddTodoFormProps, context) {
         super(props);
-        console.log('Got', context);
     }
 
     public render() {

@@ -14,6 +14,7 @@ module.exports = {
       './src/client.tsx',
     ]
   },
+  debug: true,
   output: {
     filename: 'bundle.js',
     path: rootDir + '/dist/client/',
