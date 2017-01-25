@@ -8,6 +8,7 @@ import { Router, browserHistory } from 'react-router';
 import { routes } from "./routes";
 import { WithStylesContext } from "isomorphic-style-loader-utils";
 import { DEVELOPMENT, RENDER_CSS_ON_CLIENT } from "./utils/config";
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 // Load initial state
 const initialState = window['__data'];
@@ -22,11 +23,6 @@ if (DEVELOPMENT) {
     store = createStore(todoReducer, initialState);
 }
 
-// Main styles
-if (RENDER_CSS_ON_CLIENT) {
-    require('./styles/main.scss')._insertCss();
-}
-
 // Render the app
 let AppComponent = () => (
     <Provider store={store}>
@@ -34,9 +30,13 @@ let AppComponent = () => (
     </Provider>
 );
 
+
 if (RENDER_CSS_ON_CLIENT) {
+    // Main styles
+    let mainStyles = require('./styles/main.scss');
+
     // Add Component style context
-    let OldAppComponent = AppComponent;
+    let OldAppComponent = withStyles(mainStyles)(AppComponent);
     AppComponent = () => (
         <WithStylesContext onInsertCss={ styles => styles._insertCss()}>
             <OldAppComponent/>

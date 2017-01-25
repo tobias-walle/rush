@@ -14,6 +14,7 @@ import { Provider } from "react-redux";
 import { Router, createMemoryHistory } from "react-router";
 import { WithStylesContext } from "isomorphic-style-loader-utils";
 import { RENDER_CSS_ON_CLIENT } from "./utils/config";
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
 // Fix dirname
 let rootDir = path.resolve();
@@ -68,13 +69,13 @@ app.use((req, res) => {
                 </Provider>
             );
 
-            let css: string[];
+            let css: string[] = [];
             if (!RENDER_CSS_ON_CLIENT) {
                 // Load main styles as string
-                css = [require('./styles/main.scss')._getCss()];
+                let mainStyles = require('./styles/main.scss');
 
                 // Wrap app with style context
-                let OldAppComponent = AppComponent;
+                let OldAppComponent = withStyles(mainStyles)(AppComponent);
                 AppComponent = () => (
                     <WithStylesContext onInsertCss={styles => css.push(styles._getCss())}>
                         <OldAppComponent/>
