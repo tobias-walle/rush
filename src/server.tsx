@@ -13,53 +13,58 @@ import { todoReducer } from "./modules/todo/todo.reducer";
 import { Provider } from "react-redux";
 import { Router, createMemoryHistory } from "react-router";
 import { WithStylesContext } from "isomorphic-style-loader-utils";
-import { RENDER_CSS_ON_CLIENT } from "./utils/config";
+import { RENDER_CSS_ON_CLIENT, DEVELOPMENT } from "./utils/config";
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 
-// Fix dirname
-let rootDir = path.resolve();
+const HOST = (process.env.HOST || 'localhost');
+const PORT = process.env.PORT !== undefined ? process.env.PORT : 3000;
 
-let httpProxy = require('http-proxy');
+const ROOT_DIR = path.resolve();
+const PUBLIC_PATH = path.resolve(ROOT_DIR + '/dist/client');
 
-let proxy = httpProxy.createProxyServer();
+
 let app: express.Application = express();
 
-let isProduction: boolean = process.env.NODE_ENV === 'production';
-let host = (process.env.HOST || 'localhost');
-let port = isProduction && process.env.PORT !== undefined ? process.env.PORT : 3000;
-let publicPath = path.resolve(rootDir + '/dist/client');
+// Start webpack dev server in development mode
+if (DEVELOPMENT) {
+    // Create a proxy for the webpack development server
+    let httpProxy = require('http-proxy');
+    let proxy = httpProxy.createProxyServer();
 
-
-if (!isProduction) {
     // Create and start the webpack dev server.
-    let webpackPort = port + 1;
-    let webpackHost = host;
+    const WEBPACK_PORT = PORT + 1;
+    const WEBPACK_HOST = HOST;
 
-    let webpackDevServer = new WebServer(webpackHost, webpackPort);
+    let webpackDevServer = new WebServer(WEBPACK_HOST, WEBPACK_PORT);
     webpackDevServer.start();
 
     // Send all remaining request to the dev server
     app.all('/static/*', (req, res) => {
         proxy.web(req, res, {
-            target: `http://${webpackHost}:${webpackPort}/`
+            target: `http://${WEBPACK_HOST}:${WEBPACK_PORT}/`
         })
     });
 }
 
-// Provide static files under dist
-app.use('/static', express.static(publicPath));
+// Provide static files
+app.use('/static', express.static(PUBLIC_PATH));
 
-// Send AppComponent if route is matching
 app.use((req, res) => {
+    // Search for UI Routes
     match({routes, location: req.originalUrl}, (error: any, nextLocation: Location, nextState: MatchState) => {
         if (error) {
+            // Send message if an error occurs
             res.status(500).send(error.message);
         } else if (nextLocation) {
+            // Redirect on redirection
             res.redirect(302, nextLocation.pathname + nextLocation.search);
         } else if (nextState) {
-            let initialState = {};
 
+            // Setup state
+            let initialState = {};
             let store = createStore(todoReducer, initialState);
+
+            // Create history
             let history = createMemoryHistory();
 
             // Prepare app
@@ -69,6 +74,7 @@ app.use((req, res) => {
                 </Provider>
             );
 
+            // Load styles if configured
             let css: string[] = [];
             if (!RENDER_CSS_ON_CLIENT) {
                 // Load main styles as string
@@ -83,16 +89,19 @@ app.use((req, res) => {
                 )
             }
 
+            // Send the result
             res.status(200).send(renderToString(
                 <HtmlComponent store={store} component={<AppComponent/>} styles={css}/>
             ));
         } else {
+            // No routes where found, send 404
             res.status(404).send('Not found');
         }
     });
 });
 
-app.listen(port, () => {
-    console.log(`Server is running on ${host}:${port}/`);
+// Start Server
+app.listen(PORT, () => {
+    console.log(`Server is running on ${HOST}:${PORT}/`);
 });
 
