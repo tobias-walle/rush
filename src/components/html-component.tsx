@@ -42,8 +42,8 @@ export class HtmlComponent extends React.Component<HtmlProps, any> {
                 dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())};`}}
                 charSet="UTF-8"
             />
-            <script src="/dist/vendor.bundle.js"></script>
-            <script src="/dist/bundle.js"></script>
+            <script src="/static/vendor.bundle.js"></script>
+            <script src="/static/bundle.js"></script>
             </body>
             </html>
         )

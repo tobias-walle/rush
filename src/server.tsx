@@ -39,7 +39,7 @@ if (!isProduction) {
     webpackDevServer.start();
 
     // Send all remaining request to the dev server
-    app.all('/dist/*', (req, res) => {
+    app.all('/static/*', (req, res) => {
         proxy.web(req, res, {
             target: `http://${webpackHost}:${webpackPort}/`
         })
@@ -47,7 +47,7 @@ if (!isProduction) {
 }
 
 // Provide static files under dist
-app.use('/dist', express.static(publicPath));
+app.use('/static', express.static(publicPath));
 
 // Send AppComponent if route is matching
 app.use((req, res) => {
