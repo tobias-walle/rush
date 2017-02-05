@@ -11,6 +11,8 @@
     "build:server:prod": "webpack --config ./webpack/webpack.server.config.production.js",
     "build:client:dev": "webpack --config ./webpack/webpack.client.config.development.js",
     "build:client:prod": "webpack --config ./webpack/webpack.client.config.production.js",
+    "build:dev": "concurrently \"npm run build:server:dev\" \"npm run build:client:dev\"",
+    "build:prod": "concurrently \"npm run build:server:prod\" \"npm run build:client:prod\"",
     "watch:server:dev": "webpack --config ./webpack/webpack.server.config.development.js --watch",
     "watch:server:prod": "webpack --config ./webpack/webpack.server.config.production.js --watch",
     "watch:client:dev": "webpack --config ./webpack/webpack.client.config.development.js --watch",
