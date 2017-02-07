@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { TodoAppComponent } from "./modules/todo/todo.component";
 import { Route } from 'react-router';
+import { BlogComponent } from "./modules/blog/blog.component";
 
 export const routes: JSX.Element = (
-    <Route path="/" component={TodoAppComponent}/>
+    <Route path="/" component={BlogComponent}/>
 );

@@ -1,0 +1,21 @@
+@import "../../../styles/config/colors";
+
+.article-list-item {
+  border: none;
+  background: $color-background-light-1;
+  padding: 1.5rem;
+  border-radius: 5px;
+
+  &:not(:last-child) {
+    margin-bottom: 2rem;
+  }
+
+  h2 {
+    margin-top: 0;
+    font-size: 1.2rem;
+  }
+
+  p {
+    margin-bottom: 0;
+  }
+}

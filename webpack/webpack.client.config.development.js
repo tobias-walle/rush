@@ -18,7 +18,7 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     path: rootDir + '/dist/client/',
-    publicPath: '/dist/',
+    publicPath: '/static/',
   },
 
   devtool: 'source-maps',
@@ -31,7 +31,7 @@ module.exports = {
 
   module: {
     loaders: [
-      {test: /\.tsx?$/, loaders: ['react-hot', 'awesome-typescript-loader']},
+      {test: /\.tsx?$/, loaders: ['react-hot-loader/webpack', 'awesome-typescript-loader']},
       {
         test: /\.scss?$/, loaders: [
         'isomorphic-style-loader',
@@ -55,3 +55,4 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
   ],
 };
+
