@@ -17,36 +17,54 @@ import { RENDER_CSS_ON_CLIENT, DEVELOPMENT, DISABLE_SERVER_SIDE_RENDERING } from
 import { HtmlComponent } from "./components/html-component";
 import { reducer } from "./modules/reducer";
 import { syncHistoryWithStore } from 'react-router-redux';
+import { ApiServer } from "../api/index";
 
-const HOST = (process.env.HOST || 'localhost');
-const PORT = process.env.PORT !== undefined ? process.env.PORT : 3000;
+// Server Config
+const HOST = process.env.HOST || 'localhost';
+const PORT = process.env.PORT || 3000;
 
+// Webpack dev server config
+const WEBPACK_DEV_HOST = process.env.WEBPACK_HOST || HOST || 'localhost';
+const WEBPACK_DEV_PORT = process.env.WEBPACK_PORT || 3001;
+
+// API Config
+const API_HOST = process.env.API_HOST || HOST || 'localhost';
+const API_PORT = process.env.API_PORT || 3002;
+
+// Paths
 const ROOT_DIR = path.resolve();
 const PUBLIC_PATH = path.resolve(ROOT_DIR + '/dist/client');
 
-
+// Setup Server
 let app: express.Application = express();
+
+// Create a proxy for the webpack dev server and the api
+let httpProxy = require('http-proxy');
+let proxy = httpProxy.createProxyServer();
 
 // Start webpack dev server in development mode
 if (DEVELOPMENT) {
-  // Create a proxy for the webpack development server
-  let httpProxy = require('http-proxy');
-  let proxy = httpProxy.createProxyServer();
 
   // Create and start the webpack dev server.
-  const WEBPACK_PORT = PORT + 1;
-  const WEBPACK_HOST = HOST;
-
-  let webpackDevServer = new WebServer(WEBPACK_HOST, WEBPACK_PORT);
+  let webpackDevServer = new WebServer(WEBPACK_DEV_HOST, WEBPACK_DEV_PORT);
   webpackDevServer.start();
 
   // Send all remaining request to the dev server
   app.all('/static/*', (req, res) => {
     proxy.web(req, res, {
-      target: `http://${WEBPACK_HOST}:${WEBPACK_PORT}/`
+      target: `http://${WEBPACK_DEV_HOST}:${WEBPACK_DEV_PORT}/`
     })
   });
 }
+
+// Setup and start API
+let apiServer: ApiServer = new ApiServer(API_HOST, API_PORT);
+app.use('/api', (req, res) => {
+  proxy.web(req, res, {
+    target: `http://${API_HOST}:${API_PORT}`
+  })
+});
+apiServer.start();
 
 // Provide static files
 app.use('/static', express.static(PUBLIC_PATH));
