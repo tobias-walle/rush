@@ -10,6 +10,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { DEVELOPMENT, RENDER_CSS_ON_CLIENT, DISABLE_SERVER_SIDE_RENDERING } from "./utils/config";
 import { routes } from "./routes";
 import { reducer } from "./modules/reducer";
+import { syncHistoryWithStore } from 'react-router-redux';
 
 // Load initial state
 const initialState = window['__data'];
@@ -23,6 +24,8 @@ if (DEVELOPMENT) {
 } else {
   store = createStore(reducer, initialState);
 }
+
+syncHistoryWithStore(browserHistory, store);
 
 // Render the app
 let AppComponent = () => (

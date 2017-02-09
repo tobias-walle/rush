@@ -16,6 +16,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { RENDER_CSS_ON_CLIENT, DEVELOPMENT, DISABLE_SERVER_SIDE_RENDERING } from "./utils/config";
 import { HtmlComponent } from "./components/html-component";
 import { reducer } from "./modules/reducer";
+import { syncHistoryWithStore } from 'react-router-redux';
 
 const HOST = (process.env.HOST || 'localhost');
 const PORT = process.env.PORT !== undefined ? process.env.PORT : 3000;
@@ -67,6 +68,8 @@ app.use((req, res) => {
 
       // Create history
       let history = createMemoryHistory();
+
+      syncHistoryWithStore(history, store);
 
       if (DISABLE_SERVER_SIDE_RENDERING) {
         // Just provider Html without SSR
