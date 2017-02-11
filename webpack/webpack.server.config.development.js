@@ -1,6 +1,7 @@
 let webpack = require('webpack');
 let fs = require('fs');
 let path = require('path');
+const { CheckerPlugin } = require('awesome-typescript-loader');
 
 let rootDir = path.resolve(__dirname, '..');
 
@@ -17,7 +18,6 @@ module.exports = {
       './src/server.tsx',
     ]
   },
-  debug: true,
   output: {
     filename: 'server.js',
     path: rootDir + '/dist/server/',
@@ -27,24 +27,33 @@ module.exports = {
 
   resolve: {
     extensions: [
-      '', '.webpack.js', '.web.js', '.ts', '.tsx', '.js'
+      '.webpack.js', '.web.js', '.ts', '.tsx', '.js'
     ]
   },
 
   module: {
-    loaders: [
+    rules: [
       {test: /\.tsx?$/, loaders: ['awesome-typescript-loader']},
       {test: /\.scss?$/, loaders: [
         'isomorphic-style-loader',
         'css-loader?sourceMap&modules&localIdentName=[name]_[local]_[hash:base64:5]',
         'postcss-loader',
         'sass-loader?sourceMap'
-      ]}
+      ]},
+      {
+        test: /\.js$/,
+        loader: 'source-map-loader',
+        enforce: 'pre'
+      }
     ],
-    preLoaders: [
-      {test: /\.js$/, loader: 'source-map-loader'}
-    ]
   },
+
+  plugins: [
+    new CheckerPlugin(),
+    new webpack.LoaderOptionsPlugin({
+      debug: true
+    })
+  ],
 
   externals: nodeModules
 };

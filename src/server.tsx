@@ -114,7 +114,7 @@ app.use((req, res) => {
             <WithStylesContext onInsertCss={styles => css.push(styles._getCss())}>
               <OldAppComponent/>
             </WithStylesContext>
-          )
+          );
         }
 
         // Send the result

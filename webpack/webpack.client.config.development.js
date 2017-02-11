@@ -1,6 +1,7 @@
 let webpack = require('webpack');
 let CopyWebpackPlugin = require('copy-webpack-plugin');
 let path = require('path');
+const {CheckerPlugin} = require('awesome-typescript-loader');
 
 let rootDir = path.resolve(__dirname, '..');
 
@@ -14,7 +15,6 @@ module.exports = {
       './src/client.tsx',
     ]
   },
-  debug: true,
   output: {
     filename: 'bundle.js',
     path: rootDir + '/dist/client/',
@@ -25,34 +25,40 @@ module.exports = {
 
   resolve: {
     extensions: [
-      '', '.webpack.js', '.web.js', '.ts', '.tsx', '.js'
+      '.webpack.js', '.web.js', '.ts', '.tsx', '.js'
     ]
   },
 
   module: {
-    loaders: [
-      {test: /\.tsx?$/, loaders: ['react-hot-loader/webpack', 'awesome-typescript-loader']},
+    rules: [
+      {
+        test: /\.tsx?$/, loaders: ['react-hot-loader/webpack', 'awesome-typescript-loader']
+      },
       {
         test: /\.scss?$/, loaders: [
         'isomorphic-style-loader',
         'css-loader?sourceMap&modules&localIdentName=[name]_[local]_[hash:base64:5]',
         'postcss-loader',
-        'sass-loader?sourceMap'
-      ]
+        'sass-loader?sourceMap']
+      },
+      {
+        test: /\.js$/,
+        loader: 'source-map-loader',
+        enforce: 'pre'
       }
     ],
-
-    preLoaders: [
-      {test: /\.js$/, loader: 'source-map-loader'}
-    ]
   },
 
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
+    new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'vendor.bundle.js'}),
     new CopyWebpackPlugin([
       {from: 'src/assets', to: 'assets'}
     ]),
     new webpack.HotModuleReplacementPlugin(),
+    new CheckerPlugin(),
+    new webpack.LoaderOptionsPlugin({
+      debug: true
+    })
   ],
 };
 

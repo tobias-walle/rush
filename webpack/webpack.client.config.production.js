@@ -1,6 +1,7 @@
 let webpack = require('webpack');
 let CopyWebpackPlugin = require('copy-webpack-plugin');
 let path = require('path');
+const { CheckerPlugin } = require('awesome-typescript-loader');
 
 let rootDir = path.resolve(__dirname, '..');
 
@@ -22,12 +23,12 @@ module.exports = {
 
   resolve: {
     extensions: [
-      '', '.webpack.js', '.web.js', '.ts', '.tsx', '.js'
+      '.webpack.js', '.web.js', '.ts', '.tsx', '.js'
     ]
   },
 
   module: {
-    loaders: [
+    rules: [
       {test: /\.tsx?$/, loaders: ['awesome-typescript-loader']},
       {
         test: /\.scss?$/, loaders: [
@@ -41,15 +42,14 @@ module.exports = {
   },
 
   plugins: [
+    new CheckerPlugin(),
     new CopyWebpackPlugin([
       {from: 'src/assets', to: 'assets'}
     ]),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
     }),
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.bundle.js'}),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false

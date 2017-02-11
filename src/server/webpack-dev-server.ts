@@ -23,12 +23,12 @@ export class WebServer {
         let compiler: any = Webpack(webpackConfig);
 
         compiler.plugin('compile', () => {
-            console.log('Bundling...');
+            console.log('Bundling client...');
             bundleStart = Date.now();
         });
 
         compiler.plugin('done', () => {
-            console.log(`Bundled in ${Date.now() - bundleStart} ms!`);
+            console.log(`Bundled client in ${Date.now() - bundleStart} ms!`);
         });
 
         this.bundler = new WebpackDevServer(compiler, {

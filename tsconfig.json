@@ -1,12 +1,20 @@
 {
   "compilerOptions": {
     "outDir": "./dist/server",
-    "lib": ["ES5", "dom"],
+    "lib": [
+      "ES5",
+      "dom"
+    ],
     "sourceMap": true,
     "module": "commonjs",
     "target": "es5",
     "jsx": "react",
     "experimentalDecorators": true
+  },
+  "awesomeTypescriptLoaderOptions": {
+    "silent": true,
+    "forkChecker": true,
+    "useWebpackText": true
   },
   "include": [
     "./src/*"

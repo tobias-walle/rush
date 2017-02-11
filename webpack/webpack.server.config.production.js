@@ -1,6 +1,7 @@
 let webpack = require('webpack');
 let fs = require('fs');
 let path = require('path');
+const { CheckerPlugin } = require('awesome-typescript-loader');
 
 let rootDir = path.resolve(__dirname, '..');
 
@@ -26,12 +27,12 @@ module.exports = {
 
   resolve: {
     extensions: [
-      '', '.webpack.js', '.web.js', '.ts', '.tsx', '.js'
+      '.webpack.js', '.web.js', '.ts', '.tsx', '.js'
     ]
   },
 
   module: {
-    loaders: [
+    rules: [
       {test: /\.tsx?$/, loaders: ['awesome-typescript-loader']},
       {test: /\.scss?$/, loaders: [
         'isomorphic-style-loader',
@@ -39,9 +40,6 @@ module.exports = {
         'postcss-loader',
         'sass-loader?sourceMap'
       ]}
-    ],
-    preLoaders: [
-      {test: /\.js$/, loader: 'source-map-loader'}
     ]
   },
 
@@ -51,5 +49,6 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
     }),
+    new CheckerPlugin(),
   ]
 };
