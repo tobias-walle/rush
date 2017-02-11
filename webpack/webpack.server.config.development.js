@@ -2,6 +2,8 @@ let webpack = require('webpack');
 let fs = require('fs');
 let path = require('path');
 const { CheckerPlugin } = require('awesome-typescript-loader');
+let CopyWebpackPlugin = require('copy-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 let rootDir = path.resolve(__dirname, '..');
 
@@ -49,10 +51,17 @@ module.exports = {
   },
 
   plugins: [
+    new CleanWebpackPlugin(['server'], {
+      root: path.resolve(__dirname, '..', 'dist'),
+    }),
     new CheckerPlugin(),
+    new CopyWebpackPlugin([
+      {from: 'src/assets', to: 'assets'}
+    ]),
+    new webpack.HotModuleReplacementPlugin(),
     new webpack.LoaderOptionsPlugin({
       debug: true
-    })
+    }),
   ],
 
   externals: nodeModules

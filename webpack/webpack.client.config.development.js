@@ -1,19 +1,22 @@
 let webpack = require('webpack');
-let CopyWebpackPlugin = require('copy-webpack-plugin');
 let path = require('path');
 const {CheckerPlugin} = require('awesome-typescript-loader');
+let CopyWebpackPlugin = require('copy-webpack-plugin');
+let CleanWebpackPlugin = require('clean-webpack-plugin');
 
 let rootDir = path.resolve(__dirname, '..');
 
 module.exports = {
   entry: {
+    app: [
+      'react-hot-loader/patch',
+      './src/client.tsx',
+    ],
     vendor: [
+      'react-hot-loader/patch',
       'react',
       'react-dom'
     ],
-    app: [
-      './src/client.tsx',
-    ]
   },
   output: {
     filename: 'bundle.js',
@@ -50,6 +53,10 @@ module.exports = {
   },
 
   plugins: [
+    new CleanWebpackPlugin(['client'], {
+      root: path.resolve(__dirname, '..', 'dist'),
+    }),
+    new webpack.NamedModulesPlugin(),
     new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'vendor.bundle.js'}),
     new CopyWebpackPlugin([
       {from: 'src/assets', to: 'assets'}
@@ -61,4 +68,3 @@ module.exports = {
     })
   ],
 };
-

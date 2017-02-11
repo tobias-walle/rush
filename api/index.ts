@@ -1,8 +1,10 @@
 import * as express from 'express';
 import * as morgan from "morgan";
+import { Server } from "http";
 
 export class ApiServer {
   private app: express.Application;
+  private server: Server;
 
   /**
    * Creates the API Server.
@@ -40,19 +42,28 @@ export class ApiServer {
     this.app.get('/hello', (req, res) => {
       res.send('World');
     });
-
   }
 
   /**
    * Start the API Server.
-   */i
+   */
   start() {
     if (this.port !== undefined && this.port !== null) {
-      this.app.listen(this.port, () => {
+      this.server = this.app.listen(this.port, () => {
         console.log(`Api Server is running on ${this.host}:${this.port}/`)
       });
     } else {
       throw Error('The port of the API Server is not defined.')
+    }
+  }
+
+  /**
+   * Stop the API Server
+   */
+  stop() {
+    console.log('Stop API server');
+    if (this.server) {
+      this.server.close();
     }
   }
 }

@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import { BlogState, blogState } from "./blog/blog.redux";
 import { reducer as formReducer } from 'redux-form';
 import { routerReducer } from 'react-router-redux';
+import { combineEpics } from "redux-observable";
 
 // Combine all modules to the global state interface
 export interface GlobalState {
@@ -17,3 +18,6 @@ export const reducer = combineReducers({
   routing: routerReducer,
   blogState,
 });
+
+// Combine the epics (redux-observables)
+export const epic = combineEpics();

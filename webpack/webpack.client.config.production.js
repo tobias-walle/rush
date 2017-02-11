@@ -1,7 +1,8 @@
 let webpack = require('webpack');
-let CopyWebpackPlugin = require('copy-webpack-plugin');
 let path = require('path');
 const { CheckerPlugin } = require('awesome-typescript-loader');
+let CopyWebpackPlugin = require('copy-webpack-plugin');
+let CleanWebpackPlugin = require('clean-webpack-plugin');
 
 let rootDir = path.resolve(__dirname, '..');
 
@@ -42,6 +43,9 @@ module.exports = {
   },
 
   plugins: [
+    new CleanWebpackPlugin(['client'], {
+      root: path.resolve(__dirname, '..', 'dist'),
+    }),
     new CheckerPlugin(),
     new CopyWebpackPlugin([
       {from: 'src/assets', to: 'assets'}

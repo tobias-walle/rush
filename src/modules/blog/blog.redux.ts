@@ -1,6 +1,5 @@
 import { Article } from "./models/article";
 import { Module } from "redux-typed-modules";
-import { GlobalState } from "../reducer";
 
 export interface BlogState {
   articles: Article[]
@@ -18,6 +17,8 @@ const module = new Module({
  * Add an article to the state
  */
 export const addArticle = module.createAction({
+  type: 'BLOG/ADD_ARTICLE',
+
   action: (article: Article) => {
     return {
       article: article
@@ -35,6 +36,8 @@ export const addArticle = module.createAction({
  * Remove an article from the state
  */
 export const removeArticle = module.createAction({
+  type: 'BLOG/REMOVE_ARTICLE',
+
   action: (id: string) => {
     return {
       id
