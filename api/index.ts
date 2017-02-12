@@ -1,6 +1,8 @@
 import * as express from 'express';
 import * as morgan from "morgan";
+import * as bodyParser from "body-parser";
 import { Server } from "http";
+import { blogRouter } from "./modules/blog/blog.routes";
 
 export class ApiServer {
   private app: express.Application;
@@ -32,6 +34,7 @@ export class ApiServer {
    * Setup the middleware
    */
   private setupMiddleware() {
+    this.app.use(bodyParser.json());
     this.app.use(morgan('dev'));
   }
 
@@ -39,9 +42,7 @@ export class ApiServer {
    * Setup the api routes.
    */
   private setupRoutes() {
-    this.app.get('/hello', (req, res) => {
-      res.send('World');
-    });
+    this.app.use('/blog/', blogRouter);
   }
 
   /**
