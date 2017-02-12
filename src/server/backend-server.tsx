@@ -14,7 +14,6 @@ import { syncHistoryWithStore } from 'react-router-redux';
 
 import { DEVELOPMENT, DISABLE_SERVER_SIDE_RENDERING, RENDER_CSS_ON_CLIENT } from "../utils/config";
 import { ApiServer } from "../../api/index";
-import { AppContainer } from 'react-hot-loader';
 import { getStoreMiddleware } from "../utils/redux-helper";
 import { reducer } from "../modules/root";
 import { HtmlComponent } from "../components/html-component";
@@ -121,11 +120,9 @@ export class BackendServer {
           } else {
             // Prepare app
             let RootComponent = () => (
-                <AppContainer>
-                  <AppComponent store={store}
-                                history={history}
-                  />
-                </AppContainer>
+                <AppComponent store={store}
+                              history={history}
+                />
               )
               ;
 
@@ -191,9 +188,3 @@ export class BackendServer {
   }
 }
 
-if (DEVELOPMENT && module['hot']) {
-  let hot = module['hot'];
-  hot.accept('../styles/main.scss', () => {
-    mainStyles = require('../styles/main.scss');
-  });
-}

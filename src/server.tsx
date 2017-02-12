@@ -4,15 +4,6 @@ import { AppContainer } from "react-hot-loader";
 import { DEVELOPMENT } from "./utils/config";
 import { BackendServer, BackendServerOptions } from "./server/backend-server";
 
-// Require the backend server again to support hot reloading
-let BackendServerConstructor = require("./server/backend-server.tsx").BackendServer;
-
-// Check if this file is executed as a hot reload
-let isHotReload = false;
-if (module['hot'] && module['hot']['data']) {
-  isHotReload = module['hot'].data['reloading'];
-}
-
 // Server Config
 const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || 3000;
@@ -35,46 +26,64 @@ let options: BackendServerOptions = {
   api_host: API_HOST,
   api_port: API_PORT,
 };
-if (isHotReload) {
-  options = module['hot']['data']['options'];
-  let webpackDevServer = module['hot']['data']['webpackDevServer'];
-  // Update class
-  server = new BackendServerConstructor(options);
-  server.webpackDevServer = webpackDevServer;
-}
-if (!server) {
-  server = new BackendServerConstructor(options);
-  if (DEVELOPMENT) {
-    server.startWebpackDevServer();
-  }
+server = new BackendServer(options);
+if (DEVELOPMENT) {
+  server.startWebpackDevServer();
 }
 
 server.startApiServer();
 server.start();
 
 
-// -- HOT RELOAD SETUP -- THIS IS STILL EXPERIMENTAL AND MAY HAVE SOME BUGS
-if (DEVELOPMENT && module['hot']) {
+console.log('test');
+// -- HOT RELOAD SETUP -- THIS IS STILL EXPERIMENTAL AND MAY HAVE SOME BUGS WHICH REQUIRES A FULL RELOAD
+if (DEVELOPMENT && module && module['hot']) {
   const hot = module['hot'];
-  hot.accept();
-  hot.dispose((data) => {
-    BackendServerConstructor = require("./server/backend-server.tsx").BackendServer;
-    server.stopApiServer();
-    server.stop();
-    data['options'] = server.options;
-    data['webpackDevServer'] = server.webpackDevServer;
-    data['reloading'] = true;
+
+  // Check for changes in backend server
+  hot.accept(require.resolve('./server/backend-server.tsx'), () => {
+    console.log('[HMR] Reload Backend Server');
+    try {
+      // Reload backend server
+      let NewBackendServer = require("./server/backend-server.tsx").BackendServer;
+
+      // Create a new server
+      let newServer = new NewBackendServer(options);
+
+      // Stop old server
+      server.stopApiServer();
+      server.stop();
+
+      // Copy webpackserver to new server
+      newServer.webpackDevServer = server.webpackDevServer;
+
+      // Set new server as the primary server
+      server = newServer;
+
+      // Start server again
+      server.startApiServer();
+      server.start();
+
+    } catch (err) {
+      console.error('Hot Reload failed:', err);
+    }
   });
+
+  // Check for changes
   Observable.interval(1000)
     .filter(() => hot.status() === 'idle')
     .subscribe(() => {
-      hot.check((err, outdatedModules) => {
-        if (err) {
-          console.error(err);
-        } else {
-          console.log(outdatedModules);
+        try {
+          hot.check({
+            ignoreDeclined: true,
+            ignoreUnaccepted: true,
+          }).then((result) => {
+          })
+            .catch((err) => console.error('[HMR Check Promise]', err));
+        } catch (err) {
+          console.error('[HMR Check]', err);
         }
-      })
-    });
+      }
+    );
 }
 

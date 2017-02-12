@@ -15,7 +15,7 @@ export class WebServer {
     let webpackConfig = require('../../webpack/webpack.client.config.development.js');
     webpackConfig.entry.app.unshift(
       `webpack-dev-server/client?${url}`,
-      'webpack/hot/only-dev-server',
+      'webpack/hot/dev-server',
     );
 
     this.host = host;
