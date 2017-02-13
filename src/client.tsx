@@ -1,30 +1,36 @@
+import 'rxjs';
 import * as React from 'react';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { render } from 'react-dom'
 import { createStore } from 'redux';
 import { browserHistory } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
 
 import { WithStylesContext } from "isomorphic-style-loader-utils";
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
-
-import { DEVELOPMENT, RENDER_CSS_ON_CLIENT, DISABLE_SERVER_SIDE_RENDERING } from "./utils/config";
-import { reducer } from "./modules/root";
-import { syncHistoryWithStore } from 'react-router-redux';
-import { getStoreMiddleware } from "./utils/redux-helper";
 import { AppContainer } from 'react-hot-loader';
 
+import { DEVELOPMENT, RENDER_CSS_ON_CLIENT, DISABLE_SERVER_SIDE_RENDERING } from "./utils/config";
+
 // Load initial state
-const initialState = window['__data'];
 let store: any;
-let middleware = getStoreMiddleware();
-if (DEVELOPMENT) {
-  // If not production, activate redux debug tools
-  middleware = composeWithDevTools(middleware);
-}
+const setupStore = () => {
+  // Imports
+  const initialState = window['__data'];
+  const reducer = require('./modules/root').reducer;
+  const getStoreMiddleware = require('./utils/redux-helper').getStoreMiddleware;
 
-store = createStore(reducer, initialState, middleware);
+  let middleware = getStoreMiddleware();
+  if (DEVELOPMENT) {
+    // If not production, activate redux debug tools
+    middleware = composeWithDevTools(middleware);
+  }
 
-syncHistoryWithStore(browserHistory, store);
+  store = createStore(reducer, initialState, middleware);
+
+  syncHistoryWithStore(browserHistory, store);
+};
+setupStore();
 
 // Render the app
 const getRootComponent = () => {
@@ -59,7 +65,8 @@ render(
 );
 
 if (module['hot']) {
-  module['hot'].accept('./components/app-component.tsx', () => {
+
+  const reRenderApp = () => {
     let NextRootComponent = getRootComponent();
 
     render((
@@ -67,5 +74,14 @@ if (module['hot']) {
         <NextRootComponent />
       </AppContainer>
     ), document.getElementById('container'));
-  })
+  };
+
+  module['hot'].accept('./components/app-component.tsx', () => {
+    reRenderApp();
+  });
+
+  module['hot'].accept('./modules/root', () => {
+    setupStore();
+    reRenderApp();
+  });
 }
