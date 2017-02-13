@@ -29,7 +29,6 @@ blogRouter.get('/articles/:id', (req, res) => {
 // Create an article
 blogRouter.put('/articles', (req, res) => {
   let article = req.body;
-  console.log(article);
   if (article && article.id) {
     storage.addArticle(article);
     res.status(201).send();
