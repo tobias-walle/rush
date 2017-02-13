@@ -4,10 +4,16 @@ import { ArticleListItemComponent } from "./article-list-item.component";
 
 
 export interface ArticleListProps {
-  articles: Article[]
+  articles?: Article[],
+  fetchArticles?: () => void,
 }
 
 export class ArticleListComponent extends React.Component<ArticleListProps, any> {
+
+  componentDidMount() {
+    this.props.fetchArticles();
+  }
+
   public render(): JSX.Element {
     let articles = this.props.articles;
     return (

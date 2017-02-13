@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { BlogState, blogState } from "./blog/blog.redux";
+import { BlogState, blogState, blogEpics } from "./blog/blog.redux";
 import { reducer as formReducer } from 'redux-form';
 import { routerReducer } from 'react-router-redux';
 import { combineEpics } from "redux-observable";
@@ -20,4 +20,6 @@ export const reducer = combineReducers({
 });
 
 // Combine the epics (redux-observables)
-export const epic = combineEpics();
+export const epic = combineEpics(
+  blogEpics,
+);
