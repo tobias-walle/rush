@@ -1,6 +1,8 @@
 @import "../../../styles/config/colors";
 
 .article-list-item {
+  position: relative;
+  overflow: hidden;
   border: none;
   background: $color-background-light-1;
   padding: 1.5rem;
@@ -17,5 +19,33 @@
 
   p {
     margin-bottom: 0;
+  }
+
+  &:not(:hover) {
+    .button-delete-article {
+      width: 0;
+    }
+  }
+  &:hover {
+    .button-delete-article {
+      width: 3em;
+    }
+  }
+}
+
+.button-delete-article {
+  transition: 300ms width;
+  cursor: pointer;
+  border: none;
+  color: $color-text-primary-light;
+  font-size: 1.3em;
+  background: $color-danger;
+  position: absolute;
+  padding: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  &:hover {
+    background: $color-danger-light;
   }
 }

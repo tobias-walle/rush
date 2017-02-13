@@ -110,7 +110,7 @@ export const removeArticle = module.createAction({
 export const fetchArticles = module.createAction({
   type: 'BLOG/FETCH_ARTICLES',
 
-  action: (a?: any, b?: any) => {
+  action: () => {
     return {}
   },
 
@@ -143,10 +143,6 @@ export const fetchArticlesCompleted = module.createAction({
   }
 });
 
-
-export const blogState = module.createReducer();
-
-
 const fetchArticlesEpic = action$ =>
   action$.ofType('BLOG/FETCH_ARTICLES')
     .mergeMap(action =>
@@ -157,8 +153,72 @@ const fetchArticlesEpic = action$ =>
         ))
     );
 
+
+const DELETE_ARTICLE = 'BLOG/DELETE_ARTICLE';
+/**
+ * Delete article
+ */
+export const deleteArticle = module.createAction({
+  type: DELETE_ARTICLE,
+
+  action: (article: Article) => {
+    return {
+      article
+    }
+  },
+
+  reducer: (state, action) => {
+    return {
+      ...state
+    }
+  }
+});
+
+export const deleteArticleCompleted = module.createAction({
+  type: 'BLOG/DELETE_ARTICLE_COMPLETED',
+
+  action: (article: Article, error: any) => {
+    return {
+      article,
+      error
+    }
+  },
+
+  reducer: (state, action) => {
+    let {article, error} = action;
+    let articles = state.articles;
+    if (!error) {
+      if (article && article.id) {
+        articles = articles.filter((other) => article.id !== other.id);
+      } else {
+        console.error('Cannot delete article:', article)
+      }
+    } else {
+      console.error(error);
+    }
+    return {
+      ...state,
+      articles
+    }
+  }
+});
+
+const deleteArticleEpic = $action =>
+    $action.ofType(DELETE_ARTICLE)
+      .mergeMap((action) =>
+        ajax({
+          method: 'DELETE',
+          url: `/api/blog/articles/${action.article.id}`
+        })
+          .map((response) => deleteArticleCompleted(action.article, null))
+          .catch((error) => Observable.of(deleteArticleCompleted(null, error)))
+      );
+
+export const blogState = module.createReducer();
+
 export const blogEpics = combineEpics(
   addArticleEpic,
-  fetchArticlesEpic
+  fetchArticlesEpic,
+  deleteArticleEpic,
 );
 
