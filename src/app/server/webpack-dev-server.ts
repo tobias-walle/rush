@@ -12,7 +12,7 @@ export class WebServer {
 
   constructor(host: string, port: number) {
     let url = this.url = `http://${host}:${port}`;
-    let webpackConfig = require('../../webpack/webpack.client.config.development.js');
+    let webpackConfig = require('../../../webpack/webpack.client.config.development.js');
     webpackConfig.entry.app.unshift(
       `webpack-dev-server/client?${url}`,
       'webpack/hot/dev-server',

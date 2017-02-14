@@ -10,7 +10,7 @@ module.exports = {
   entry: {
     app: [
       'react-hot-loader/patch',
-      './src/client.tsx',
+      './src/app/client.tsx',
     ],
     vendor: [
       'react-hot-loader/patch',
@@ -59,7 +59,7 @@ module.exports = {
     new webpack.NamedModulesPlugin(),
     new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'vendor.bundle.js'}),
     new CopyWebpackPlugin([
-      {from: 'src/assets', to: 'assets'}
+      {from: 'src/app/assets', to: 'assets'}
     ]),
     new webpack.HotModuleReplacementPlugin(),
     new CheckerPlugin(),

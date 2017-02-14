@@ -16,7 +16,7 @@ module.exports = {
   target: 'node',
   entry: {
     app: [
-      './src/server.tsx',
+      './src/app/server.tsx',
     ]
   },
   output: {

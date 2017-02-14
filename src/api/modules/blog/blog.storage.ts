@@ -1,4 +1,4 @@
-import { Article } from "../../../src/modules/blog/models/article";
+import { Article } from "../../../app/modules/blog/models/article";
 
 /**
  * A simple class to store the articles in memory. Don't use this in production.

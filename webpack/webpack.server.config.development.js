@@ -17,7 +17,7 @@ module.exports = {
   target: 'node',
   entry: {
     app: [
-      './src/server.tsx',
+      './src/app/server.tsx',
     ]
   },
   output: {
@@ -56,7 +56,7 @@ module.exports = {
     }),
     new CheckerPlugin(),
     new CopyWebpackPlugin([
-      {from: 'src/assets', to: 'assets'}
+      {from: 'src/app/assets', to: 'assets'}
     ]),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.LoaderOptionsPlugin({

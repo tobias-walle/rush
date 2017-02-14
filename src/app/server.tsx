@@ -35,7 +35,6 @@ server.startApiServer();
 server.start();
 
 
-console.log('test');
 // -- HOT RELOAD SETUP -- THIS IS STILL EXPERIMENTAL AND MAY HAVE SOME BUGS WHICH REQUIRES A FULL RELOAD
 if (DEVELOPMENT && module && module['hot']) {
   const hot = module['hot'];
