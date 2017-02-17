@@ -16,8 +16,8 @@ import { DEVELOPMENT, DISABLE_SERVER_SIDE_RENDERING, RENDER_CSS_ON_CLIENT } from
 import { ApiServer } from "../../api/index";
 import { getStoreMiddleware } from "../utils/redux-helper";
 import { reducer } from "../modules/root";
-import { HtmlComponent } from "../components/html-component";
-import { AppComponent } from "../components/app-component";
+import { HtmlComponent } from "../components/html.component";
+import { AppComponent } from "../components/app.component";
 
 // Load main styles as string
 let mainStyles = require('../styles/main.scss');

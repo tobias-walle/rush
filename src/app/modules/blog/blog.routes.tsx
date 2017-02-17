@@ -5,7 +5,7 @@ import { BlogComponent } from "./blog.component";
 import { IndexRoute } from "react-router";
 import { ArticleListContainer } from "./container/article-list.container";
 import { ArticleDetailContainer } from "./container/article-detail.container";
-import { ArticleFormContainer } from "./container/article-form-container";
+import { ArticleFormContainer } from "./container/article-form.container";
 
 export const BlogRoutes = () => (
   <div>

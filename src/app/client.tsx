@@ -36,7 +36,7 @@ setupStore();
 
 // Render the app
 const getRootComponent = () => {
-  let AppComponent = require('./components/app-component').AppComponent;
+  let AppComponent = require('./components/app.component.tsx').AppComponent;
 
   let RootComponent = () => (
     <AppComponent history={history}
@@ -78,7 +78,7 @@ if (module['hot']) {
     ), document.getElementById('container'));
   };
 
-  module['hot'].accept('./components/app-component.tsx', () => {
+  module['hot'].accept('./components/app.component.tsx', () => {
     reRenderApp();
   });
 
