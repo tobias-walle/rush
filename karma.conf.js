@@ -4,13 +4,15 @@ module.exports = (config) => {
   config.set({
     plugins: [
       require('karma-webpack'),
-      require('karma-tap'),
+      require('karma-jasmine'),
       require('karma-chrome-launcher'),
     ],
 
     basePath: '',
-    frameworks: ['tap'],
-    files: ['**/*.spec.ts*'],
+    frameworks: ['jasmine'],
+    files: [
+      '**/*.spec.ts*'
+    ],
 
     preprocessors: {
       '**/*.ts*': ['webpack'],
