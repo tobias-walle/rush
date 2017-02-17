@@ -102,13 +102,12 @@ export class BackendServer {
           // Redirect on redirection
           res.redirect(302, nextLocation.pathname + nextLocation.search);
         } else if (nextState) {
+          // Create history
+          let history = createMemoryHistory();
 
           // Setup state
           let initialState = {};
-          let store = createStore(reducer, initialState, getStoreMiddleware());
-
-          // Create history
-          let history = createMemoryHistory();
+          let store = createStore(reducer, initialState, getStoreMiddleware(history));
 
           syncHistoryWithStore(history, store);
 

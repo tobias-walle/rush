@@ -6,11 +6,17 @@ import { Observable } from "rxjs";
 
 export interface BlogState {
   articles: Article[],
-  articleAddError: any
-  articleDeleteError: any
-  articlesDownloading: boolean
-  articlesDownloadSuccess: boolean
-  articlesDownloadError: any
+  selectedArticle: Article,
+
+  getArticleDownloading: boolean,
+  getArticleSuccess: string,
+  getArticleError: string,
+
+  articleAddError: string,
+  articleDeleteError: string,
+  articlesDownloading: boolean,
+  articlesDownloadSuccess: boolean,
+  articlesDownloadError: string,
 }
 
 const module = new Module({
@@ -19,6 +25,67 @@ const module = new Module({
   }
 });
 
+// Get article
+const GET_ARTICLE = 'BLOG/GET_ARTICLE';
+export const getArticle = module.createAction({
+  type: GET_ARTICLE,
+
+  action: (articleId: string) => {
+    return {
+      articleId
+    }
+  },
+
+  reducer: (state, action) => {
+    return {
+      ...state,
+      selectedArticle: null,
+      getArticleSuccess: false,
+      getArticleError: null,
+    }
+  }
+});
+
+const getArticleCompleted = module.createAction({
+  type: 'BLOG/GET_ARTICLE_COMPLETED',
+
+  action: (article: Article, error: string) => {
+    return {
+      article,
+      error
+    }
+  },
+
+  reducer: (state, action) => {
+    let { article, error } = action;
+    if (error) {
+      console.error(error);
+      article = null;
+    }
+    return {
+      ...state,
+      selectedArticle: article,
+      getArticleSuccess: !error,
+      getArticleError: error,
+    }
+  }
+});
+
+const getArticleEpic = action$ =>
+  action$.ofType(GET_ARTICLE)
+    .mergeMap(action =>
+      ajax(`/api/blog/articles/${action.articleId}`)
+        .map(response => {
+          if (response.status === 200) {
+            return getArticleCompleted(response.response, null);
+          } else {
+            return getArticleCompleted(null, response.responseText);
+          }
+        })
+        .catch(error => Observable.of(getArticleCompleted(null, error.toString())))
+    );
+
+// Add article
 const ADD_ARTICLE = 'BLOG/ADD_ARTICLE';
 export const addArticle = module.createAction({
   type: ADD_ARTICLE,
@@ -36,7 +103,7 @@ export const addArticle = module.createAction({
   }
 });
 
-export const addArticleCompleted = module.createAction({
+const addArticleCompleted = module.createAction({
   type: 'BLOG/ADD_ARTICLE_COMPLETED',
 
   action: (article: Article, error: any) => {
@@ -84,31 +151,10 @@ const addArticleEpic = action$ =>
         ))
     );
 
-/**
- * Remove an article
- */
-export const removeArticle = module.createAction({
-  type: 'BLOG/REMOVE_ARTICLE',
-
-  action: (id: string) => {
-    return {
-      id
-    }
-  },
-
-  reducer: (state, action) => {
-    return {
-      ...state,
-      articles: state.articles.filter((article: Article) => article.id !== action.id)
-    }
-  }
-});
-
-/**
- * Fetch articles from api
- */
+// Fetch articles
+const FETCH_ARTICLES = 'BLOG/FETCH_ARTICLES';
 export const fetchArticles = module.createAction({
-  type: 'BLOG/FETCH_ARTICLES',
+  type: FETCH_ARTICLES,
 
   action: () => {
     return {}
@@ -122,7 +168,7 @@ export const fetchArticles = module.createAction({
   }
 });
 
-export const fetchArticlesCompleted = module.createAction({
+const fetchArticlesCompleted = module.createAction({
   type: 'BLOG/FETCH_ARTICLES_COMPLETED',
 
   action: (articles: Article[], error: any) => {
@@ -144,7 +190,7 @@ export const fetchArticlesCompleted = module.createAction({
 });
 
 const fetchArticlesEpic = action$ =>
-  action$.ofType('BLOG/FETCH_ARTICLES')
+  action$.ofType(FETCH_ARTICLES)
     .mergeMap(action =>
       ajax.get('/api/blog/articles')
         .map(response => fetchArticlesCompleted(response.response, null))
@@ -154,10 +200,8 @@ const fetchArticlesEpic = action$ =>
     );
 
 
+// Delete Article
 const DELETE_ARTICLE = 'BLOG/DELETE_ARTICLE';
-/**
- * Delete article
- */
 export const deleteArticle = module.createAction({
   type: DELETE_ARTICLE,
 
@@ -174,7 +218,7 @@ export const deleteArticle = module.createAction({
   }
 });
 
-export const deleteArticleCompleted = module.createAction({
+const deleteArticleCompleted = module.createAction({
   type: 'BLOG/DELETE_ARTICLE_COMPLETED',
 
   action: (article: Article, error: any) => {
@@ -214,9 +258,11 @@ const deleteArticleEpic = $action =>
           .catch((error) => Observable.of(deleteArticleCompleted(null, error)))
       );
 
+// Combine
 export const blogState = module.createReducer();
 
 export const blogEpics = combineEpics(
+  getArticleEpic,
   addArticleEpic,
   fetchArticlesEpic,
   deleteArticleEpic,

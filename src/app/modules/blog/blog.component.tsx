@@ -10,9 +10,7 @@ export class BlogComponent extends React.Component<BlogProps, any> {
   public render(): JSX.Element {
     return (
       <div>
-        <ArticleFormContainer/>
-        <h1>Articles</h1>
-        <ArticleListContainer/>
+        {this.props['children']}
       </div>
     )
   }

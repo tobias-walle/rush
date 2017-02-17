@@ -12,6 +12,8 @@ import { AppContainer } from 'react-hot-loader';
 
 import { DEVELOPMENT, RENDER_CSS_ON_CLIENT, DISABLE_SERVER_SIDE_RENDERING } from "./utils/config";
 
+const history = browserHistory;
+
 // Load initial state
 let store: any;
 const setupStore = () => {
@@ -20,7 +22,7 @@ const setupStore = () => {
   const reducer = require('./modules/root').reducer;
   const getStoreMiddleware = require('./utils/redux-helper').getStoreMiddleware;
 
-  let middleware = getStoreMiddleware();
+  let middleware = getStoreMiddleware(history);
   if (DEVELOPMENT) {
     // If not production, activate redux debug tools
     middleware = composeWithDevTools(middleware);
@@ -28,7 +30,7 @@ const setupStore = () => {
 
   store = createStore(reducer, initialState, middleware);
 
-  syncHistoryWithStore(browserHistory, store);
+  syncHistoryWithStore(history, store);
 };
 setupStore();
 
@@ -37,7 +39,7 @@ const getRootComponent = () => {
   let AppComponent = require('./components/app-component').AppComponent;
 
   let RootComponent = () => (
-    <AppComponent history={browserHistory}
+    <AppComponent history={history}
                   store={store}
     />
   );

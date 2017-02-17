@@ -5,7 +5,8 @@ import { fetchArticles, deleteArticle } from "../blog.redux";
 
 function mapStateToProps(state: GlobalState): ArticleListProps {
   return {
-    articles: state.blogState.articles
+    articles: state.blogState.articles,
+    articlesDownloaded: state.blogState.articlesDownloadSuccess
   }
 }
 
