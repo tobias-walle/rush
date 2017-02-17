@@ -17,7 +17,8 @@ import { ApiServer } from "../../api/index";
 import { getStoreMiddleware } from "../utils/redux-helper";
 import { reducer } from "../modules/root";
 import { HtmlComponent } from "../components/html.component";
-import { AppComponent } from "../components/app.component";
+import { RouterContext } from "react-router";
+import { Provider } from "react-redux";
 
 // Load main styles as string
 let mainStyles = require('../styles/main.scss');
@@ -119,11 +120,10 @@ export class BackendServer {
           } else {
             // Prepare app
             let RootComponent = () => (
-                <AppComponent store={store}
-                              history={history}
-                />
-              )
-              ;
+              <Provider store={store}>
+                <RouterContext {...nextState}/>
+              </Provider>
+            );
 
             // Load styles if configured
             let css: string[] = [];
@@ -136,8 +136,7 @@ export class BackendServer {
                 <WithStylesContext onInsertCss={styles => css.push(styles._getCss())}>
                   <OldAppComponent/>
                 </WithStylesContext>
-              )
-              ;
+              );
             }
 
             // Send the result
@@ -145,8 +144,7 @@ export class BackendServer {
               <HtmlComponent store={store}
                              component={<RootComponent/>}
                              styles={css}/>
-              )
-              ;
+            );
             res.status(200).send(html);
           }
         } else {
