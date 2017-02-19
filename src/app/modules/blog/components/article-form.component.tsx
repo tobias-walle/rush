@@ -7,7 +7,7 @@ export interface ArticleFormValues {
 }
 
 export interface ArticleFormProps extends FormProps<ArticleFormValues, {}, {}> {
-  onSubmit: (values: ArticleFormValues) => void
+  onSubmit?: (values: ArticleFormValues) => void
 }
 
 @reduxForm({
