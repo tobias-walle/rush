@@ -21,6 +21,8 @@ export class ArticleListComponent extends React.Component<ArticleListProps, any>
 
   public render(): JSX.Element {
     let {articles, deleteArticle} = this.props;
+    // Is undefined, set array to an empty array
+    articles = articles || [];
     return (
       <div>
         {
