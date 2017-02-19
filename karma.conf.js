@@ -23,9 +23,15 @@ module.exports = (config) => {
       module: webpackConfig.module,
       node: {
         fs: 'empty'
+      },
+      // Add this to resolve errors with enzyme
+      externals: {
+        'cheerio': 'window',
+        'react/addons': true, // important!!
+        'react/lib/ExecutionEnvironment': true,
+        'react/lib/ReactContext': true
       }
     },
-
     reporters: ['progress'],
     port: 9876,
     colors: true,
