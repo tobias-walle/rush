@@ -7,8 +7,8 @@ const ReactTestUtils = require('react-addons-test-utils');
 const mockStore = configureStore();
 
 
-describe('Component: App', () => {
-  it('should render AppComponent', () => {
+describe('AppComponent', () => {
+  it('should render', () => {
     const renderer = ReactTestUtils.createRenderer();
     const history = createMemoryHistory(['/']);
     const store: Store<any> = mockStore() as any;
