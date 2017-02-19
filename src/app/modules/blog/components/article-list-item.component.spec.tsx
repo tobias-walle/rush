@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { shallow, mount } from "enzyme";
+import { shallow } from "enzyme";
 import { Article } from "../models/article";
 import { ArticleListItemComponent } from "./article-list-item.component";
 
