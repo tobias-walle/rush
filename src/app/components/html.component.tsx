@@ -40,9 +40,9 @@ export class HtmlComponent extends React.Component<HtmlProps, any> {
       )
     } else {
       head = (
-        <Helmet>
+        <head>
           {stylesElement}
-        </Helmet>
+        </head>
       );
     }
 

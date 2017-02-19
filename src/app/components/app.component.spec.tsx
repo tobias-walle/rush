@@ -2,24 +2,21 @@ import * as React from 'react';
 import { AppComponent } from './app.component';
 import { createMemoryHistory } from 'react-router';
 import { Store } from "react-redux";
+import { shallow } from "enzyme";
 import configureStore from 'redux-mock-store';
-const ReactTestUtils = require('react-addons-test-utils');
 const mockStore = configureStore();
 
 
 describe('AppComponent', () => {
   it('should render', () => {
-    const renderer = ReactTestUtils.createRenderer();
     const history = createMemoryHistory(['/']);
     const store: Store<any> = mockStore() as any;
 
-    renderer.render(
+    expect(shallow(
       <AppComponent
         store={store}
-        history={history}/>);
-
-    let result = renderer.getRenderOutput();
-
-    expect(ReactTestUtils.isElement(result)).toBeTruthy();
+        history={history}/>)
+      .exists()
+    ).toBeTruthy();
   });
 });
