@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Article } from "../models/article";
 import { WithStyles } from "isomorphic-style-loader-utils";
+import { Link } from "react-router";
 const styles = require('./article-list-item.component.scss');
 
 export interface ArticleListItemProps {
@@ -14,8 +15,10 @@ export class ArticleListItemComponent extends React.Component<ArticleListItemPro
     let { article, onDeleteClicked }= this.props;
     return (
       <div className={styles['article-list-item']}>
-        <h2>{article.subject}</h2>
-        <p>{article.body}</p>
+        <Link className="no-style article-link" to={"/blog/article/" + article.id}>
+          <h2>{article.subject}</h2>
+          <p>{article.body}</p>
+        </Link>
 
         <input type="button" className={`button-delete ${styles['button-delete-article']}` } value="x"
                onClick={() =>

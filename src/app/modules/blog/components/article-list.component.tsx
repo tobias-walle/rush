@@ -14,7 +14,7 @@ export interface ArticleListProps {
 export class ArticleListComponent extends React.Component<ArticleListProps, any> {
 
   componentDidMount() {
-    if (!this.props.articlesDownloaded) {
+    if (!this.props.articlesDownloaded && this.props.fetchArticles) {
       this.props.fetchArticles();
     }
   }
@@ -27,12 +27,11 @@ export class ArticleListComponent extends React.Component<ArticleListProps, any>
       <div>
         {
           articles.map((article) => (
-            <Link className="no-style" key={article.id} to={"/blog/article/" + article.id}>
-              <ArticleListItemComponent
-                article={article}
-                onDeleteClicked={(article) => deleteArticle(article)}
-              />
-            </Link>
+            <ArticleListItemComponent
+              key={article.id}
+              article={article}
+              onDeleteClicked={(article) => deleteArticle(article)}
+            />
           ))
         }
       </div>
