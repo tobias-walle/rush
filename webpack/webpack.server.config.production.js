@@ -51,7 +51,8 @@ module.exports = {
       root: path.resolve(__dirname, '..', 'dist'),
     }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
+      'process.env.NODE_ENV': JSON.stringify('production'),
+      'process.env.IS_SERVER_SIDE': JSON.stringify(true),
     }),
     new CheckerPlugin(),
   ]

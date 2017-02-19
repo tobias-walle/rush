@@ -55,6 +55,9 @@ module.exports = {
       root: path.resolve(__dirname, '..', 'dist'),
     }),
     new CheckerPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.IS_SERVER_SIDE': JSON.stringify(true)
+    }),
     new CopyWebpackPlugin([
       {from: 'src/app/assets', to: 'assets'}
     ]),

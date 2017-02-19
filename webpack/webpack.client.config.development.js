@@ -58,6 +58,9 @@ module.exports = {
     }),
     new webpack.NamedModulesPlugin(),
     new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'vendor.bundle.js'}),
+    new webpack.DefinePlugin({
+      'process.env.IS_SERVER_SIDE': JSON.stringify(false)
+    }),
     new CopyWebpackPlugin([
       {from: 'src/app/assets', to: 'assets'}
     ]),

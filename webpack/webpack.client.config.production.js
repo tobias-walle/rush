@@ -51,7 +51,8 @@ module.exports = {
       {from: 'src/app/assets', to: 'assets'}
     ]),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
+      'process.env.NODE_ENV': JSON.stringify('production'),
+      'process.env.IS_SERVER_SIDE': JSON.stringify(false),
     }),
     new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.bundle.js'}),
     new webpack.optimize.UglifyJsPlugin({
