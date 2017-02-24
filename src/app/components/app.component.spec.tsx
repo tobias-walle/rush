@@ -9,7 +9,7 @@ const mockStore = configureStore();
 
 describe('AppComponent', () => {
   it('should render', () => {
-    const history = createMemoryHistory(['/']);
+    const history = createMemoryHistory();
     const store: Store<any> = mockStore() as any;
 
     expect(shallow(
