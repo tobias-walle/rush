@@ -2,7 +2,6 @@ import * as express from 'express';
 import * as morgan from "morgan";
 import * as bodyParser from "body-parser";
 import { Server } from "http";
-import { blogRouter } from "./modules/blog/blog.routes";
 
 export class ApiServer {
   private app: express.Application;
@@ -42,7 +41,9 @@ export class ApiServer {
    * Setup the api routes.
    */
   private setupRoutes() {
-    this.app.use('/blog/', blogRouter);
+    this.app.get('/', (req, res) => {
+      res.send(Math.random() > .5 ? 1 : 0);
+    });
   }
 
   /**
