@@ -1,0 +1,10 @@
+@import "download";
+
+@import "config/module";
+
+:global {
+  @import "vendors";
+  @import "global";
+  @import "components/module";
+}
+

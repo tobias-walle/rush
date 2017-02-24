@@ -1,0 +1,47 @@
+@import "../config/module";
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-top: 1em;
+  margin-bottom: .2em;
+}
+
+.input, .textarea, .button {
+  font-size: 1rem;
+  border-radius: 3px;
+}
+
+.input, .textarea {
+  padding: .3em;
+  display: block;
+  width: 100%;
+  border: solid 1px grey;
+}
+
+.textarea {
+  resize: none;
+  height: 10em;
+}
+
+.button {
+  background: $color-background-dark-2;
+  color: $color-text-primary-light;
+  cursor: pointer;
+
+  border: none;
+  padding: .5em 1em;
+  display: inline-block;
+  font-size: 1rem;
+  margin: 1em 0;
+
+  &:hover {
+    background: $color-background-dark-1;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    background: lightgray;
+  }
+}
+
