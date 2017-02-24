@@ -12,8 +12,7 @@ export class TileProps {
 export class TileComponent extends React.Component<TileProps, any> {
   render() {
     return (
-      <div className={styles.tile}
-      >Tile</div>
+      <div className={styles.tile}></div>
     );
   }
 }
