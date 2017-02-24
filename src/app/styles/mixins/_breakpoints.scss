@@ -1,0 +1,22 @@
+@import "../config/breakpoints";
+
+@function get-breakpoint($name) {
+  @each $bp in $breakpoints {
+    @if nth($bp, 1) == $name {
+      @return nth($bp, 2);
+    }
+  }
+}
+
+@mixin media-down($name) {
+  @media (max-width: get-breakpoint($name)) {
+    @content
+  }
+}
+
+@mixin media-up($name) {
+  @media (min-width: get-breakpoint($name)) {
+    @content
+  }
+}
+
