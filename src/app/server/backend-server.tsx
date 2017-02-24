@@ -1,24 +1,24 @@
-import { Server } from "http";
+import { Server } from 'http';
 import * as express from 'express';
 import * as path from 'path';
 import * as React from 'react';
 import { WebServer } from './webpack-dev-server';
 import { match } from 'react-router';
 import { routes } from '../routes';
-import { renderToString } from "react-dom/server";
-import { createStore } from "redux";
-import { createMemoryHistory } from "react-router";
-import { WithStylesContext } from "isomorphic-style-loader-utils";
+import { renderToString } from 'react-dom/server';
+import { createStore } from 'redux';
+import { createMemoryHistory } from 'react-router';
+import { WithStylesContext } from 'isomorphic-style-loader-utils';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { syncHistoryWithStore } from 'react-router-redux';
 
-import { DEVELOPMENT, DISABLE_SERVER_SIDE_RENDERING, RENDER_CSS_ON_CLIENT } from "../utils/config";
-import { ApiServer } from "../../api/index";
-import { getStoreMiddleware } from "../utils/redux-helper";
-import { reducer } from "../modules/root";
-import { HtmlComponent } from "../components/html.component";
-import { RouterContext } from "react-router";
-import { Provider } from "react-redux";
+import { DEVELOPMENT, DISABLE_SERVER_SIDE_RENDERING, RENDER_CSS_ON_CLIENT } from '../utils/config';
+import { ApiServer } from '../../api/index';
+import { getStoreMiddleware } from '../utils/redux-helper';
+import { reducer } from '../modules/root';
+import { HtmlComponent } from '../components/html.component';
+import { RouterContext } from 'react-router';
+import { Provider } from 'react-redux';
 
 // Load main styles as string
 let mainStyles = require('../styles/main.scss');
@@ -76,7 +76,7 @@ export class BackendServer {
     this.app.all('/static/*', (req, res) => {
       this.proxy.web(req, res, {
         target: `http://${this.options.webpack_dev_host}:${this.options.webpack_dev_port}/`
-      })
+      });
     });
   }
 
@@ -84,7 +84,7 @@ export class BackendServer {
     this.app.use('/api', (req, res) => {
       this.proxy.web(req, res, {
         target: `http://${this.options.api_host}:${this.options.api_port}`
-      })
+      });
     });
   }
 
@@ -116,7 +116,7 @@ export class BackendServer {
             // Just provider Html without SSR
             res.status(200).send(renderToString(
               <HtmlComponent store={store}/>
-            ))
+            ));
           } else {
             // Prepare app
             let RootComponent = () => (

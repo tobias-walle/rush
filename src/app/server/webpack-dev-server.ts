@@ -1,6 +1,6 @@
 import * as Webpack from 'webpack';
 import * as WebpackDevServer from 'webpack-dev-server';
-import { Server } from "http";
+import { Server } from 'http';
 
 export class WebServer {
   private server: Server;
@@ -54,7 +54,7 @@ export class WebServer {
     this.server = this.bundler.listen(this.port, this.host, () => {
       console.log(`Webpack Dev Server is running on ${this.host}:${this.port}/`);
       console.log('Bundling project, please wait...');
-    })
+    });
   }
 
   /**

@@ -1,16 +1,16 @@
 import 'rxjs';
 import * as React from 'react';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { render } from 'react-dom'
+import { render } from 'react-dom';
 import { createStore } from 'redux';
 import { browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 
-import { WithStylesContext } from "isomorphic-style-loader-utils";
+import { WithStylesContext } from 'isomorphic-style-loader-utils';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { AppContainer } from 'react-hot-loader';
 
-import { DEVELOPMENT, RENDER_CSS_ON_CLIENT, DISABLE_SERVER_SIDE_RENDERING } from "./utils/config";
+import { DEVELOPMENT, RENDER_CSS_ON_CLIENT, DISABLE_SERVER_SIDE_RENDERING } from './utils/config';
 
 const history = browserHistory;
 

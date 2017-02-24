@@ -1,7 +1,7 @@
-import { GenericStoreEnhancer, applyMiddleware } from "redux";
-import { createEpicMiddleware } from "redux-observable";
-import { epic } from "../modules/root";
-import { routerMiddleware } from "react-router-redux";
+import { GenericStoreEnhancer, applyMiddleware } from 'redux';
+import { createEpicMiddleware } from 'redux-observable';
+import { epic } from '../modules/root';
+import { routerMiddleware } from 'react-router-redux';
 
 /**
  * Create the store middleware for redux.

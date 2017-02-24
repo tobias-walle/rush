@@ -2,12 +2,12 @@ import { combineReducers } from 'redux';
 
 import { reducer as formReducer } from 'redux-form';
 import { routerReducer } from 'react-router-redux';
-import { combineEpics } from "redux-observable";
+import { combineEpics } from 'redux-observable';
 
 // Combine all modules to the global state interface
 export interface GlobalState {
-  form: any,
-  routing: any,
+  form: any;
+  routing: any;
 }
 
 // Combine the reducers

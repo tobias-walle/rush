@@ -1,8 +1,8 @@
-import * as React from "react";
-import { Observable } from "rxjs";
-import { AppContainer } from "react-hot-loader";
-import { DEVELOPMENT } from "./utils/config";
-import { BackendServer, BackendServerOptions } from "./server/backend-server";
+import * as React from 'react';
+import { Observable } from 'rxjs';
+import { AppContainer } from 'react-hot-loader';
+import { DEVELOPMENT } from './utils/config';
+import { BackendServer, BackendServerOptions } from './server/backend-server';
 
 // Server Config
 const HOST = process.env.HOST || 'localhost';
@@ -44,7 +44,7 @@ if (DEVELOPMENT && module && module['hot']) {
     console.log('[HMR] Reload Backend Server');
     try {
       // Reload backend server
-      let NewBackendServer = require("./server/backend-server.tsx").BackendServer;
+      let NewBackendServer = require('./server/backend-server.tsx').BackendServer;
 
       // Create a new server
       let newServer = new NewBackendServer(options);
