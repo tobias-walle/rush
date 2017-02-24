@@ -38,6 +38,10 @@ module.exports = {
         'postcss-loader',
         'sass-loader'
       ]
+      },
+      {
+        test: /\.(png|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        loader: 'url-loader?limit=100000'
       }
     ],
   },

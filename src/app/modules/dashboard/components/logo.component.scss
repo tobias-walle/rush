@@ -1,0 +1,17 @@
+@import "../../../styles/config/module";
+
+$font-size: 6rem;
+.logo {
+  color: $color-text-primary-dark;
+  font-size: $font-size;
+  text-align: center;
+  font-family: $font-cursive;
+}
+
+.logo-main {
+}
+
+.logo-sub {
+  margin-left: .5em;
+  font-size: $font-size * .5;
+}
