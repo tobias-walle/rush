@@ -1,13 +1,13 @@
 import { GlobalState } from "../../root";
 import { ArticleDetailProps, ArticleDetailComponent } from "../components/article-detail.component";
 import { connect } from "react-redux";
-import { getArticle } from "../blog.redux";
+import { loadArticle } from "../redux/article.redux";
 
 function mapStateToProps(state: GlobalState, ownProps): ArticleDetailProps {
   return {
-    article: state.blogState.selectedArticle,
-    downloading: state.blogState.getArticleDownloading,
-    downloadError: state.blogState.getArticleError,
+    article: state.blog.articlesState.selectedArticle,
+    downloading: state.blog.articlesState.getArticleDownloading,
+    downloadError: state.blog.articlesState.getArticleError,
   }
 }
 
@@ -15,7 +15,7 @@ function mapDispatchToProps(dispatch, ownProps): ArticleDetailProps {
   let articleId = ownProps.params.id;
 
   return {
-    fetchArticle: () => dispatch(getArticle(articleId)),
+    fetchArticle: () => dispatch(loadArticle(articleId)),
   }
 }
 

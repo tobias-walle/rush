@@ -1,7 +1,7 @@
 import { ArticleFormProps, ArticleFormValues, ArticleFormComponent } from "../components/article-form.component";
-import { addArticle } from "../blog.redux";
 import { Article } from "../models/article";
 import { connect } from "react-redux";
+import { addArticle } from "../redux/article.redux";
 
 function mapDispatchToProps(dispatch): ArticleFormProps {
   return {
