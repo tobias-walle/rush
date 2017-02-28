@@ -82,7 +82,8 @@ if (module['hot']) {
     reRenderApp();
   });
 
-  module['hot'].accept('./modules/root', () => {
+  module['hot'].accept(['./modules/root', './utils/redux-helper'], () => {
+    console.log('Hot Reload root');
     setupStore();
     reRenderApp();
   });
