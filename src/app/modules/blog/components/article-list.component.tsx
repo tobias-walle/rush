@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Article } from "../models/article";
-import { ArticleListItemComponent } from "./article-list-item.component";
-import { Link } from "react-router";
+import { Article } from '../models/article';
+import { ArticleListItemComponent } from './article-list-item.component';
+import { Link } from 'react-router';
 
 
 export interface ArticleListProps {
@@ -35,6 +35,6 @@ export class ArticleListComponent extends React.Component<ArticleListProps, any>
           ))
         }
       </div>
-    )
+    );
   }
 }

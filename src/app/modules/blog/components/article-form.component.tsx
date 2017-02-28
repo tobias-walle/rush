@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { reduxForm, Field, FormProps } from "redux-form";
+import { reduxForm, Field, FormProps } from 'redux-form';
 
 export interface ArticleFormValues {
-  subject: string,
-  body: string
+  subject: string;
+  body: string;
 }
 
 export interface ArticleFormProps extends FormProps<ArticleFormValues, {}, {}> {
-  onSubmit?: (values: ArticleFormValues) => void
+  onSubmit?: (values: ArticleFormValues) => void;
 }
 
 @reduxForm({
@@ -24,12 +24,12 @@ export class ArticleFormComponent extends React.Component<ArticleFormProps, any>
         this.props.reset();
       })}>
         <label>Subject:</label>
-        <Field name="subject" className="input" component="input" type="text"/>
+        <Field name='subject' className='input' component='input' type='text'/>
         <label>Body:</label>
-        <Field name="body" className="textarea" component="textarea"/>
-        <button className="button" type="submit" disabled={pristine || submitting}>Submit</button>
+        <Field name='body' className='textarea' component='textarea'/>
+        <button className='button' type='submit' disabled={pristine || submitting}>Submit</button>
       </form>
-    )
+    );
   }
 }
 

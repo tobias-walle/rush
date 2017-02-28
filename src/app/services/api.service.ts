@@ -1,5 +1,5 @@
-import { ajax } from "rxjs/observable/dom/ajax";
-import { Observable, AjaxResponse } from "rxjs";
+import { ajax } from 'rxjs/observable/dom/ajax';
+import { Observable, AjaxResponse } from 'rxjs';
 
 export type HttpMethod =
   'GET'

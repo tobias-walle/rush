@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { Article } from "../models/article";
+import { Article } from '../models/article';
 
 
 export interface ArticleDetailProps {
-  article?: Article,
-  downloading?: boolean,
-  downloadError?: string,
-  fetchArticle?: () => void,
+  article?: Article;
+  downloading?: boolean;
+  downloadError?: string;
+  fetchArticle?: () => void;
 }
 
 export class ArticleDetailComponent extends React.Component<ArticleDetailProps, any> {
@@ -25,7 +25,7 @@ export class ArticleDetailComponent extends React.Component<ArticleDetailProps, 
           <h1>{article.subject}</h1>
           <p>{article.body}</p>
         </div>
-      )
+      );
     } else {
       if (downloading) {
         content = <p>Loading...</p>;

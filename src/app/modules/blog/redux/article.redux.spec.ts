@@ -1,9 +1,9 @@
 import {
   articleReducer, addArticle, ArticleState, addArticleSucceded, addArticleFailed,
   addArticleEpic, loadArticle, loadArticleSucceded, loadArticleFailed, loadArticleEpic
-} from "./article.redux";
-import { Observable } from "rxjs";
-import { ActionsObservable } from "redux-observable";
+} from './article.redux';
+import { Observable } from 'rxjs';
+import { ActionsObservable } from 'redux-observable';
 
 
 describe('ArticleRedux', () => {
@@ -64,8 +64,8 @@ describe('ArticleRedux', () => {
         .subscribe((actualAction) => {
           expect(actualAction).toEqual(expectedAction);
           done();
-        })
-    })
+        });
+    });
   });
 
 
@@ -126,7 +126,7 @@ describe('ArticleRedux', () => {
         .subscribe((actualAction) => {
           expect(actualAction).toEqual(expectedAction);
           done();
-        })
-    })
+        });
+    });
   });
 });

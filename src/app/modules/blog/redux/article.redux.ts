@@ -1,24 +1,24 @@
-import { Article } from "../models/article";
-import { Action } from "redux";
-import { ApiService, apiService } from "../../../services/api.service";
-import { Observable } from "rxjs";
-import { combineEpics } from "redux-observable";
+import { Article } from '../models/article';
+import { Action } from 'redux';
+import { ApiService, apiService } from '../../../services/api.service';
+import { Observable } from 'rxjs';
+import { combineEpics } from 'redux-observable';
 
 export interface ArticleState {
-  articles?: Article[],
-  selectedArticle?: Article,
+  articles?: Article[];
+  selectedArticle?: Article;
 
-  getArticleDownloading?: boolean,
-  getArticleSuccess?: boolean,
-  getArticleError?: string,
+  getArticleDownloading?: boolean;
+  getArticleSuccess?: boolean;
+  getArticleError?: string;
 
-  articleAddError?: string,
+  articleAddError?: string;
 
-  articleDeleteError?: string,
+  articleDeleteError?: string;
 
-  articlesDownloading?: boolean,
-  articlesDownloadSuccess?: boolean,
-  articlesDownloadError?: string,
+  articlesDownloading?: boolean;
+  articlesDownloadSuccess?: boolean;
+  articlesDownloadError?: string;
 }
 
 const initialState: ArticleState = {
@@ -66,28 +66,28 @@ export interface LoadAllFailAction extends Action {
 
 
 export interface AddAction extends Action {
-  article: Article
+  article: Article;
 }
 
 export interface AddSuccessAction extends Action {
-  article: Article
+  article: Article;
 }
 
 export interface AddFailAction extends Action {
-  error: string
+  error: string;
 }
 
 
 export interface DeleteAction extends Action {
-  article: Article
+  article: Article;
 }
 
 export interface DeleteSuccessAction extends Action {
-  article: Article
+  article: Article;
 }
 
 export interface DeleteFailAction extends Action {
-  error: string
+  error: string;
 }
 
 // Reducer
@@ -189,42 +189,42 @@ export function loadArticle(articleId: string): LoadAction {
   return {
     type: LOAD,
     articleId,
-  }
+  };
 }
 
 export function loadArticleSucceded(article: Article): LoadSuccessAction {
   return {
     type: LOAD_SUCCESS,
     article
-  }
+  };
 }
 
 export function loadArticleFailed(error: string): LoadFailAction {
   return {
     type: LOAD_FAIL,
     error
-  }
+  };
 }
 
 
 export function loadAllArticles(): LoadAllAction {
   return {
     type: LOAD_ALL,
-  }
+  };
 }
 
 export function loadAllArticlesSucceded(articles: Article[]): LoadAllSuccessAction {
   return {
     type: LOAD_ALL_SUCCESS,
     articles
-  }
+  };
 }
 
 export function loadAllArticlesFailed(error: string): LoadAllFailAction {
   return {
     type: LOAD_ALL_FAIL,
     error
-  }
+  };
 }
 
 
@@ -232,21 +232,21 @@ export function addArticle(article: Article): AddAction {
   return {
     type: ADD,
     article
-  }
+  };
 }
 
 export function addArticleSucceded(article: Article): AddSuccessAction {
   return {
     type: ADD_SUCCESS,
     article
-  }
+  };
 }
 
 export function addArticleFailed(error: string): AddFailAction {
   return {
     type: ADD_FAIL,
     error
-  }
+  };
 }
 
 
@@ -254,21 +254,21 @@ export function deleteArticle(article: Article): DeleteAction {
   return {
     type: DELETE,
     article
-  }
+  };
 }
 
 export function deleteArticleSucceded(article: Article): DeleteSuccessAction {
   return {
     type: DELETE_SUCCESS,
     article
-  }
+  };
 }
 
 export function deleteArticleFail(error: string): DeleteFailAction {
   return {
     type: DELETE_FAIL,
     error
-  }
+  };
 }
 
 // Epics
@@ -284,7 +284,7 @@ export const loadArticleEpic = (action$, store, api: ApiService = apiService) =>
           }
         })
         .catch(error => {
-          return Observable.of(loadArticleFailed(error.toString()))
+          return Observable.of(loadArticleFailed(error.toString()));
         })
     );
 

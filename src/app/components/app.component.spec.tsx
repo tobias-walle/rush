@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { AppComponent } from './app.component';
 import { createMemoryHistory } from 'react-router';
-import { Store } from "react-redux";
-import { shallow } from "enzyme";
+import { Store } from 'react-redux';
+import { shallow } from 'enzyme';
 import configureStore from 'redux-mock-store';
 const mockStore = configureStore();
 

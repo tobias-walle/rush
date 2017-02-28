@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { shallow, mount } from "enzyme";
-import { ArticleFormComponent, ArticleFormValues } from "./article-form.component";
-import { Provider } from "react-redux";
+import { shallow, mount } from 'enzyme';
+import { ArticleFormComponent, ArticleFormValues } from './article-form.component';
+import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 const mockStore = configureStore();
 

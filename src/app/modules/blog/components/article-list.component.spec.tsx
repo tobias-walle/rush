@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { shallow, mount } from "enzyme";
-import { ArticleListComponent } from "./article-list.component";
-import { Article } from "../models/article";
+import { shallow, mount } from 'enzyme';
+import { ArticleListComponent } from './article-list.component';
+import { Article } from '../models/article';
 
 describe('ArticleListComponent', () => {
   it('should render', () => {

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { BlogStorage } from "./blog.storage";
+import { BlogStorage } from './blog.storage';
 
 export const blogRouter = Router();
 
@@ -53,5 +53,5 @@ blogRouter.delete('/articles/:id', (req, res) => {
 if (module['hot']) {
   module['hot'].dispose((data) => {
     data['storage'] = storage;
-  })
+  });
 }

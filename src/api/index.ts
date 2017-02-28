@@ -1,8 +1,8 @@
 import * as express from 'express';
-import * as morgan from "morgan";
-import * as bodyParser from "body-parser";
-import { Server } from "http";
-import { blogRouter } from "./modules/blog/blog.routes";
+import * as morgan from 'morgan';
+import * as bodyParser from 'body-parser';
+import { Server } from 'http';
+import { blogRouter } from './modules/blog/blog.routes';
 
 export class ApiServer {
   private app: express.Application;
@@ -51,10 +51,10 @@ export class ApiServer {
   start() {
     if (this.port !== undefined && this.port !== null) {
       this.server = this.app.listen(this.port, () => {
-        console.log(`Api Server is running on ${this.host}:${this.port}/`)
+        console.log(`Api Server is running on ${this.host}:${this.port}/`);
       });
     } else {
-      throw Error('The port of the API Server is not defined.')
+      throw Error('The port of the API Server is not defined.');
     }
   }
 

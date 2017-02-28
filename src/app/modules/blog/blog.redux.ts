@@ -1,10 +1,10 @@
 // Combine
-import { combineReducers } from "redux";
-import { combineEpics } from "redux-observable";
-import { articleReducer, articleEpic, ArticleState } from "./redux/article.redux";
+import { combineReducers } from 'redux';
+import { combineEpics } from 'redux-observable';
+import { articleReducer, articleEpic, ArticleState } from './redux/article.redux';
 
 export interface BlogState {
-  articlesState: ArticleState
+  articlesState: ArticleState;
 }
 
 export const blogReducer = combineReducers(

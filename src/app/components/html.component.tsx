@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom/server';
 import * as serialize from 'serialize-javascript';
 import * as Helmet from 'react-helmet';
-import { IS_SERVER_SIDE } from "../utils/config";
+import { IS_SERVER_SIDE } from '../utils/config';
 
 export class HtmlProps {
   store: any;
@@ -23,7 +23,7 @@ export class HtmlComponent extends React.Component<HtmlProps, any> {
     let content: string = component ? ReactDOM.renderToString(component) : '';
 
     let head: JSX.Element;
-    let stylesElement = <style type="text/css" dangerouslySetInnerHTML={{__html: styles.join('  ')}}/>;
+    let stylesElement = <style type='text/css' dangerouslySetInnerHTML={{__html: styles.join('  ')}}/>;
     let htmlAttributes: any;
     if (IS_SERVER_SIDE) {
       let helmet = Helmet.rewind();
@@ -37,7 +37,7 @@ export class HtmlComponent extends React.Component<HtmlProps, any> {
           {helmet.script.toComponent()}
           {stylesElement}
         </head>
-      )
+      );
     } else {
       head = (
         <head>
@@ -50,18 +50,18 @@ export class HtmlComponent extends React.Component<HtmlProps, any> {
       <html {...htmlAttributes ? htmlAttributes.toString() : undefined}>
       {head}
       <body>
-      <div id="container"
+      <div id='container'
            dangerouslySetInnerHTML={{__html: content}}
       />
 
       <script
         dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())};`}}
-        charSet="UTF-8"
+        charSet='UTF-8'
       />
-      <script src="/static/vendor.bundle.js"></script>
-      <script src="/static/bundle.js"></script>
+      <script src='/static/vendor.bundle.js'></script>
+      <script src='/static/bundle.js'></script>
       </body>
       </html>
-    )
+    );
   }
 }

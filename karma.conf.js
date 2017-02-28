@@ -20,7 +20,7 @@ module.exports = (config) => {
     },
 
     mime: {
-      'text/x-typescript': ['ts','tsx']
+      'text/x-typescript': ['ts', 'tsx']
     },
 
     webpack: {
@@ -54,5 +54,5 @@ module.exports = (config) => {
     autoWatch: true,
     browsers: ['Chrome', 'Chromium'],
     singleRun: false
-  })
+  });
 };
