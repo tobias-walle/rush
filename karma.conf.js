@@ -1,3 +1,4 @@
+let webpack = require('webpack');
 let webpackConfig = require('./webpack/webpack.client.config.development');
 
 module.exports = (config) => {
@@ -11,16 +12,30 @@ module.exports = (config) => {
     basePath: '',
     frameworks: ['jasmine'],
     files: [
-      '**/*.spec.ts*'
+      { pattern: './src/test.ts' },
     ],
 
     preprocessors: {
-      '**/*.ts*': ['webpack'],
+      './src/test.ts': ['webpack'],
+    },
+
+    mime: {
+      'text/x-typescript': ['ts','tsx']
     },
 
     webpack: {
       resolve: webpackConfig.resolve,
       module: webpackConfig.module,
+      devtool: 'inline-source-map',
+      plugins: [
+        new webpack.SourceMapDevToolPlugin({
+          filename: null, // Sourcemap is inlined
+          test: /\.(ts|tsx|js|jsx)($|\?)/i
+        }),
+        new webpack.LoaderOptionsPlugin({
+          debug: true
+        })
+      ],
       node: {
         fs: 'empty'
       },
