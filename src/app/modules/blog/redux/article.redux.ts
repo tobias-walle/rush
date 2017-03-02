@@ -276,15 +276,9 @@ export const loadArticleEpic = (action$, store, api: ApiService = apiService) =>
   action$.ofType(LOAD)
     .mergeMap(action =>
       api.get(`blog/articles/${action.articleId}`)
-        .map(response => {
-          if (response.status === 200) {
-            return loadArticleSucceded(response.response);
-          } else {
-            return loadArticleFailed(response.responseText);
-          }
-        })
+        .map(response => loadArticleSucceded(response.response))
         .catch(error => {
-          return Observable.of(loadArticleFailed(error.toString()));
+          return Observable.of(loadArticleFailed(error.responseText));
         })
     );
 
@@ -294,7 +288,7 @@ export const addArticleEpic = (action$, store, api: ApiService = apiService) =>
       api.put('blog/articles', action.article)
         .map(response => addArticleSucceded(action.article))
         .catch(err => Observable.of(
-          addArticleFailed(err.responseText())
+          addArticleFailed(err.responseText)
         ))
     );
 
