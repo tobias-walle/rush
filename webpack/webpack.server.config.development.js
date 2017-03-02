@@ -17,6 +17,7 @@ module.exports = {
   target: 'node',
   entry: {
     app: [
+      'babel-polyfill',
       './src/app/server.tsx',
     ]
   },

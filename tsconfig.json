@@ -2,7 +2,7 @@
   "compilerOptions": {
     "outDir": "./dist/server",
     "lib": [
-      "ES5",
+      "es2017",
       "dom"
     ],
     "sourceMap": true,

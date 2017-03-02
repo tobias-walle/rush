@@ -37,7 +37,6 @@
   "devDependencies": {
     "@types/classnames": "0.0.32",
     "@types/enzyme": "^2.7.4",
-    "@types/es6-shim": "^0.31.32",
     "@types/express": "^4.0.35",
     "@types/immutability-helper": "^2.0.15",
     "@types/jasmine": "^2.5.43",
@@ -86,10 +85,9 @@
     "webpack-dev-server": "^2.3.0"
   },
   "dependencies": {
+    "babel-polyfill": "^6.23.0",
     "body-parser": "^1.16.1",
     "classnames": "^2.2.5",
-    "es6-shim": "^0.35.2",
-    "es7-shim": "^6.0.0",
     "express": "^4.14.0",
     "http-proxy": "^1.16.2",
     "immutability-helper": "^2.1.1",

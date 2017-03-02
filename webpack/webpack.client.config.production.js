@@ -13,6 +13,7 @@ module.exports = {
       'react-dom'
     ],
     app: [
+      'babel-polyfill',
       './src/app/client.tsx',
     ]
   },

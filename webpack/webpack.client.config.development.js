@@ -9,6 +9,7 @@ let rootDir = path.resolve(__dirname, '..');
 module.exports = {
   entry: {
     app: [
+      'babel-polyfill',
       'react-hot-loader/patch',
       './src/app/client.tsx',
     ],
