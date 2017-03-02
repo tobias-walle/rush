@@ -264,7 +264,7 @@ export function deleteArticleSucceded(article: Article): DeleteSuccessAction {
   };
 }
 
-export function deleteArticleFail(error: string): DeleteFailAction {
+export function deleteArticleFailed(error: string): DeleteFailAction {
   return {
     type: DELETE_FAIL,
     error
@@ -292,15 +292,9 @@ export const addArticleEpic = (action$, store, api: ApiService = apiService) =>
   action$.ofType(ADD)
     .mergeMap(action =>
       api.put('blog/articles', action.article)
-        .map(response => {
-          if (response.status === 201) {
-            return addArticleSucceded(action.article);
-          } else {
-            return addArticleFailed(response.responseText);
-          }
-        })
+        .map(response => addArticleSucceded(action.article))
         .catch(err => Observable.of(
-          addArticleFailed(err.toString())
+          addArticleFailed(err.responseText())
         ))
     );
 
@@ -310,7 +304,7 @@ export const loadArticlesEpic = (action$, store, api: ApiService = apiService) =
       api.get(`blog/articles`)
         .map(response => loadAllArticlesSucceded(response.response))
         .catch(err => Observable.of(
-          loadAllArticlesFailed(err)
+          loadAllArticlesFailed(err.responseText)
         ))
     );
 
@@ -319,7 +313,7 @@ export const deleteArticleEpic = (action$, store, api: ApiService = apiService) 
     .mergeMap((action) =>
       api.delete(`blog/articles/${action.article.id}`)
         .map((response) => deleteArticleSucceded(action.article))
-        .catch((error) => Observable.of(deleteArticleFail(error)))
+        .catch((error) => Observable.of(deleteArticleFailed(error.responseText)))
     );
 
 export const articleEpic = combineEpics(
