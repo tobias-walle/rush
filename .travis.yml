@@ -4,6 +4,8 @@ node_js:
   - stable
   - 6
 
+before_install:
+  - npm install -g npm@latest
 
 install:
   - npm install
