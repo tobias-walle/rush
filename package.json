@@ -17,8 +17,8 @@
     "watch:server:prod": "node ./scripts/build.js production --target server --watch",
     "watch:client:dev": "node ./scripts/build.js development --target client --watch",
     "watch:client:prod": "node ./scripts/build.js production --target client --watch",
-    "test": "karma start",
-    "lint": "tslint src/**/*.ts{,x}"
+    "test": "./node_modules/.bin/karma start --single-run",
+    "lint": "./node_modules/.bin/tslint src/**/*.ts{,x}"
   },
   "betterScripts": {
     "start:prod": {
@@ -60,7 +60,9 @@
     "jasmine-core": "^2.5.2",
     "karma": "^1.4.1",
     "karma-chrome-launcher": "^2.0.0",
+    "karma-firefox-launcher": "^1.0.0",
     "karma-jasmine": "^1.1.0",
+    "karma-phantomjs-launcher": "^1.0.2",
     "karma-webpack": "^2.0.2",
     "minimist": "^1.2.0",
     "nodemon": "^1.11.0",

@@ -7,6 +7,8 @@ module.exports = (config) => {
       require('karma-webpack'),
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
+      require('karma-firefox-launcher'),
+      require('karma-phantomjs-launcher'),
     ],
 
     basePath: '',
@@ -52,7 +54,7 @@ module.exports = (config) => {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome', 'Chromium'],
+    browsers: ['Chrome'],
     singleRun: false
   });
 };
