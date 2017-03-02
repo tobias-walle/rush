@@ -18,4 +18,5 @@ before_script:
 script:
   - npm run lint
   - ./node_modules/.bin/karma start --browsers Firefox --single-run
+  - npm run build:prod
 
