@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "My first react app with redux. Following the tutorial on https://medium.com/@rajaraodv/step-by-step-guide-to-building-react-redux-apps-using-mocks-48ca0f47f9a#.loitituz1",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:TobiasWalle/react-redux-app-template.git"
+  },
   "scripts": {
     "start": "npm run --silent start:dev",
     "start:dev": "node ./scripts/build.js development --watch --target server --after-first-run \"node ./dist/server/server.js\"",
