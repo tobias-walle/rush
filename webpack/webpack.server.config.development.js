@@ -1,7 +1,7 @@
 let webpack = require('webpack');
 let fs = require('fs');
 let path = require('path');
-const { CheckerPlugin } = require('awesome-typescript-loader');
+const {CheckerPlugin} = require('awesome-typescript-loader');
 let CopyWebpackPlugin = require('copy-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
@@ -37,12 +37,14 @@ module.exports = {
   module: {
     rules: [
       {test: /\.tsx?$/, loaders: ['awesome-typescript-loader']},
-      {test: /\.scss?$/, loaders: [
+      {
+        test: /\.scss?$/, loaders: [
         'isomorphic-style-loader',
         'css-loader?sourceMap&modules&localIdentName=[name]_[local]_[hash:base64:5]',
         'postcss-loader',
         'sass-loader?sourceMap'
-      ]},
+      ]
+      },
       {
         test: /\.js$/,
         loader: 'source-map-loader',
@@ -51,6 +53,10 @@ module.exports = {
       {
         test: /\.(png|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'url-loader?limit=100000'
+      },
+      {
+        test: /\.json$/,
+        use: 'json-loader'
       }
     ],
   },
