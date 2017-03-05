@@ -60,6 +60,7 @@
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.26.1",
     "enzyme": "^2.7.1",
+    "file-loader": "^0.10.1",
     "jasmine-core": "^2.5.2",
     "karma": "^1.4.1",
     "karma-chrome-launcher": "^2.0.0",
@@ -81,6 +82,7 @@
     "style-loader": "^0.13.1",
     "tslint": "^4.5.1",
     "typescript": "^2.1.5",
+    "url-loader": "^0.5.8",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.3.0"
   },
