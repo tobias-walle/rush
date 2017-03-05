@@ -8,7 +8,7 @@ export type HttpMethod =
     | 'PATCH'
     | 'DELETE';
 
-export type HttpQuery = {[key: string]: string};
+export type HttpQuery = {[key: string]: any};
 
 export type HttpOptions = {
   body?: any,
@@ -25,8 +25,8 @@ export class ApiService {
       ajax
     },
     private readonly options: {
-      urlPrefix: string,
-      defaultHeaders: {[key: string]: string}
+      urlPrefix?: string,
+      defaultHeaders?: {[key: string]: string}
     } = {
       urlPrefix: '/api/',
       defaultHeaders: {
@@ -50,7 +50,11 @@ export class ApiService {
     }
 
     if (query && Object.keys(query).length > 0) {
-      urlSuffix += Object.keys(query).map(key => `${key}=${query[key]}`).join('&');
+      let l = urlSuffix.length;
+      if (l > 0 && urlSuffix[l - 1] === '/') {
+        urlSuffix = urlSuffix.slice(0, l - 1);
+      }
+      urlSuffix += '?' + Object.keys(query).map(key => `${key}=${query[key]}`).join('&');
     }
     let url = this.options.urlPrefix + urlSuffix;
     return encodeURI(url);
