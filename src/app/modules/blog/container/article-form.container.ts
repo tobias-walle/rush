@@ -7,12 +7,11 @@ function mapDispatchToProps(dispatch): ArticleFormProps {
   return {
     onSubmit: (values: ArticleFormValues) => {
       dispatch(addArticle(new Article(values.subject, values.body)));
-    }
+    },
   };
 }
 
 export const ArticleFormContainer = connect(
   null,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(ArticleFormComponent);
-

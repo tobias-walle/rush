@@ -11,7 +11,7 @@ export interface AppProps {
 }
 
 export const AppComponent = (props: AppProps) => {
-  let { store, history } = props;
+  const { store, history } = props;
   return (
     <Provider store={store}>
       <Router history={history} routes={routes}/>

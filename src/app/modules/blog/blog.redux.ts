@@ -9,11 +9,10 @@ export interface BlogState {
 
 export const blogReducer = combineReducers(
   {
-    articlesState: articleReducer
-  }
+    articlesState: articleReducer,
+  },
 );
 
 export const blogEpic = combineEpics(
-  articleEpic
+  articleEpic,
 );
-

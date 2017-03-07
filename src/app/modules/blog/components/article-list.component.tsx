@@ -1,14 +1,12 @@
 import * as React from 'react';
 import { Article } from '../models/article';
 import { ArticleListItemComponent } from './article-list-item.component';
-import { Link } from 'react-router';
-
 
 export interface ArticleListProps {
   articles?: Article[];
   articlesDownloaded?: boolean;
-  fetchArticles?: () => void;
-  deleteArticle?: (article: Article) => void;
+  fetchArticles?(): void;
+  deleteArticle?(article: Article): void;
 }
 
 export class ArticleListComponent extends React.Component<ArticleListProps, any> {
@@ -20,9 +18,9 @@ export class ArticleListComponent extends React.Component<ArticleListProps, any>
   }
 
   public render(): JSX.Element {
-    let {articles, deleteArticle} = this.props;
+    const { deleteArticle} = this.props;
     // Is undefined, set array to an empty array
-    articles = articles || [];
+    const articles = this.props.articles || [];
     return (
       <div>
         {
@@ -30,7 +28,7 @@ export class ArticleListComponent extends React.Component<ArticleListProps, any>
             <ArticleListItemComponent
               key={article.id}
               article={article}
-              onDeleteClicked={(article) => deleteArticle(article)}
+              onDeleteClicked={(articleToDelete) => deleteArticle(articleToDelete)}
             />
           ))
         }

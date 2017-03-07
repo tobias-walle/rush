@@ -1,7 +1,4 @@
 import * as React from 'react';
-import { ArticleListContainer } from './container/article-list.container';
-import { ArticleFormContainer } from './container/article-form.container';
-
 
 export interface BlogProps {
 }

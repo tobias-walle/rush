@@ -9,24 +9,24 @@ describe('ArticleListItemComponent', () => {
   });
 
   it('should render Article', () => {
-    let article = new Article('Subject 1', 'Body 1');
+    const article = new Article('Subject 1', 'Body 1');
 
-    let wrapper = shallow(<ArticleListItemComponent article={article}/>);
+    const wrapper = shallow(<ArticleListItemComponent article={article}/>);
 
-    let html = wrapper.html();
+    const html = wrapper.html();
     expect(html.includes(article.subject)).toBeTruthy('Does not render subject');
     expect(html.includes(article.body)).toBeTruthy('Does not render body');
   });
 
   it('should trigger delete callback', () => {
-    let article = new Article('Subject 1', 'Body 1');
-    let deleteArticle = jasmine.createSpy('deleteArticle');
+    const article = new Article('Subject 1', 'Body 1');
+    const deleteArticle = jasmine.createSpy('deleteArticle');
 
-    let wrapper = shallow(
+    const wrapper = shallow(
       <ArticleListItemComponent
         article={article}
         onDeleteClicked={deleteArticle}
-      />
+      />,
     );
 
     wrapper.find('.button-delete').first().simulate('click');

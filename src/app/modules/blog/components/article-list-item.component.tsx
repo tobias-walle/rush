@@ -6,13 +6,13 @@ const styles = require('./article-list-item.component.scss');
 
 export interface ArticleListItemProps {
   article?: Article;
-  onDeleteClicked?: (article) => void;
+  onDeleteClicked?(article): void;
 }
 
 @WithStyles(styles)
 export class ArticleListItemComponent extends React.Component<ArticleListItemProps, any> {
   public render(): JSX.Element {
-    let {article, onDeleteClicked} = this.props;
+    const {article, onDeleteClicked} = this.props;
     if (article) {
       return (
         <div className={styles['article-list-item']}>
@@ -21,8 +21,11 @@ export class ArticleListItemComponent extends React.Component<ArticleListItemPro
             <p>{article.body}</p>
           </Link>
 
-          <input type='button' className={`button-delete ${styles['button-delete-article']}` } value='x'
-                 onClick={() =>
+          <input
+            type='button'
+            className={`button-delete ${styles['button-delete-article']}`}
+            value='x'
+            onClick={() =>
                onDeleteClicked ? onDeleteClicked(article) : null}
           />
         </div>

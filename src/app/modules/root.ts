@@ -25,4 +25,3 @@ export const reducer = combineReducers({
 export const epic = combineEpics(
   blogEpic,
 );
-

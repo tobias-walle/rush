@@ -6,7 +6,7 @@ import { deleteArticle, loadAllArticles } from '../redux/article.redux';
 function mapStateToProps(state: GlobalState): ArticleListProps {
   return {
     articles: state.blog.articlesState.articles,
-    articlesDownloaded: state.blog.articlesState.articlesDownloadSuccess
+    articlesDownloaded: state.blog.articlesState.articlesDownloadSuccess,
   };
 }
 
@@ -17,7 +17,7 @@ function mapDispatchToProps(dispatch): ArticleListProps {
     },
     deleteArticle: (article) => {
       dispatch(deleteArticle(article));
-    }
+    },
   };
 }
 

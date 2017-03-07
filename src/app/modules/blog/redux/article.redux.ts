@@ -52,7 +52,6 @@ export interface LoadFailAction extends Action {
   error: string;
 }
 
-
 export interface LoadAllAction extends Action {
 }
 
@@ -63,7 +62,6 @@ export interface LoadAllSuccessAction extends Action {
 export interface LoadAllFailAction extends Action {
   error: string;
 }
-
 
 export interface AddAction extends Action {
   article: Article;
@@ -76,7 +74,6 @@ export interface AddSuccessAction extends Action {
 export interface AddFailAction extends Action {
   error: string;
 }
-
 
 export interface DeleteAction extends Action {
   article: Article;
@@ -98,33 +95,33 @@ export function articleReducer(state: ArticleState = initialState, action: any =
         ...state,
         selectedArticle: null,
         getArticleSuccess: false,
-        getArticleError: null
+        getArticleError: null,
       };
     case LOAD_SUCCESS:
-      action = <LoadSuccessAction> action;
+      action = action as LoadSuccessAction;
       return {
         ...state,
         selectedArticle: action.article,
         getArticleSuccess: true,
-        getArticleError: null
+        getArticleError: null,
       };
     case LOAD_FAIL:
-      action = <LoadFailAction> action;
+      action = action as LoadFailAction;
       return {
         ...state,
         selectedArticle: null,
         getArticleSuccess: false,
-        getArticleError: action.error
+        getArticleError: action.error,
       };
 
     case LOAD_ALL:
-      action = <LoadAllAction> action;
+      action = action as LoadAllAction;
       return {
         ...state,
-        articlesDownloading: true
+        articlesDownloading: true,
       };
     case LOAD_ALL_SUCCESS:
-      action = <LoadAllSuccessAction> action;
+      action = action as LoadAllSuccessAction;
       return {
         ...state,
         articlesDownloading: false,
@@ -133,7 +130,7 @@ export function articleReducer(state: ArticleState = initialState, action: any =
         articles: action.articles,
       };
     case LOAD_ALL_FAIL:
-      action = <LoadAllFailAction> action;
+      action = action as LoadAllFailAction;
       return {
         ...state,
         articlesDownloading: false,
@@ -144,37 +141,36 @@ export function articleReducer(state: ArticleState = initialState, action: any =
 
     case ADD:
       return {
-        ...state
+        ...state,
       };
     case ADD_SUCCESS:
-      action = <AddSuccessAction> action;
+      action = action as AddSuccessAction;
       return {
         ...state,
         articles: [...state.articles, action.article],
         articleAddError: null,
       };
     case ADD_FAIL:
-      action = <AddFailAction> action;
+      action = action as AddFailAction;
       return {
         ...state,
         articleAddError: action.error,
       };
 
-
     case DELETE:
       return {
-        ...state
+        ...state,
       };
     case DELETE_SUCCESS:
-      action = <DeleteSuccessAction> action;
+      action = action as DeleteSuccessAction;
       return {
         ...state,
         articles: state.articles.filter(
-          (article) => article.id !== action.article.id
+          (article) => article.id !== action.article.id,
         ),
       };
     case DELETE_FAIL:
-      action = <DeleteFailAction> action;
+      action = action as DeleteFailAction;
       return {
         ...state,
         articleDeleteError: action.error,
@@ -195,17 +191,16 @@ export function loadArticle(articleId: string): LoadAction {
 export function loadArticleSucceded(article: Article): LoadSuccessAction {
   return {
     type: LOAD_SUCCESS,
-    article
+    article,
   };
 }
 
 export function loadArticleFailed(error: string): LoadFailAction {
   return {
     type: LOAD_FAIL,
-    error
+    error,
   };
 }
-
 
 export function loadAllArticles(): LoadAllAction {
   return {
@@ -216,58 +211,56 @@ export function loadAllArticles(): LoadAllAction {
 export function loadAllArticlesSucceded(articles: Article[]): LoadAllSuccessAction {
   return {
     type: LOAD_ALL_SUCCESS,
-    articles
+    articles,
   };
 }
 
 export function loadAllArticlesFailed(error: string): LoadAllFailAction {
   return {
     type: LOAD_ALL_FAIL,
-    error
+    error,
   };
 }
-
 
 export function addArticle(article: Article): AddAction {
   return {
     type: ADD,
-    article
+    article,
   };
 }
 
 export function addArticleSucceded(article: Article): AddSuccessAction {
   return {
     type: ADD_SUCCESS,
-    article
+    article,
   };
 }
 
 export function addArticleFailed(error: string): AddFailAction {
   return {
     type: ADD_FAIL,
-    error
+    error,
   };
 }
-
 
 export function deleteArticle(article: Article): DeleteAction {
   return {
     type: DELETE,
-    article
+    article,
   };
 }
 
 export function deleteArticleSucceded(article: Article): DeleteSuccessAction {
   return {
     type: DELETE_SUCCESS,
-    article
+    article,
   };
 }
 
 export function deleteArticleFailed(error: string): DeleteFailAction {
   return {
     type: DELETE_FAIL,
-    error
+    error,
   };
 }
 
@@ -279,7 +272,7 @@ export const loadArticleEpic = (action$, store, api: ApiService = apiService) =>
         .map(response => loadArticleSucceded(response.response))
         .catch(error => {
           return Observable.of(loadArticleFailed(error.responseText));
-        })
+        }),
     );
 
 export const addArticleEpic = (action$, store, api: ApiService = apiService) =>
@@ -288,8 +281,8 @@ export const addArticleEpic = (action$, store, api: ApiService = apiService) =>
       api.put('blog/articles', action.article)
         .map(response => addArticleSucceded(action.article))
         .catch(err => Observable.of(
-          addArticleFailed(err.responseText)
-        ))
+          addArticleFailed(err.responseText),
+        )),
     );
 
 export const loadArticlesEpic = (action$, store, api: ApiService = apiService) =>
@@ -298,8 +291,8 @@ export const loadArticlesEpic = (action$, store, api: ApiService = apiService) =
       api.get(`blog/articles`)
         .map(response => loadAllArticlesSucceded(response.response))
         .catch(err => Observable.of(
-          loadAllArticlesFailed(err.responseText)
-        ))
+          loadAllArticlesFailed(err.responseText),
+        )),
     );
 
 export const deleteArticleEpic = (action$, store, api: ApiService = apiService) =>
@@ -307,13 +300,12 @@ export const deleteArticleEpic = (action$, store, api: ApiService = apiService) 
     .mergeMap((action) =>
       api.delete(`blog/articles/${action.article.id}`)
         .map((response) => deleteArticleSucceded(action.article))
-        .catch((error) => Observable.of(deleteArticleFailed(error.responseText)))
+        .catch((error) => Observable.of(deleteArticleFailed(error.responseText))),
     );
 
 export const articleEpic = combineEpics(
   loadArticleEpic,
   loadArticlesEpic,
   addArticleEpic,
-  deleteArticleEpic
+  deleteArticleEpic,
 );
-

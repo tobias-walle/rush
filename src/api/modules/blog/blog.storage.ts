@@ -23,4 +23,3 @@ export class BlogStorage {
     this.articles = this.articles.filter((other) => other.id !== article.id);
   }
 }
-

@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import { AppComponent } from './app.component';
 import { createMemoryHistory } from 'react-router';
 import { Store } from 'react-redux';
@@ -15,8 +16,9 @@ describe('AppComponent', () => {
     expect(shallow(
       <AppComponent
         store={store}
-        history={history}/>)
-      .exists()
+        history={history}
+      />)
+      .exists(),
     ).toBeTruthy();
   });
 });

@@ -5,7 +5,6 @@ import { HtmlComponent } from './html.component';
 import configureStore from 'redux-mock-store';
 const mockStore = configureStore();
 
-
 describe('HtmlComponent', () => {
   let store: Store<any>;
 
@@ -18,15 +17,15 @@ describe('HtmlComponent', () => {
   });
 
   it('should render component input', () => {
-    let inputComponentText = 'This is a test string';
-    let wrapper = shallow(<HtmlComponent store={store} component={<p>{inputComponentText}</p>}/>);
+    const inputComponentText = 'This is a test string';
+    const wrapper = shallow(<HtmlComponent store={store} component={<p>{inputComponentText}</p>}/>);
 
     expect(wrapper.html().indexOf(inputComponentText)).toBeGreaterThan(-1, 'Input Component is not in element.');
   });
 
   it('should render styles input', () => {
-    let inputStyles = ['.test { color: red };'];
-    let wrapper = shallow(<HtmlComponent store={store} styles={inputStyles}/>);
+    const inputStyles = ['.test { color: red };'];
+    const wrapper = shallow(<HtmlComponent store={store} styles={inputStyles}/>);
 
     expect(wrapper.html().indexOf(inputStyles[0])).toBeGreaterThan(-1, 'Styles not in element');
   });

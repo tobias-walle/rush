@@ -21,15 +21,15 @@ import { RouterContext } from 'react-router';
 import { Provider } from 'react-redux';
 
 // Load main styles as string
-let mainStyles = require('../styles/main.scss');
+const mainStyles = require('../styles/main.scss');
 
 export class BackendServerOptions {
   host?: string = 'localhost';
   port?: number = 3000;
-  webpack_dev_host?: string = 'localhost';
-  webpack_dev_port?: number = 3001;
-  api_host?: string = 'localhost';
-  api_port?: number = 3002;
+  webpackDevHost?: string = 'localhost';
+  webpackDevPort?: number = 3001;
+  apiHost?: string = 'localhost';
+  apiPort?: number = 3002;
 }
 
 export class BackendServer {
@@ -46,7 +46,7 @@ export class BackendServer {
   apiServer: ApiServer;
 
   constructor(
-    options: BackendServerOptions
+    options: BackendServerOptions,
   ) {
     this.setOptions(options);
   }
@@ -75,7 +75,7 @@ export class BackendServer {
   setupWebpackDevServerRoutes() {
     this.app.all('/static/*', (req, res) => {
       this.proxy.web(req, res, {
-        target: `http://${this.options.webpack_dev_host}:${this.options.webpack_dev_port}/`
+        target: `http://${this.options.webpackDevHost}:${this.options.webpackDevPort}/`,
       });
     });
   }
@@ -83,7 +83,7 @@ export class BackendServer {
   setupApiRoutes() {
     this.app.use('/api', (req, res) => {
       this.proxy.web(req, res, {
-        target: `http://${this.options.api_host}:${this.options.api_port}`
+        target: `http://${this.options.apiHost}:${this.options.apiPort}`,
       });
     });
   }
@@ -104,18 +104,18 @@ export class BackendServer {
           res.redirect(302, nextLocation.pathname + nextLocation.search);
         } else if (nextState) {
           // Create history
-          let history = createMemoryHistory();
+          const history = createMemoryHistory();
 
           // Setup state
-          let initialState = {};
-          let store = createStore(reducer, initialState, getStoreMiddleware(history));
+          const initialState = {};
+          const store = createStore(reducer, initialState, getStoreMiddleware(history));
 
           syncHistoryWithStore(history, store);
 
           if (DISABLE_SERVER_SIDE_RENDERING) {
             // Just provider Html without SSR
             res.status(200).send(renderToString(
-              <HtmlComponent store={store}/>
+              <HtmlComponent store={store}/>,
             ));
           } else {
             // Prepare app
@@ -126,12 +126,12 @@ export class BackendServer {
             );
 
             // Load styles if configured
-            let css: string[] = [];
+            const css: string[] = [];
             if (!RENDER_CSS_ON_CLIENT) {
               console.log('Load main styles');
 
               // Wrap app with style context
-              let OldAppComponent = withStyles(mainStyles)(RootComponent);
+              const OldAppComponent = withStyles(mainStyles)(RootComponent);
               RootComponent = () => (
                 <WithStylesContext onInsertCss={styles => css.push(styles._getCss())}>
                   <OldAppComponent/>
@@ -140,10 +140,12 @@ export class BackendServer {
             }
 
             // Send the result
-            let html = renderToString(
-              <HtmlComponent store={store}
-                             component={<RootComponent/>}
-                             styles={css}/>
+            const html = renderToString(
+              <HtmlComponent
+                store={store}
+                component={<RootComponent/>}
+                styles={css}
+              />,
             );
             res.status(200).send(html);
           }
@@ -155,12 +157,12 @@ export class BackendServer {
     });
   }
 
-  startWebpackDevServer(host = this.options.webpack_dev_host, port = this.options.webpack_dev_port) {
+  startWebpackDevServer(host = this.options.webpackDevHost, port = this.options.webpackDevPort) {
     this.webpackDevServer = new WebServer(host, port);
     this.webpackDevServer.start();
   }
 
-  startApiServer(host = this.options.api_host, port = this.options.api_port) {
+  startApiServer(host = this.options.apiHost, port = this.options.apiPort) {
     this.apiServer = new ApiServer(host, port);
     this.apiServer.start();
   }
@@ -184,4 +186,3 @@ export class BackendServer {
     this.httpServer.close();
   }
 }
-

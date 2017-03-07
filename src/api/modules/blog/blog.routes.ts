@@ -17,8 +17,8 @@ blogRouter.get('/articles', (req, res) => {
 
 // Get one articles
 blogRouter.get('/articles/:id', (req, res) => {
-  let {id} = req.params;
-  let article = storage.getArticle(id);
+  const {id} = req.params;
+  const article = storage.getArticle(id);
   if (article) {
     res.status(200).send(article);
   } else {
@@ -28,7 +28,7 @@ blogRouter.get('/articles/:id', (req, res) => {
 
 // Create an article
 blogRouter.put('/articles', (req, res) => {
-  let article = req.body;
+  const article = req.body;
   if (article && article.id) {
     storage.addArticle(article);
     res.status(201).send();
@@ -39,8 +39,8 @@ blogRouter.put('/articles', (req, res) => {
 
 // Delete one articles
 blogRouter.delete('/articles/:id', (req, res) => {
-  let {id} = req.params;
-  let article = storage.getArticle(id);
+  const {id} = req.params;
+  const article = storage.getArticle(id);
   if (article) {
     storage.removeArticle(article);
     res.status(204).send();
@@ -48,7 +48,6 @@ blogRouter.delete('/articles/:id', (req, res) => {
     res.status(404).send();
   }
 });
-
 
 if (module['hot']) {
   module['hot'].dispose((data) => {

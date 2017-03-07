@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { Article } from '../models/article';
 
-
 export interface ArticleDetailProps {
   article?: Article;
   downloading?: boolean;
   downloadError?: string;
-  fetchArticle?: () => void;
+  fetchArticle?(): void;
 }
 
 export class ArticleDetailComponent extends React.Component<ArticleDetailProps, any> {
@@ -16,7 +15,7 @@ export class ArticleDetailComponent extends React.Component<ArticleDetailProps, 
   }
 
   render(): JSX.Element {
-    let {article, downloading, downloadError} = this.props;
+    const {article, downloading, downloadError} = this.props;
 
     let content: JSX.Element;
     if (article) {
@@ -32,7 +31,7 @@ export class ArticleDetailComponent extends React.Component<ArticleDetailProps, 
       } else if (downloadError) {
         content = <p>{downloadError}</p>;
       } else {
-        content = <div></div>;
+        content = <div/>;
       }
     }
 

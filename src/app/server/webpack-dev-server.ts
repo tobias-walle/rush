@@ -11,8 +11,8 @@ export class WebServer {
   readonly port: number;
 
   constructor(host: string, port: number) {
-    let url = this.url = `http://${host}:${port}`;
-    let webpackConfig = require('../../../webpack/webpack.client.config.development.js');
+    const url = this.url = `http://${host}:${port}`;
+    const webpackConfig = require('../../../webpack/webpack.client.config.development.js');
     webpackConfig.entry.app.unshift(
       `webpack-dev-server/client?${url}`,
       'webpack/hot/dev-server',
@@ -22,7 +22,7 @@ export class WebServer {
     this.port = port;
 
     let bundleStart: number;
-    let compiler: any = Webpack(webpackConfig);
+    const compiler: any = Webpack(webpackConfig);
 
     compiler.plugin('compile', () => {
       console.log('Bundling client...');
@@ -42,8 +42,8 @@ export class WebServer {
       quiet: false,
       noInfo: true,
       stats: {
-        colors: true
-      }
+        colors: true,
+      },
     });
   }
 
@@ -67,5 +67,3 @@ export class WebServer {
     }
   }
 }
-
-

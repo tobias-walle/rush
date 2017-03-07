@@ -13,7 +13,7 @@ export type HttpQuery = {[key: string]: any};
 export type HttpOptions = {
   body?: any,
   query?: HttpQuery,
-  customHeaders?: any
+  customHeaders?: any,
 };
 
 export class ApiService {
@@ -22,17 +22,17 @@ export class ApiService {
 
   constructor(
     dependencies = {
-      ajax
+      ajax,
     },
     private readonly options: {
       urlPrefix?: string,
-      defaultHeaders?: {[key: string]: string}
+      defaultHeaders?: {[key: string]: string},
     } = {
       urlPrefix: '/api/',
       defaultHeaders: {
-        'Content-Type': 'application/JSON'
-      }
-    }
+        'Content-Type': 'application/JSON',
+      },
+    },
   ) {
     this.ajax = dependencies.ajax;
   }
@@ -50,13 +50,13 @@ export class ApiService {
     }
 
     if (query && Object.keys(query).length > 0) {
-      let l = urlSuffix.length;
+      const l = urlSuffix.length;
       if (l > 0 && urlSuffix[l - 1] === '/') {
         urlSuffix = urlSuffix.slice(0, l - 1);
       }
       urlSuffix += '?' + Object.keys(query).map(key => `${key}=${query[key]}`).join('&');
     }
-    let url = this.options.urlPrefix + urlSuffix;
+    const url = this.options.urlPrefix + urlSuffix;
     return encodeURI(url);
   }
 
@@ -72,13 +72,13 @@ export class ApiService {
   request(
     method: HttpMethod,
     url: string,
-    {body, query, customHeaders}: HttpOptions = {}
+    {body, query, customHeaders}: HttpOptions = {},
   ): Observable<AjaxResponse> {
     let bodyString;
     if (body) {
       bodyString = JSON.stringify(body);
     }
-    let options = {
+    const options = {
       url: this.buildUrl(url, query),
       method,
       body: bodyString,

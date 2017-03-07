@@ -12,7 +12,7 @@ function mapStateToProps(state: GlobalState, ownProps): ArticleDetailProps {
 }
 
 function mapDispatchToProps(dispatch, ownProps): ArticleDetailProps {
-  let articleId = ownProps.params.id;
+  const articleId = ownProps.params.id;
 
   return {
     fetchArticle: () => dispatch(loadArticle(articleId)),
