@@ -1,4 +1,5 @@
 import { ApiService, HttpQuery, HttpMethod } from './api.service';
+import { Observable } from 'rxjs';
 
 describe('ApiService', () => {
   it('should build an url', () => {
@@ -43,63 +44,81 @@ describe('ApiService', () => {
   });
 
   it('should send a request', (done) => {
-    let mockAjax: any = (o) => {
-      expect(o).toBeDefined();
-      done();
+    let expectedResponse = 'test';
+    let mockAjax: any = () => {
+      return Observable.of(expectedResponse);
     };
 
     let service = new ApiService({ajax: mockAjax});
-    service.request('GET', 'test');
+    service.request('GET', 'test.com').subscribe((response) => {
+      expect(response).toBe(expectedResponse);
+      done();
+    });
   });
 
   it('should send a GET request', (done) => {
-    let mockAjax: any = (o) => {
-      expect(o).toBeDefined();
-      done();
+    let expectedResponse = 'test';
+    let mockAjax: any = () => {
+      return Observable.of(expectedResponse);
     };
 
     let service = new ApiService({ajax: mockAjax});
-    service.get('test');
+    service.get('test.com').subscribe((response) => {
+      expect(response).toBe(expectedResponse);
+      done();
+    });
   });
 
   it('should send a POST request', (done) => {
-    let mockAjax: any = (o) => {
-      expect(o).toBeDefined();
-      done();
+    let expectedResponse = 'test';
+    let mockAjax: any = () => {
+      return Observable.of(expectedResponse);
     };
 
     let service = new ApiService({ajax: mockAjax});
-    service.post('test');
+    service.post('test.com').subscribe((response) => {
+      expect(response).toBe(expectedResponse);
+      done();
+    });
   });
 
   it('should send a PUT request', (done) => {
-    let mockAjax: any = (o) => {
-      expect(o).toBeDefined();
-      done();
+    let expectedResponse = 'test';
+    let mockAjax: any = () => {
+      return Observable.of(expectedResponse);
     };
 
     let service = new ApiService({ajax: mockAjax});
-    service.put('test');
+    service.put('test.com').subscribe((response) => {
+      expect(response).toBe(expectedResponse);
+      done();
+    });
   });
 
   it('should send a PATCH request', (done) => {
-    let mockAjax: any = (o) => {
-      expect(o).toBeDefined();
-      done();
+    let expectedResponse = 'test';
+    let mockAjax: any = () => {
+      return Observable.of(expectedResponse);
     };
 
     let service = new ApiService({ajax: mockAjax});
-    service.patch('test');
+    service.patch('test.com').subscribe((response) => {
+      expect(response).toBe(expectedResponse);
+      done();
+    });
   });
 
   it('should send a DELETE request', (done) => {
-    let mockAjax: any = (o) => {
-      expect(o).toBeDefined();
-      done();
+    let expectedResponse = 'test';
+    let mockAjax: any = () => {
+      return Observable.of(expectedResponse);
     };
 
     let service = new ApiService({ajax: mockAjax});
-    service.delete('test');
+    service.delete('test.com').subscribe((response) => {
+      expect(response).toBe(expectedResponse);
+      done();
+    });
   });
 
 
