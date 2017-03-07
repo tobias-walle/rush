@@ -1,4 +1,4 @@
-import { ApiService, HttpQuery, HttpMethod } from './api.service';
+import { ApiService, HttpQuery } from './api.service';
 import { Observable } from 'rxjs';
 
 describe('ApiService', () => {
