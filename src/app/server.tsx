@@ -37,6 +37,7 @@ if (DEVELOPMENT && module && module['hot']) {
   const hot = module['hot'];
 
   // Check for changes in backend server
+  console.log('[HMR] Hot Module Replacement is activated');
   hot.accept(require.resolve('./server/backend-server.tsx'), () => {
     console.log('[HMR] Reload Backend Server');
     try {

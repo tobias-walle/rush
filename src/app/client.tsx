@@ -88,4 +88,6 @@ if (module['hot']) {
     setupStore();
     reRenderApp();
   });
+
+  module['hot'].accept();
 }
