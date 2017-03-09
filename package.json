@@ -94,6 +94,7 @@
     "immutability-helper": "^2.1.2",
     "isomorphic-style-loader": "^1.1.0",
     "isomorphic-style-loader-utils": "^1.0.0",
+    "material-design-color": "^2.3.2",
     "morgan": "^1.8.1",
     "node-sass": "^4.5.0",
     "normalize-scss": "^6.0.0",
