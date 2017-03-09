@@ -94,7 +94,9 @@ if (target) {
 let cleanUp = () => {
   log('Clean Up Workers');
   // Cleanup worker
-  workers.forEach((w) => w.kill('SIGINT'));
+  setTimeout(() => {
+    workers.forEach((w) => w.kill('SIGINT'));
+  });
 };
 process.on('exit', cleanUp);
 process.on('SIGINT', cleanUp);

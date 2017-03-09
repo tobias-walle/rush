@@ -4,17 +4,27 @@ import { Router } from 'react-router';
 import { Provider } from 'react-redux';
 import { History } from 'history';
 import { routes } from '../routes';
+import { startWindowSizeListener, windowSizeChange } from '../modules/browser/browser.redux';
 
 export interface AppProps {
   store: Store<any>;
   history: History;
 }
 
-export const AppComponent = (props: AppProps) => {
-  let { store, history } = props;
-  return (
-    <Provider store={store}>
-      <Router history={history} routes={routes}/>
-    </Provider>
-  );
-};
+export class AppComponent extends React.Component<AppProps, any> {
+
+  componentDidMount() {
+    let store = this.props.store;
+    store.dispatch(windowSizeChange());
+    store.dispatch(startWindowSizeListener());
+  }
+
+  render() {
+    const {store, history} = this.props;
+    return (
+      <Provider store={store}>
+        <Router history={history} routes={routes}/>
+      </Provider>
+    );
+  }
+}

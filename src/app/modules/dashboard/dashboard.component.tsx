@@ -1,20 +1,47 @@
 import * as React from 'react';
 import { LogoComponent } from './components/logo.component';
-import { TileComponent } from './components/tile.component';
-import { WithStyles } from 'isomorphic-style-loader-utils';
-const styles = require('./dashboard.component.scss');
+import { TileMapping } from './models/tile-mapping';
+import { DEFAULT_TILE_BUNDLE_MAPPING } from './constants/default-tile-mapping';
+import { TileContainer } from './containers/tile.container';
+import { TileSelection } from './models/tile-selection';
 
-@WithStyles(styles)
-export class DashboardComponent extends React.Component<{}, {}> {
+export class DashboardComponentProps {
+  tileMapping?: TileMapping;
+  visibleTileBundles?: TileSelection[];
+}
+
+export class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
   render() {
+    let {tileMapping, visibleTileBundles} = this.props as DashboardComponentProps;
+    tileMapping = tileMapping || DEFAULT_TILE_BUNDLE_MAPPING;
+    visibleTileBundles = visibleTileBundles || [];
     return (
       <div>
         <LogoComponent/>
-        <TileComponent/>
-        <TileComponent/>
-        <TileComponent/>
-        <TileComponent/>
-        <TileComponent/>
+        <div className='grid-container'>
+          {
+            visibleTileBundles
+              .map(selection => {
+                  let tile = tileMapping[selection.tileKey];
+                  if (!tile) {
+                    console.warn(`"${selection.tileKey}" does not exists in tile mapping.`);
+                    return null;
+                  }
+                    let props = {
+                      ...tile.componentProps,
+                      ...selection.props
+                    };
+                    return (
+                      <TileContainer
+                        key={selection.key}
+                        tile={tile}
+                        componentProps={props}
+                      />
+                    );
+                }
+              )
+          }
+        </div>
       </div>
     );
   }

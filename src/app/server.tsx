@@ -5,15 +5,15 @@ import { DEVELOPMENT } from './utils/config';
 import { BackendServer, BackendServerOptions } from './server/backend-server';
 
 // Server Config
-const HOST = process.env.HOST || 'localhost';
+const HOST = process.env.HOST || '127.0.0.1';
 const PORT = process.env.PORT || 3000;
 
 // Webpack dev server config
-const WEBPACK_DEV_HOST = process.env.WEBPACK_HOST || HOST || 'localhost';
+const WEBPACK_DEV_HOST = process.env.WEBPACK_HOST || HOST || '127.0.0.1';
 const WEBPACK_DEV_PORT = process.env.WEBPACK_PORT || 3001;
 
 // API Config
-const API_HOST = process.env.API_HOST || HOST || 'localhost';
+const API_HOST = process.env.API_HOST || HOST || '127.0.0.1';
 const API_PORT = process.env.API_PORT || 3002;
 
 // Start Server

@@ -1,8 +1,10 @@
 {
   "compilerOptions": {
     "outDir": "./dist/server",
+    "typeRoots": ["./node_modules/@types"],
     "lib": [
-      "ES5",
+      "es2015",
+      "es2015.iterable",
       "dom"
     ],
     "sourceMap": true,
@@ -17,6 +19,7 @@
     "useWebpackText": true
   },
   "include": [
-    "./src/*"
+    "./src/**/*.ts",
+    "./src/**/*.tsx"
   ]
 }

@@ -3,15 +3,7 @@
 @import "../../../styles/mixins/breakpoints";
 
 .tile {
+  @include box_shadow(1);
   background: white;
   box-sizing: border-box;
-  height: 250px;
-  width: calc(50% - 50px);
-  @include media-down(md) {
-    width: calc(100% - 50px);
-  }
-  padding: 25px;
-  margin: 25px;
-  float: left;
-  @include box_shadow(1)
 }
