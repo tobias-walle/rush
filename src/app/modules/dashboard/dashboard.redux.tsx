@@ -8,8 +8,8 @@ const initialState: DashboardState = {
   tiles: [
     new TileSelection('1', { 'text': '1' }),
     new TileSelection('2', { 'text': '2' }),
-    new TileSelection('2', { 'text': '3' })
-  ]
+    new TileSelection('2', { 'text': '3' }),
+  ],
 };
 
 export function dashboardReducer(state: DashboardState = initialState, action: any = {}): DashboardState {
@@ -18,4 +18,3 @@ export function dashboardReducer(state: DashboardState = initialState, action: a
       return state;
   }
 }
-

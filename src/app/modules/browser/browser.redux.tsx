@@ -15,7 +15,7 @@ export interface BrowserState {
 }
 
 const initialState: BrowserState = {
-  windowSizeListenerStarted: false
+  windowSizeListenerStarted: false,
 };
 
 // Actions
@@ -45,28 +45,27 @@ export function browserReducer(state: BrowserState = initialState, action: any =
       return {
         ...state,
         windowWidth: action.windowWidth,
-        breakpoint: action.breakpoint
+        breakpoint: action.breakpoint,
       };
     case START_WINDOW_SIZE_LISTENER:
       return {
         ...state,
-        windowSizeListenerStarted: action.windowSizeListenerStarted
+        windowSizeListenerStarted: action.windowSizeListenerStarted,
       };
     default:
       return state;
   }
 }
 
-
 // Action Creators
 export function windowSizeChange(): WindowSizeChangeAction {
   return {
-    type: WINDOW_SIZE_CHANGE
+    type: WINDOW_SIZE_CHANGE,
   };
 }
 
 export function setWindowWidth(windowWidth: number): SetWindowWidthAction {
-  let breakpoint = getBreakpoint(windowWidth);
+  const breakpoint = getBreakpoint(windowWidth);
   return {
     type: SET_WINDOW_WIDTH,
     windowWidth,
@@ -77,10 +76,9 @@ export function setWindowWidth(windowWidth: number): SetWindowWidthAction {
 export function startWindowSizeListener(): StartWindowSizeListenerAction {
   return {
     type: START_WINDOW_SIZE_LISTENER,
-    windowSizeListenerStarted: true
+    windowSizeListenerStarted: true,
   };
 }
-
 
 // Epics
 export const windowSizeChangeEpic = (action$, store, w: Window = browserWindow) =>
@@ -95,6 +93,5 @@ export const startWindowSizeListenerEpic = (action$, store, w: Window = browserW
 
 export const browserEpic = combineEpics(
   windowSizeChangeEpic,
-  startWindowSizeListenerEpic
+  startWindowSizeListenerEpic,
 );
-

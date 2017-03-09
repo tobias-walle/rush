@@ -16,6 +16,7 @@ module.exports = {
   target: 'node',
   entry: {
     app: [
+      'babel-polyfill',
       './src/app/server.tsx',
     ]
   },
@@ -40,11 +41,16 @@ module.exports = {
         'isomorphic-style-loader',
         'css-loader?modules&localIdentName=[name]_[local]_[hash:base64:5]',
         'postcss-loader',
-        'sass-loader?sourceMap']
+        'sass-loader?sourceMap'
+      ]
       },
       {
         test: /\.(png|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'url-loader?limit=100000'
+      },
+      {
+        test: /\.json$/,
+        use: 'json-loader'
       }
     ]
   },

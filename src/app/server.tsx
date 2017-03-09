@@ -1,6 +1,4 @@
-import * as React from 'react';
 import { Observable } from 'rxjs';
-import { AppContainer } from 'react-hot-loader';
 import { DEVELOPMENT } from './utils/config';
 import { BackendServer, BackendServerOptions } from './server/backend-server';
 
@@ -18,13 +16,13 @@ const API_PORT = process.env.API_PORT || 3002;
 
 // Start Server
 let server: BackendServer;
-let options: BackendServerOptions = {
+const options: BackendServerOptions = {
   host: HOST,
-  port: 3000,
-  webpack_dev_host: WEBPACK_DEV_HOST,
-  webpack_dev_port: WEBPACK_DEV_PORT,
-  api_host: API_HOST,
-  api_port: API_PORT,
+  port: PORT,
+  webpackDevHost: WEBPACK_DEV_HOST,
+  webpackDevPort: WEBPACK_DEV_PORT,
+  apiHost: API_HOST,
+  apiPort: API_PORT,
 };
 server = new BackendServer(options);
 if (DEVELOPMENT) {
@@ -34,20 +32,20 @@ if (DEVELOPMENT) {
 server.startApiServer();
 server.start();
 
-
 // -- HOT RELOAD SETUP -- THIS IS STILL EXPERIMENTAL AND MAY HAVE SOME BUGS WHICH REQUIRES A FULL RELOAD
 if (DEVELOPMENT && module && module['hot']) {
   const hot = module['hot'];
 
   // Check for changes in backend server
+  console.log('[HMR] Hot Module Replacement is activated');
   hot.accept(require.resolve('./server/backend-server.tsx'), () => {
     console.log('[HMR] Reload Backend Server');
     try {
       // Reload backend server
-      let NewBackendServer = require('./server/backend-server.tsx').BackendServer;
+      const NewBackendServer = require('./server/backend-server.tsx').BackendServer;
 
       // Create a new server
-      let newServer = new NewBackendServer(options);
+      const newServer = new NewBackendServer(options);
 
       // Stop old server
       server.stopApiServer();
@@ -82,7 +80,6 @@ if (DEVELOPMENT && module && module['hot']) {
         } catch (err) {
           console.error('[HMR Check]', err);
         }
-      }
+      },
     );
 }
-

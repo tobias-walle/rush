@@ -5,8 +5,7 @@ import { DashboardContainer } from './dashboard.container';
 export const DashboardRoutes = () => {
   return (
     <div>
-      <Route path='dashboard' component={DashboardContainer}>
-      </Route>
+      <Route path='dashboard' component={DashboardContainer}/>
     </div>
   );
 };

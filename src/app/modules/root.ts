@@ -19,10 +19,10 @@ export const reducer = combineReducers({
   form: formReducer,
   routing: routerReducer,
   browser: browserReducer,
-  dashboard: dashboardReducer
+  dashboard: dashboardReducer,
 });
 
 // Combine the epics (redux-observables)
 export const epic = combineEpics(
-  browserEpic
+  browserEpic,
 );

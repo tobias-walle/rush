@@ -1,6 +1,6 @@
 let webpack = require('webpack');
 let path = require('path');
-const { CheckerPlugin } = require('awesome-typescript-loader');
+const {CheckerPlugin} = require('awesome-typescript-loader');
 let CopyWebpackPlugin = require('copy-webpack-plugin');
 let CleanWebpackPlugin = require('clean-webpack-plugin');
 
@@ -13,6 +13,7 @@ module.exports = {
       'react-dom'
     ],
     app: [
+      'babel-polyfill',
       './src/app/client.tsx',
     ]
   },
@@ -42,6 +43,10 @@ module.exports = {
       {
         test: /\.(png|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'url-loader?limit=100000'
+      },
+      {
+        test: /\.json$/,
+        use: 'json-loader'
       }
     ],
   },
@@ -58,7 +63,7 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify('production'),
       'process.env.IS_SERVER_SIDE': JSON.stringify(false),
     }),
-    new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.bundle.js'}),
+    new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'vendor.bundle.js'}),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false

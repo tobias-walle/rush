@@ -6,7 +6,6 @@ import { shallow } from 'enzyme';
 import configureStore from 'redux-mock-store';
 const mockStore = configureStore();
 
-
 describe('AppComponent', () => {
   it('should render', () => {
     const history = createMemoryHistory();
@@ -15,8 +14,9 @@ describe('AppComponent', () => {
     expect(shallow(
       <AppComponent
         store={store}
-        history={history}/>)
-      .exists()
+        history={history}
+      />)
+      .exists(),
     ).toBeTruthy();
   });
 });

@@ -1,3 +1,4 @@
+let webpack = require('webpack');
 let webpackConfig = require('./webpack/webpack.client.config.development');
 
 module.exports = (config) => {
@@ -6,21 +7,38 @@ module.exports = (config) => {
       require('karma-webpack'),
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
+      require('karma-firefox-launcher'),
+      require('karma-phantomjs-launcher'),
     ],
 
     basePath: '',
     frameworks: ['jasmine'],
     files: [
-      '**/*.spec.ts*'
+      './node_modules/babel-polyfill/dist/polyfill.js',
+      { pattern: './src/test.ts' },
     ],
 
     preprocessors: {
-      '**/*.ts*': ['webpack'],
+      './src/test.ts': ['webpack'],
+    },
+
+    mime: {
+      'text/x-typescript': ['ts', 'tsx']
     },
 
     webpack: {
       resolve: webpackConfig.resolve,
       module: webpackConfig.module,
+      devtool: 'inline-source-map',
+      plugins: [
+        new webpack.SourceMapDevToolPlugin({
+          filename: null, // Sourcemap is inlined
+          test: /\.(ts|tsx|js|jsx)($|\?)/i
+        }),
+        new webpack.LoaderOptionsPlugin({
+          debug: true
+        })
+      ],
       node: {
         fs: 'empty'
       },
@@ -37,7 +55,7 @@ module.exports = (config) => {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome', 'Chromium'],
+    browsers: ['Chrome'],
     singleRun: false
-  })
+  });
 };

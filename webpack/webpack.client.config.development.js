@@ -1,14 +1,15 @@
-let webpack = require('webpack');
-let path = require('path');
+const webpack = require('webpack');
+const path = require('path');
 const {CheckerPlugin} = require('awesome-typescript-loader');
-let CopyWebpackPlugin = require('copy-webpack-plugin');
-let CleanWebpackPlugin = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-let rootDir = path.resolve(__dirname, '..');
+const rootDir = path.resolve(__dirname, '..');
 
 module.exports = {
   entry: {
     app: [
+      'babel-polyfill',
       'react-hot-loader/patch',
       './src/app/client.tsx',
     ],
@@ -52,6 +53,10 @@ module.exports = {
       {
         test: /\.(png|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'url-loader?limit=100000'
+      },
+      {
+        test: /\.json$/,
+        use: 'json-loader'
       }
     ],
   },

@@ -36,22 +36,23 @@ setupStore();
 
 // Render the app
 const getRootComponent = () => {
-  let AppComponent = require('./components/app.component.tsx').AppComponent;
+  const AppComponent = require('./components/app.component.tsx').AppComponent;
 
   let RootComponent = () => (
-    <AppComponent history={history}
-                  store={store}
+    <AppComponent
+      history={history}
+      store={store}
     />
   );
 
   if (RENDER_CSS_ON_CLIENT || DISABLE_SERVER_SIDE_RENDERING) {
     // Main styles
-    let mainStyles = require('./styles/main.scss');
+    const mainStyles = require('./styles/main.scss');
 
     // Add Component style context
-    let OldRootComponent = withStyles(mainStyles)(RootComponent);
+    const OldRootComponent = withStyles(mainStyles)(RootComponent);
     RootComponent = () => (
-      <WithStylesContext onInsertCss={ styles => styles._insertCss()}>
+      <WithStylesContext onInsertCss={styles => styles._insertCss()}>
         <OldRootComponent/>
       </WithStylesContext>
     );
@@ -59,17 +60,17 @@ const getRootComponent = () => {
   return RootComponent;
 };
 
-let RootComponent = getRootComponent();
+const RootComponent = getRootComponent();
 render(
   <AppContainer>
     <RootComponent/>
-  </AppContainer>, document.getElementById('container')
+  </AppContainer>, document.getElementById('container'),
 );
 
 if (module['hot']) {
 
   const reRenderApp = () => {
-    let NextRootComponent = getRootComponent();
+    const NextRootComponent = getRootComponent();
 
     render((
       <AppContainer>
@@ -82,8 +83,11 @@ if (module['hot']) {
     reRenderApp();
   });
 
-  module['hot'].accept('./modules/root', () => {
+  module['hot'].accept(['./modules/root', './utils/redux-helper'], () => {
+    console.log('Hot Reload root');
     setupStore();
     reRenderApp();
   });
+
+  module['hot'].accept();
 }

@@ -8,11 +8,11 @@ import { routerMiddleware } from 'react-router-redux';
  * @return {GenericStoreEnhancer}
  */
 export function getStoreMiddleware(history): GenericStoreEnhancer {
-  let middlewares = [
+  const middlewares = [
     // Create middleware for redux-observables
     createEpicMiddleware(epic),
     // Router
-    routerMiddleware(history)
+    routerMiddleware(history),
   ];
 
   return applyMiddleware(...middlewares);

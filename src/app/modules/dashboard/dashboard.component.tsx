@@ -22,23 +22,23 @@ export class DashboardComponent extends React.Component<DashboardComponentProps,
           {
             visibleTileBundles
               .map(selection => {
-                  let tile = tileMapping[selection.tileKey];
+                  const tile = tileMapping[selection.tileKey];
                   if (!tile) {
                     console.warn(`"${selection.tileKey}" does not exists in tile mapping.`);
                     return null;
                   }
-                    let props = {
+                  const props = {
                       ...tile.componentProps,
-                      ...selection.props
+                      ...selection.props,
                     };
-                    return (
+                  return (
                       <TileContainer
                         key={selection.key}
                         tile={tile}
                         componentProps={props}
                       />
                     );
-                }
+                },
               )
           }
         </div>

@@ -14,7 +14,7 @@ export interface AppProps {
 export class AppComponent extends React.Component<AppProps, any> {
 
   componentDidMount() {
-    let store = this.props.store;
+    const store = this.props.store;
     store.dispatch(windowSizeChange());
     store.dispatch(startWindowSizeListener());
   }

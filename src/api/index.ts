@@ -17,8 +17,8 @@ export class ApiServer {
     public host: string,
     public port: number,
     private options: {
-      logging?: true
-    } = {}
+      logging?: true,
+    } = {},
   ) {
     this.app = express();
 
@@ -69,4 +69,3 @@ export class ApiServer {
     }
   }
 }
-

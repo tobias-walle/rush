@@ -9,15 +9,14 @@ export interface TileContainerProps {
 }
 
 function mapStateToProps(state: GlobalState, ownProps: TileContainerProps): TileProps {
-  let { tile, componentProps } = ownProps;
+  const { tile, componentProps } = ownProps;
   return {
     breakpoint: state.browser.breakpoint,
     tile,
-    componentProps
+    componentProps,
   };
 }
 
 export const TileContainer = connect(
-  mapStateToProps
+  mapStateToProps,
 )(TileComponent);
-

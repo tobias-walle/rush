@@ -16,17 +16,18 @@ export class HtmlComponent extends React.Component<HtmlProps, any> {
   }
 
   render(): JSX.Element {
-    let {component, store, styles} = this.props;
+    const {component, store} = this.props;
+    let styles = this.props.styles;
     if (styles === undefined) {
       styles = [];
     }
-    let content: string = component ? ReactDOM.renderToString(component) : '';
+    const content: string = component ? ReactDOM.renderToString(component) : '';
 
     let head: JSX.Element;
-    let stylesElement = <style type='text/css' dangerouslySetInnerHTML={{__html: styles.join('  ')}}/>;
+    const stylesElement = <style type='text/css' dangerouslySetInnerHTML={{__html: styles.join('  ')}}/>;
     let htmlAttributes: any;
     if (IS_SERVER_SIDE) {
-      let helmet = Helmet.rewind();
+      const helmet = Helmet.rewind();
       htmlAttributes = helmet.htmlAttributes;
       head = (
         <head>
@@ -50,16 +51,17 @@ export class HtmlComponent extends React.Component<HtmlProps, any> {
       <html {...htmlAttributes ? htmlAttributes.toString() : undefined}>
       {head}
       <body>
-      <div id='container'
-           dangerouslySetInnerHTML={{__html: content}}
+      <div
+        id='container'
+        dangerouslySetInnerHTML={{__html: content}}
       />
 
       <script
         dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())};`}}
         charSet='UTF-8'
       />
-      <script src='/static/vendor.bundle.js'></script>
-      <script src='/static/bundle.js'></script>
+      <script src='/static/vendor.bundle.js'/>
+      <script src='/static/bundle.js'/>
       </body>
       </html>
     );

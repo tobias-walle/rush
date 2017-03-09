@@ -8,19 +8,18 @@ export function getTileSize(breakpoint: string, tile: Tile, breakpointMapping = 
   if (tile.scales.length <= 0) {
     return null;
   }
-  let defaultSize = BreakpointDefaultSizeMapping[breakpoint];
-  let scales = tile.scales;
+  const defaultSize = BreakpointDefaultSizeMapping[breakpoint];
+  const scales = tile.scales;
   scales.sort();
   scales.reverse();
-  for (let scale of scales) {
-    let size = Math.floor(defaultSize * scale);
+  for (const scale of scales) {
+    const size = Math.floor(defaultSize * scale);
     if (size <= 12) {
       return size;
     }
   }
   return null;
 }
-
 
 export interface TileProps {
   tile?: Tile;
@@ -32,22 +31,21 @@ export interface TileProps {
 export class TileComponent extends React.Component<TileProps, any> {
 
   render() {
-    let props: TileProps = this.props;
+    const props: TileProps = this.props;
 
-    let breakpoint = props.breakpoint;
-    let componentProps = props.componentProps;
-    let tile = props.tile;
-    let Component = tile.Component;
+    const breakpoint = props.breakpoint;
+    const componentProps = props.componentProps;
+    const tile = props.tile;
+    const Component = tile.Component;
 
-    let classes = ['tile', styles.tile];
-    let size = getTileSize(breakpoint, tile);
+    const classes = ['tile', styles.tile];
+    const size = getTileSize(breakpoint, tile);
     if (size) {
       classes.push(`tile-${size}`);
     }
 
     return (
-      <div className={classes.join(' ')}
-      >
+      <div className={classes.join(' ')}>
         <Component {...componentProps}/>
       </div>
     );

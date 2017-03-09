@@ -7,10 +7,10 @@ import { Breakpoints } from '../constants/breakpoints';
  */
 export function getBreakpoint(widthInPixels: number): string {
   // xl, lg, ...
-  let breakpoints = Object.keys(Breakpoints).reverse();
+  const breakpoints = Object.keys(Breakpoints).reverse();
 
-  for (let breakpoint of breakpoints) {
-    let pixels = Breakpoints[breakpoint];
+  for (const breakpoint of breakpoints) {
+    const pixels = Breakpoints[breakpoint];
     if (widthInPixels > pixels) {
       return breakpoint;
     }

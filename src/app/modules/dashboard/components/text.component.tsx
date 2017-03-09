@@ -13,7 +13,7 @@ export class TextComponent extends React.Component<TextComponentProps, {}> {
     return (
       <div className={styles.container}>
         <div>
-          { props.text }
+          {props.text}
         </div>
       </div>
     );

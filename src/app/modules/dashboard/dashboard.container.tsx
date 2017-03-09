@@ -9,6 +9,5 @@ function mapStateToProps(state: GlobalState): DashboardComponentProps {
 }
 
 export const DashboardContainer = connect(
-  mapStateToProps
+  mapStateToProps,
 )(DashboardComponent);
-
