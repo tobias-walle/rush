@@ -1,0 +1,10 @@
+@import "../config/breakpoints";
+
+$columns: 12;
+$spacing: .8rem;
+$scaling-factor: 1.2;
+$tile-config:
+  sm $sm 12,
+  md $md 6,
+  lg $lg 4,
+  xl $xl 3;
