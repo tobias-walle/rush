@@ -4,7 +4,7 @@ import { reducer as formReducer } from 'redux-form';
 import { routerReducer } from 'react-router-redux';
 import { combineEpics } from 'redux-observable';
 import { browserEpic, BrowserState, browserReducer } from './browser/browser.redux';
-import { DashboardState, dashboardReducer } from './dashboard/dashboard.redux';
+import { DashboardState, dashboardReducer, dashboardEpics } from './dashboard/dashboard.redux';
 
 // Combine all modules to the global state interface
 export interface GlobalState {
@@ -25,4 +25,5 @@ export const reducer = combineReducers({
 // Combine the epics (redux-observables)
 export const epic = combineEpics(
   browserEpic,
+  dashboardEpics,
 );

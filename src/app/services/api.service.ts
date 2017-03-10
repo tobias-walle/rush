@@ -87,7 +87,6 @@ export class ApiService {
         ...customHeaders,
       },
     };
-    console.log('BODY', options);
     return this.ajax(options);
   }
 

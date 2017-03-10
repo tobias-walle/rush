@@ -1,19 +1,29 @@
 import * as React from 'react';
+import { WithStyles } from 'isomorphic-style-loader-utils';
+const styles = require('./temperature-tile.component.scss');
 
-export interface TemperatureTileProps {
+export interface TemperatureTileComponentProps {
   temperature?: number;
+  updateTemperature?(): void;
 }
 
-export class TemperatureTileComponent extends React.Component<TemperatureTileProps, {}> {
+@WithStyles(styles)
+export class TemperatureTileComponent extends React.Component<TemperatureTileComponentProps, {}> {
   unit = 'C';
 
   format(temperature, unit = this.unit) {
     return `${temperature}°C`;
   }
 
+  componentDidMount() {
+    const props = this.props as TemperatureTileComponentProps;
+    if (props.updateTemperature) {
+      props.updateTemperature();
+    }
+  }
+
   render() {
-    const {temperature} = this.props as TemperatureTileProps;
-    const styles = require('./temperature-tile.component.scss');
+    const {temperature} = this.props as TemperatureTileComponentProps;
     const label = 'Bad Homburg';
     let message: string;
 
