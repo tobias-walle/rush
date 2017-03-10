@@ -5,6 +5,7 @@ import { Server } from 'http';
 
 export class ApiServer {
   private app: express.Application;
+  private proxy: any;
   private server: Server;
 
   /**
@@ -21,6 +22,7 @@ export class ApiServer {
     } = {},
   ) {
     this.app = express();
+    this.proxy = require('http-proxy').createProxyServer();
 
     if (options.logging) {
     }
@@ -41,8 +43,10 @@ export class ApiServer {
    * Setup the api routes.
    */
   private setupRoutes() {
-    this.app.get('/', (req, res) => {
-      res.send(Math.random() > .5 ? 1 : 0);
+    this.app.all('/*', (req, res) => {
+      this.proxy.web(req, res, {
+        target: 'http://blynk-cloud.com/',
+      });
     });
   }
 
