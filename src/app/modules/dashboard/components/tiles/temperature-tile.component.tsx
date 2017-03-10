@@ -12,7 +12,7 @@ export class TemperatureTileComponent extends React.Component<TemperatureTileCom
   unit = 'C';
 
   format(temperature, unit = this.unit) {
-    return `${temperature}°C`;
+    return `${temperature.toFixed(1)}°C`;
   }
 
   componentDidMount() {

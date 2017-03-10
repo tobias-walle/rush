@@ -15,7 +15,6 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import { DEVELOPMENT, DISABLE_SERVER_SIDE_RENDERING, RENDER_CSS_ON_CLIENT } from '../utils/config';
 import { ApiServer } from '../../api/index';
 import { getStoreMiddleware } from '../utils/redux-helper';
-import { reducer } from '../modules/root';
 import { HtmlComponent } from '../components/html.component';
 import { RouterContext } from 'react-router';
 import { Provider } from 'react-redux';
@@ -108,7 +107,11 @@ export class BackendServer {
 
           // Setup state
           const initialState = {};
-          const store = createStore(reducer, initialState, getStoreMiddleware(history));
+          const store = createStore(
+            require('../modules/root').reducer,
+            initialState,
+            getStoreMiddleware(history)
+          );
 
           syncHistoryWithStore(history, store);
 

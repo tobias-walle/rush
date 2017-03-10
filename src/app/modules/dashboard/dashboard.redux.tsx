@@ -18,6 +18,21 @@ const initialState: DashboardState = {
       'apiKey': '01ac3ff7158743c7a95bb1ddb42d964a',
       'pin': 'V0',
     }),
+    new TileSelection('gauge', {
+      'apiKey': '01ac3ff7158743c7a95bb1ddb42d964a',
+      'pin': 'V1',
+      'label': 'Humidity',
+    }),
+    new TileSelection('gauge', {
+      'apiKey': '01ac3ff7158743c7a95bb1ddb42d964a',
+      'pin': 'A0',
+      'label': 'Brightness',
+    }),
+    new TileSelection('gauge', {
+      'apiKey': '843c9f83a3674735826a5cb4b760d41b',
+      'pin': 'V0',
+      'label': 'Volume',
+    }),
   ],
   connections: {},
 };
@@ -106,13 +121,16 @@ export const getPinEpic = ($action, store, api: ApiService = apiService) =>
         .map(response => getPinDataSuccessDuck({
           apiKey: action.payload.apiKey,
           pin: action.payload.pin,
-          value: Math.round(+response.response[0]),
+          value: response.response,
         }))
-        .catch(error => Observable.of(getPinDataErrorDuck({
-          apiKey: action.payload.apiKey,
-          pin: action.payload.pin,
-          error: JSON.stringify(error),
-        }))),
+        .catch(error => {
+          return Observable.of(
+            getPinDataErrorDuck({
+              apiKey: action.payload.apiKey,
+              pin: action.payload.pin,
+              error: JSON.stringify(error),
+            }));
+        }),
     );
 
 export const getPinIntervalEpic = ($action) =>
