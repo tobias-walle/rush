@@ -7,6 +7,7 @@ export interface GaugeTileComponentProps {
   min?: number;
   max?: number;
   value?: number;
+  unit?: string;
   updateValue?(): void;
 }
 
@@ -19,21 +20,27 @@ export class GaugeTileComponent extends React.Component<GaugeTileComponentProps,
     }
   }
 
-  formatValue(value) {
+  formatValue(value, unit) {
+    let valueString: string;
     if (value == null || isNaN(value)) {
-      return '-';
+      valueString = '-';
     } else {
-      return `${Math.floor(value)}`;
+      valueString = `${Math.floor(value)}`;
+    }
+    if (unit) {
+      return valueString + unit;
+    } else {
+      return valueString;
     }
   }
 
   render() {
-    const {label, value, min, max} = this.props as GaugeTileComponentProps;
+    const {label, value, unit, min, max} = this.props as GaugeTileComponentProps;
 
     return (
       <div className={styles.container}>
         <div className={styles.label}>{label}</div>
-        <div className={styles.value}>{this.formatValue(value)}</div>
+        <div className={styles.value}>{this.formatValue(value, unit)}</div>
       </div>
     );
   };

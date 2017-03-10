@@ -14,19 +14,23 @@ export interface DashboardState {
 
 const initialState: DashboardState = {
   tiles: [
-    new TileSelection('temperature', {
+    new TileSelection('gauge', {
       'apiKey': '01ac3ff7158743c7a95bb1ddb42d964a',
       'pin': 'V0',
+      'label': 'Temperature',
+      'unit': ' °C',
     }),
     new TileSelection('gauge', {
       'apiKey': '01ac3ff7158743c7a95bb1ddb42d964a',
       'pin': 'V1',
       'label': 'Humidity',
+      'unit': ' %',
     }),
     new TileSelection('gauge', {
       'apiKey': '01ac3ff7158743c7a95bb1ddb42d964a',
-      'pin': 'A0',
+      'pin': 'V2',
       'label': 'Brightness',
+      'unit': ' lx',
     }),
     new TileSelection('gauge', {
       'apiKey': '843c9f83a3674735826a5cb4b760d41b',

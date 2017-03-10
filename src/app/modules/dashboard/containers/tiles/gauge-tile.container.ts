@@ -8,20 +8,22 @@ export interface GaugeTileContainer {
   apiKey: string;
   pin: string;
   label?: string;
+  unit?: string;
   interval?: number;
 }
 
 function mapStateToProps(state: GlobalState, ownProps: GaugeTileContainer): GaugeTileComponentProps {
-  const {apiKey, pin, label} = ownProps;
+  const {apiKey, unit, pin, label} = ownProps;
   const value = dotProp.get(state, `dashboard.connections.${apiKey}.data.${pin}.value`);
   return {
     label,
     value,
+    unit,
   };
 }
 
 function mapDispatchToProps(dispatch, ownProps: GaugeTileContainer): GaugeTileComponentProps {
-  const interval = ownProps.interval || 500;
+  const interval = ownProps.interval || 2000;
   return {
     updateValue: () => dispatch(getPinDataIntervalDuck({
       ...ownProps,
