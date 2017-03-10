@@ -86,6 +86,7 @@
     "webpack-dev-server": "^2.4.1"
   },
   "dependencies": {
+    "@tobias-walle/redux-typed-ducks": "^0.2.6",
     "babel-polyfill": "^6.23.0",
     "body-parser": "^1.17.1",
     "classnames": "^2.2.5",

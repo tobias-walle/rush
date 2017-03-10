@@ -2,6 +2,12 @@
 # yarn lockfile v1
 
 
+"@tobias-walle/redux-typed-ducks@^0.2.6":
+  version "0.2.6"
+  resolved "https://registry.yarnpkg.com/@tobias-walle/redux-typed-ducks/-/redux-typed-ducks-0.2.6.tgz#db1023c6867c8061c871b6c928d51b3b708aced7"
+  dependencies:
+    rimraf "^2.6.1"
+
 "@types/cheerio@*":
   version "0.17.31"
   resolved "https://registry.yarnpkg.com/@types/cheerio/-/cheerio-0.17.31.tgz#bfeda3e3e8647a6e49b2998d137c81d5d8ab52d0"
@@ -4375,7 +4381,7 @@ right-align@^0.1.1:
   dependencies:
     align-text "^0.1.1"
 
-rimraf@2, rimraf@^2.2.8, rimraf@^2.6.0:
+rimraf@2, rimraf@^2.2.8, rimraf@^2.6.0, rimraf@^2.6.1:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.6.1.tgz#c2338ec643df7a1b7fe5c54fa86f57428a55f33d"
   dependencies:
