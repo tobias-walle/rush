@@ -1,12 +1,13 @@
 import * as express from 'express';
 import * as morgan from 'morgan';
 import * as bodyParser from 'body-parser';
-import { Server } from 'http';
+import * as http from 'http';
+const enableWs = require('express-ws');
 
 export class ApiServer {
-  private app: express.Application;
+  private app: any;
   private proxy: any;
-  private server: Server;
+  private server: http.Server;
 
   /**
    * Creates the API Server.
@@ -22,11 +23,9 @@ export class ApiServer {
     } = {},
   ) {
     this.app = express();
-    this.proxy = require('http-proxy').createProxyServer();
+    enableWs(this.app);
 
-    if (options.logging) {
-    }
-
+    this.setupWebSocket();
     this.setupMiddleware();
     this.setupRoutes();
   }
@@ -46,6 +45,21 @@ export class ApiServer {
     this.app.all('/*', (req, res) => {
       this.proxy.web(req, res, {
         target: 'http://blynk-cloud.com/',
+      });
+    });
+  }
+
+  private setupWebSocket() {
+    this.app.ws('', (ws, req) => {
+      console.log('WebSocket Client connected');
+      ws.on('message', (data) => {
+        console.log('Got data', data);
+      });
+      ws.on('close', () => {
+        console.log('WebSocket Client disconnected');
+      });
+      ws.on('error', (err) => {
+        console.log('WebSocket: ', err);
       });
     });
   }

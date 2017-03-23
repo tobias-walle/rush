@@ -13,12 +13,6 @@ export interface GaugeTileComponentProps {
 
 @WithStyles(styles)
 export class GaugeTileComponent extends React.Component<GaugeTileComponentProps, {}> {
-  componentDidMount() {
-    const props = this.props as GaugeTileComponentProps;
-    if (props.updateValue) {
-      props.updateValue();
-    }
-  }
 
   formatValue(value, unit) {
     let valueString: string;

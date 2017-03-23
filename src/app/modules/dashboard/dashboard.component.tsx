@@ -8,9 +8,17 @@ import { TileSelection } from './models/tile-selection';
 export class DashboardComponentProps {
   tileMapping?: TileMapping;
   visibleTileBundles?: TileSelection[];
+  onComponentDidMount?: () => void;
 }
 
 export class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
+  componentDidMount() {
+    const onComponentDidMount = this.props.onComponentDidMount;
+    if (onComponentDidMount) {
+      onComponentDidMount();
+    }
+  }
+
   render() {
     let {tileMapping, visibleTileBundles} = this.props as DashboardComponentProps;
     tileMapping = tileMapping || DEFAULT_TILE_BUNDLE_MAPPING;
@@ -28,16 +36,16 @@ export class DashboardComponent extends React.Component<DashboardComponentProps,
                     return null;
                   }
                   const props = {
-                      ...tile.componentProps,
-                      ...selection.props,
-                    };
+                    ...tile.componentProps,
+                    ...selection.props,
+                  };
                   return (
-                      <TileContainer
-                        key={selection.key}
-                        tile={tile}
-                        componentProps={props}
-                      />
-                    );
+                    <TileContainer
+                      key={selection.key}
+                      tile={tile}
+                      componentProps={props}
+                    />
+                  );
                 },
               )
           }

@@ -17,6 +17,8 @@ export type HttpOptions = {
 };
 
 export class ApiService {
+  private webSocket: WebSocket;
+  private messageObservable: Observable<any>;
 
   readonly ajax;
 
@@ -35,6 +37,49 @@ export class ApiService {
     },
   ) {
     this.ajax = dependencies.ajax;
+  }
+
+  /**
+   * Make sure that the WebSocket is connected. Throw exception otherwise.
+   */
+  private validateWebSocket() {
+    if (this.webSocket.readyState !== 1) {
+      throw Error('WebSocket is not connected!');
+    }
+  }
+
+  /**
+   * Connect with the webSocket api. This method also checks if the client is already connected and make sure there is
+   * only one connection.
+   * @return An Observable which resolves then the connection is established.
+   */
+  connect(): Observable<any> {
+    if (this.webSocket == null || this.webSocket.readyState !== 1) {
+      try {
+        this.webSocket = new WebSocket(`ws://${window.location.host}` + this.options.urlPrefix);
+        this.messageObservable = Observable.fromEvent(this.webSocket, 'message');
+        return Observable.fromEvent(this.webSocket, 'open');
+      } catch (e) {
+        return Observable.throw(e);
+      }
+    }
+    return Observable.of();
+  }
+
+  /**
+   * Send data to the api via the WebSocket.
+   */
+  send(data: any) {
+    this.validateWebSocket();
+    this.webSocket.send(data);
+  }
+
+  /**
+   * Returns an Observable that emits values if the WebSocket receives data.
+   */
+  getMessageObservable(): Observable<any> {
+    this.validateWebSocket();
+    return this.messageObservable;
   }
 
   /**
