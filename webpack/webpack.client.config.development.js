@@ -2,7 +2,6 @@ const webpack = require('webpack');
 const path = require('path');
 const {CheckerPlugin} = require('awesome-typescript-loader');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const rootDir = path.resolve(__dirname, '..');
 
@@ -62,9 +61,6 @@ module.exports = {
   },
 
   plugins: [
-    new CleanWebpackPlugin(['client'], {
-      root: path.resolve(__dirname, '..', 'dist'),
-    }),
     new webpack.NamedModulesPlugin(),
     new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'vendor.bundle.js'}),
     new webpack.DefinePlugin({

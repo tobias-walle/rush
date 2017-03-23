@@ -3,108 +3,117 @@ const helpers = require('./utils/helpers');
 const path = require('path');
 const cp = require('child_process');
 const colors = require('colors');
-const rimraf = require('rimraf');
-const distFolder = '../dist';
 
-console.log('Cleanup...');
-rimraf(distFolder, () => {
 
 // Config
 // - Arguments
-  const ENVIRONMENTS = ['production', 'development'];
+const ENVIRONMENTS = ['production', 'development'];
 
-  const ARGUMENTS = {
-    'ENVIRONMENT': ENVIRONMENTS
-  };
+const ARGUMENTS = {
+  'ENVIRONMENT': ENVIRONMENTS
+};
 
 // - Options
-  const OPTIONS = {
-    target: {
-      options: ['client', 'server'],
-      description: 'Define the target that should be compiled. If nothing is set both targets will be compiled.'
-    },
-    watch: {
-      options: [true, false],
-      description: 'Watches the build and updates on changes.'
-    },
-    afterFirstRun: {
-      description: 'Can be used only in combination of the --watch Option. Command that should be executed after the first compilation.'
-    },
-  };
+const OPTIONS = {
+  target: {
+    options: ['client', 'server'],
+    description: 'Define the target that should be compiled. If nothing is set both targets will be compiled.'
+  },
+  watch: {
+    options: [true, false],
+    description: 'Watches the build and updates on changes.'
+  },
+  afterFirstRun: {
+    description: 'Can be used only in combination of the --watch Option. Command that should be executed after the first compilation.'
+  },
+};
 
 // - Paths
-  const WEBPACK_BASE_PATH = './webpack';
+const WEBPACK_BASE_PATH = './webpack';
 
 // Parses the command line arguments
-  let {environment, watch, target, afterFirstRun} = require('./utils/ArgumentParser')(ARGUMENTS, OPTIONS);
+let {environment, watch, target, afterFirstRun} = require('./utils/ArgumentParser')(ARGUMENTS, OPTIONS);
 
 // Helper to build the webpack config path for a specific target
-  let buildWebpackConfigPath = (target) => {
-    return `${WEBPACK_BASE_PATH}/webpack.${target}.config.${environment}.js`;
-  };
+let buildWebpackConfigPath = (target) => {
+  return `${WEBPACK_BASE_PATH}/webpack.${target}.config.${environment}.js`;
+};
 
 // Create a logger
-  let log = (msg) => {
-    let date = new Date();
-    let logPrefix = (`[${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}] `.bold);
-    console.log(`${logPrefix}${msg}`);
-  };
+let log = (msg) => {
+  let date = new Date();
+  let logPrefix = (`[${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}] `.bold);
+  console.log(`${logPrefix}${msg}`);
+};
 
 
 // Counter for checking how many workers have completed their first run
-  let numberOfWorker = target ? 1 : OPTIONS.target.options.length;
-  let numberOfWorkerFinishedFirstRun = 0;
+let numberOfWorker = target ? 1 : OPTIONS.target.options.length;
+let numberOfWorkerFinishedBuilding = 0;
 
-  let startWorker = (target, color) => {
-    let webpackConfigPath = path.resolve(buildWebpackConfigPath(target));
+let startWorker = (target, color) => {
+  let webpackConfigPath = path.resolve(buildWebpackConfigPath(target));
 
-    let workerConfig = {webpackConfigPath, environment, watch, target, color};
-    let worker = cp.fork(__dirname + '/utils/buildWorker');
-    worker.on('message', (message) => {
-      if (message === 'first-run') {
-        if (++numberOfWorkerFinishedFirstRun === numberOfWorker && afterFirstRun) {
-          log('Execute: ' + afterFirstRun.blue);
-          let words = afterFirstRun.split(' ');
+  let workerConfig = {webpackConfigPath, environment, watch, target, color};
+  let worker = cp.fork(__dirname + '/utils/buildWorker');
+  worker.on('message', (message) => {
+    if (message === 'compiled') {
+      console.log(afterFirstRun, numberOfWorker, numberOfWorkerFinishedBuilding);
+      if (++numberOfWorkerFinishedBuilding === numberOfWorker && afterFirstRun) {
+        log('Execute: ' + afterFirstRun.blue);
+        let words = afterFirstRun.split(' ');
 
-          let command = words[0];
-          let args = words.slice(1);
+        let command = words[0];
+        let args = words.slice(1);
 
-          let firstRunProcess = cp.spawn(command, args, {
-            stdio: 'inherit'
-          });
-          firstRunProcess.on('error', (err) => {
-            console.error(err);
-          });
-        }
+        let firstRunProcess = cp.spawn(command, args, {
+          stdio: 'inherit'
+        });
+        firstRunProcess.on('close', (code) => {
+          // Reset number of worker
+          numberOfWorkerFinishedBuilding = 0;
+        });
       }
-    });
-
-    worker.send(JSON.stringify(workerConfig));
-    return worker;
-  };
-
-
-  let workers = [];
-  if (target) {
-    workers.push(startWorker(target, 'yellow'));
-  } else {
-    let logColors = ['yellow', 'cyan', 'red', 'magenta'];
-    let i = 0;
-    for (let target of OPTIONS.target.options) {
-      workers.push(startWorker(target, logColors[i++ % logColors.length]));
     }
+  });
+
+  worker.send(JSON.stringify(workerConfig));
+  return worker;
+};
+
+
+let workers = [];
+if (target) {
+  workers.push(startWorker(target, 'yellow'));
+} else {
+  let logColors = ['yellow', 'cyan', 'red', 'magenta'];
+  let i = 0;
+  for (let target of OPTIONS.target.options) {
+    workers.push(startWorker(target, logColors[i++ % logColors.length]));
   }
+}
 
 // Setup clean up of the child processes
-  let cleanUp = () => {
-    log('Clean Up Workers');
-    // Cleanup worker
-    setTimeout(() => {
-      workers.forEach((w) => w.kill('SIGINT'));
+let cleanUp = () => {
+  log('Clean Up Workers');
+  // Cleanup worker
+  setTimeout(() => {
+    workers.forEach((w) => {
+      let killed = false;
+      w.kill('SIGINT', () => {
+        killed = true;
+      });
+      setTimeout(() => {
+        if (!killed) {
+          // Force kill if SIGINT takes to much time
+          w.kill('SIGKILL');
+        }
+      }, 500)
     });
-  };
-  process.on('exit', cleanUp);
-  process.on('SIGINT', cleanUp);
-  process.on('SIGTERM', cleanUp);
+  });
+};
+process.on('exit', cleanUp);
+process.on('SIGINT', cleanUp);
+process.on('SIGTERM', cleanUp);
+process.on('uncaughtException', cleanUp);
 
-});
