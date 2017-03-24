@@ -1,23 +1,20 @@
+import * as http from 'http';
 import { Server } from 'http';
 import * as express from 'express';
 import * as path from 'path';
 import * as React from 'react';
 import { WebServer } from './webpack-dev-server';
-import { match } from 'react-router';
+import { match, createMemoryHistory, RouterContext } from 'react-router';
 import { routes } from '../routes';
 import { renderToString } from 'react-dom/server';
 import { createStore } from 'redux';
-import { createMemoryHistory } from 'react-router';
 import { WithStylesContext } from 'isomorphic-style-loader-utils';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { syncHistoryWithStore } from 'react-router-redux';
-
 import { DEVELOPMENT, DISABLE_SERVER_SIDE_RENDERING, RENDER_CSS_ON_CLIENT } from '../utils/config';
 import { ApiServer } from '../../api/index';
 import { getStoreMiddleware } from '../utils/redux-helper';
-import { reducer } from '../modules/root';
 import { HtmlComponent } from '../components/html.component';
-import { RouterContext } from 'react-router';
 import { Provider } from 'react-redux';
 
 // Load main styles as string
@@ -36,8 +33,8 @@ export class BackendServer {
   private rootDir = path.resolve();
   private publicPath = path.resolve(this.rootDir + '/dist/client');
 
-  private app: express.Application;
-  private proxy: any;
+  private app: any;
+  private httpProxy: any;
 
   options: BackendServerOptions;
 
@@ -53,9 +50,12 @@ export class BackendServer {
 
   init() {
     this.app = express();
+    this.httpServer = http.createServer(this.app);
 
     // Create a proxy for the webpack dev server and the api
-    this.proxy = require('http-proxy').createProxyServer();
+    this.httpProxy = require('http-proxy').createProxyServer({
+      ws: true,
+    });
 
     // Setup
     this.setupApiRoutes();
@@ -74,7 +74,7 @@ export class BackendServer {
 
   setupWebpackDevServerRoutes() {
     this.app.all('/static/*', (req, res) => {
-      this.proxy.web(req, res, {
+      this.httpProxy.web(req, res, {
         target: `http://${this.options.webpackDevHost}:${this.options.webpackDevPort}/`,
       });
     });
@@ -82,8 +82,19 @@ export class BackendServer {
 
   setupApiRoutes() {
     this.app.use('/api', (req, res) => {
-      this.proxy.web(req, res, {
-        target: `http://${this.options.apiHost}:${this.options.apiPort}`,
+      this.httpProxy.web(req, res, {
+          target: `http://${this.options.apiHost}:${this.options.apiPort}/`,
+        }
+      );
+    });
+
+    this.httpServer.on('upgrade', (req, socket, head) => {
+      this.httpProxy.ws(req, socket, head, {
+        target: {
+          host: this.options.apiHost,
+          port: this.options.apiPort,
+        },
+        ignorePath: true
       });
     });
   }
@@ -108,7 +119,11 @@ export class BackendServer {
 
           // Setup state
           const initialState = {};
-          const store = createStore(reducer, initialState, getStoreMiddleware(history));
+          const store = createStore(
+            require('../modules/root').reducer,
+            initialState,
+            getStoreMiddleware(history),
+          );
 
           syncHistoryWithStore(history, store);
 
@@ -176,7 +191,7 @@ export class BackendServer {
   }
 
   start() {
-    this.httpServer = this.app.listen(this.options.port, () => {
+    this.httpServer.listen(this.options.port, () => {
       console.log(`Server is running on ${this.options.host}:${this.options.port}/`);
     });
   }
