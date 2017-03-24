@@ -76,19 +76,11 @@
     "radix": true,
     "typeof-compare": true,
     "use-isnan": true,
-    "eofline": true,
     "no-default-export": true,
     "prefer-const": true,
     "max-line-length": [
       true,
       140
-    ],
-    "trailing-comma": [
-      true,
-      {
-        "multiline": "always",
-        "singleline": "never"
-      }
     ],
     "align": [
       true,
@@ -110,8 +102,7 @@
     ],
     "comment-format": [
       true,
-      "check-space",
-      "check-uppercase"
+      "check-space"
     ],
     "jsdoc-format": true,
     "no-angle-bracket-type-assertion": true,
