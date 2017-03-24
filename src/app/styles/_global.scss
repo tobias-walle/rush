@@ -7,6 +7,10 @@ body {
   font-size: 16px;
 }
 
+input, select, textarea, button {
+  font-family: inherit;
+}
+
 #container {
   margin: auto;
   max-width: 800px;
