@@ -2,7 +2,6 @@ let webpack = require('webpack');
 let fs = require('fs');
 let path = require('path');
 const {CheckerPlugin} = require('awesome-typescript-loader');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 let rootDir = path.resolve(__dirname, '..');
 
@@ -58,9 +57,6 @@ module.exports = {
   externals: nodeModules,
 
   plugins: [
-    new CleanWebpackPlugin(['server'], {
-      root: path.resolve(__dirname, '..', 'dist'),
-    }),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),
       'process.env.IS_SERVER_SIDE': JSON.stringify(true),
