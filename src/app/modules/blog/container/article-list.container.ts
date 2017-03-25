@@ -16,7 +16,7 @@ function mapDispatchToProps(dispatch): ArticleListProps {
       dispatch(loadAllArticles());
     },
     deleteArticle: (article) => {
-      dispatch(deleteArticle(article));
+      dispatch(deleteArticle({article}));
     },
   };
 }

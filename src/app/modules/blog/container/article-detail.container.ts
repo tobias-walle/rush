@@ -15,7 +15,7 @@ function mapDispatchToProps(dispatch, ownProps): ArticleDetailProps {
   const articleId = ownProps.params.id;
 
   return {
-    fetchArticle: () => dispatch(loadArticle(articleId)),
+    fetchArticle: () => dispatch(loadArticle({articleId})),
   };
 }
 

@@ -1,21 +1,17 @@
 import { Article } from '../models/article';
-import { Action } from 'redux';
 import { ApiService, apiService } from '../../../services/api.service';
 import { Observable } from 'rxjs';
 import { combineEpics } from 'redux-observable';
+import { createDuck, createReducer } from 'redux-typed-ducks';
 
 export interface ArticleState {
   articles?: Article[];
   selectedArticle?: Article;
-
   getArticleDownloading?: boolean;
   getArticleSuccess?: boolean;
   getArticleError?: string;
-
   articleAddError?: string;
-
   articleDeleteError?: string;
-
   articlesDownloading?: boolean;
   articlesDownloadSuccess?: boolean;
   articlesDownloadError?: string;
@@ -25,287 +21,256 @@ const initialState: ArticleState = {
   articles: [],
 };
 
-// Actions
-export const LOAD = 'app/blog/LOAD';
-export const LOAD_SUCCESS = 'app/blog/LOAD_SUCCESS';
-export const LOAD_FAIL = 'app/blog/LOAD_FAIL';
-export const LOAD_ALL = 'app/blog/LOAD_ALL';
-export const LOAD_ALL_SUCCESS = 'app/blog/LOAD_ALL_SUCCESS';
-export const LOAD_ALL_FAIL = 'app/blog/LOAD_ALL_FAIL';
-export const ADD = 'app/blog/ADD';
-export const ADD_SUCCESS = 'app/blog/ADD_SUCCESS';
-export const ADD_FAIL = 'app/blog/ADD_FAIL';
-export const DELETE = 'app/blog/DELETE';
-export const DELETE_SUCCESS = 'app/blog/DELETE_SUCCESS';
-export const DELETE_FAIL = 'app/blog/DELETE_FAIL';
-
-// Action Payload types
-export interface LoadAction extends Action {
-  articleId: string;
-}
-
-export interface LoadSuccessAction extends Action {
-  article: Article;
-}
-
-export interface LoadFailAction extends Action {
-  error: string;
-}
-
-export interface LoadAllAction extends Action {
-}
-
-export interface LoadAllSuccessAction extends Action {
-  articles: Article[];
-}
-
-export interface LoadAllFailAction extends Action {
-  error: string;
-}
-
-export interface AddAction extends Action {
-  article: Article;
-}
-
-export interface AddSuccessAction extends Action {
-  article: Article;
-}
-
-export interface AddFailAction extends Action {
-  error: string;
-}
-
-export interface DeleteAction extends Action {
-  article: Article;
-}
-
-export interface DeleteSuccessAction extends Action {
-  article: Article;
-}
-
-export interface DeleteFailAction extends Action {
-  error: string;
-}
-
-// Reducer
-export function articleReducer(state: ArticleState = initialState, action: any = {}): ArticleState {
-  switch (action.type) {
-    case LOAD:
-      return {
-        ...state,
-        selectedArticle: null,
-        getArticleSuccess: false,
-        getArticleError: null,
-      };
-    case LOAD_SUCCESS:
-      action = action as LoadSuccessAction;
-      return {
-        ...state,
-        selectedArticle: action.article,
-        getArticleSuccess: true,
-        getArticleError: null,
-      };
-    case LOAD_FAIL:
-      action = action as LoadFailAction;
-      return {
-        ...state,
-        selectedArticle: null,
-        getArticleSuccess: false,
-        getArticleError: action.error,
-      };
-
-    case LOAD_ALL:
-      action = action as LoadAllAction;
-      return {
-        ...state,
-        articlesDownloading: true,
-      };
-    case LOAD_ALL_SUCCESS:
-      action = action as LoadAllSuccessAction;
-      return {
-        ...state,
-        articlesDownloading: false,
-        articlesDownloadSuccess: true,
-        articlesDownloadError: null,
-        articles: action.articles,
-      };
-    case LOAD_ALL_FAIL:
-      action = action as LoadAllFailAction;
-      return {
-        ...state,
-        articlesDownloading: false,
-        articlesDownloadSuccess: false,
-        articlesDownloadError: action.error,
-        articles: [],
-      };
-
-    case ADD:
-      return {
-        ...state,
-      };
-    case ADD_SUCCESS:
-      action = action as AddSuccessAction;
-      return {
-        ...state,
-        articles: [...state.articles, action.article],
-        articleAddError: null,
-      };
-    case ADD_FAIL:
-      action = action as AddFailAction;
-      return {
-        ...state,
-        articleAddError: action.error,
-      };
-
-    case DELETE:
-      return {
-        ...state,
-      };
-    case DELETE_SUCCESS:
-      action = action as DeleteSuccessAction;
-      return {
-        ...state,
-        articles: state.articles.filter(
-          (article) => article.id !== action.article.id,
-        ),
-      };
-    case DELETE_FAIL:
-      action = action as DeleteFailAction;
-      return {
-        ...state,
-        articleDeleteError: action.error,
-      };
-    default:
-      return state;
+export const loadArticle = createDuck(
+  'app/blog/LOAD',
+  (
+    state: ArticleState,
+    payload: {
+      articleId: string
+    }
+  ) => {
+    return {
+      ...state,
+      selectedArticle: null,
+      getArticleSuccess: false,
+      getArticleError: null,
+    };
   }
-}
+);
 
-// Action Creators
-export function loadArticle(articleId: string): LoadAction {
-  return {
-    type: LOAD,
-    articleId,
-  };
-}
+export const loadArticleSucceded = createDuck(
+  'app/blog/LOAD_SUCCESS',
+  (
+    state: ArticleState,
+    payload: {
+      article: Article,
+    }
+  ) => {
+    return {
+      ...state,
+      selectedArticle: payload.article,
+      getArticleSuccess: true,
+      getArticleError: null,
+    };
+  }
+);
 
-export function loadArticleSucceded(article: Article): LoadSuccessAction {
-  return {
-    type: LOAD_SUCCESS,
-    article,
-  };
-}
+export const loadArticleFailed = createDuck(
+  'app/blog/LOAD_FAIL',
+  (
+    state: ArticleState,
+    payload: {
+      error: string,
+    }
+  ) => {
+    return {
+      ...state,
+      selectedArticle: null,
+      getArticleSuccess: false,
+      getArticleError: payload.error,
+    };
+  }
+);
 
-export function loadArticleFailed(error: string): LoadFailAction {
-  return {
-    type: LOAD_FAIL,
-    error,
-  };
-}
+export const loadAllArticles = createDuck(
+  'app/blog/LOAD_ALL',
+  (
+    state: ArticleState,
+    payload: {}
+  ) => {
+    return {
+      ...state,
+      articlesDownloading: true,
+    };
+  }
+);
 
-export function loadAllArticles(): LoadAllAction {
-  return {
-    type: LOAD_ALL,
-  };
-}
+export const loadAllArticlesSucceded = createDuck(
+  'app/blog/LOAD_ALL_SUCCESS',
+  (
+    state: ArticleState,
+    payload: {
+      articles: Article[];
+    }
+  ) => {
+    return {
+      ...state,
+      articlesDownloading: false,
+      articlesDownloadSuccess: true,
+      articlesDownloadError: null,
+      articles: payload.articles,
+    };
+  }
+);
 
-export function loadAllArticlesSucceded(articles: Article[]): LoadAllSuccessAction {
-  return {
-    type: LOAD_ALL_SUCCESS,
-    articles,
-  };
-}
+export const loadAllArticlesFailed = createDuck(
+  'app/blog/LOAD_ALL_FAIL',
+  (
+    state: ArticleState,
+    payload: {
+      error: string
+    }
+  ) => {
+    return {
+      ...state,
+      articlesDownloading: false,
+      articlesDownloadSuccess: false,
+      articlesDownloadError: payload.error,
+      articles: [],
+    };
+  }
+);
 
-export function loadAllArticlesFailed(error: string): LoadAllFailAction {
-  return {
-    type: LOAD_ALL_FAIL,
-    error,
-  };
-}
+export const addArticle = createDuck(
+  'app/blog/ADD',
+  (
+    state: ArticleState,
+    payload: {
+      article: Article;
+    }
+  ) => {
+    return {
+      ...state,
+    };
+  }
+);
 
-export function addArticle(article: Article): AddAction {
-  return {
-    type: ADD,
-    article,
-  };
-}
+export const addArticleSucceded = createDuck(
+  'app/blog/ADD_SUCCESS',
+  (
+    state: ArticleState,
+    payload: {
+      article: Article;
+    }
+  ) => {
+    return {
+      ...state,
+      articles: [...state.articles, payload.article],
+      articleAddError: null,
+    };
+  }
+);
 
-export function addArticleSucceded(article: Article): AddSuccessAction {
-  return {
-    type: ADD_SUCCESS,
-    article,
-  };
-}
+export const addArticleFailed = createDuck(
+  'app/blog/ADD_FAIL',
+  (
+    state: ArticleState,
+    payload: {
+      error: string
+    }
+  ) => {
+    return {
+      ...state,
+      articleAddError: payload.error,
+    };
+  }
+);
 
-export function addArticleFailed(error: string): AddFailAction {
-  return {
-    type: ADD_FAIL,
-    error,
-  };
-}
+export const deleteArticle = createDuck(
+  'app/blog/DELETE',
+  (
+    state: ArticleState,
+    payload: {
+      article: Article
+    }
+  ) => {
+    return {
+      ...state,
+    };
+  }
+);
 
-export function deleteArticle(article: Article): DeleteAction {
-  return {
-    type: DELETE,
-    article,
-  };
-}
+export const deleteArticleSucceded = createDuck(
+  'app/blog/DELETE_SUCCESS',
+  (
+    state: ArticleState,
+    payload: {
+      article: Article
+    }
+  ) => {
+    return {
+      ...state,
+      articles: state.articles.filter(
+        (article) => article.id !== payload.article.id,
+      ),
+    };
+  }
+);
 
-export function deleteArticleSucceded(article: Article): DeleteSuccessAction {
-  return {
-    type: DELETE_SUCCESS,
-    article,
-  };
-}
+export const deleteArticleFailed = createDuck(
+  'app/blog/DELETE_FAIL',
+  (
+    state: ArticleState,
+    payload: {
+      error: string
+    }
+  ) => {
+    return {
+      ...state,
+      articleDeleteError: payload.error,
+    };
+  }
+);
 
-export function deleteArticleFailed(error: string): DeleteFailAction {
-  return {
-    type: DELETE_FAIL,
-    error,
-  };
-}
+export const articleReducer = createReducer(
+  [
+    loadArticle,
+    loadArticleSucceded,
+    loadArticleFailed,
+    loadAllArticles,
+    loadAllArticlesSucceded,
+    loadAllArticlesFailed,
+    addArticle,
+    addArticleSucceded,
+    addArticleFailed,
+    deleteArticle,
+    deleteArticleSucceded,
+    deleteArticleFailed
+  ], initialState
+);
 
 // Epics
-export const loadArticleEpic = (action$, store, api: ApiService = apiService) =>
-  action$.ofType(LOAD)
+export const $loadArticleEpic = (action$, store, api: ApiService = apiService) =>
+  action$.ofType(loadArticle.actionType)
     .mergeMap(action =>
-      api.get(`blog/articles/${action.articleId}`)
-        .map(response => loadArticleSucceded(response.response))
+      api.get(`blog/articles/${action.payload.articleId}`)
+        .map(response => loadArticleSucceded({article: response.response}))
         .catch(error => {
-          return Observable.of(loadArticleFailed(error.responseText));
+          return Observable.of(loadArticleFailed({error: error.responseText}));
         }),
     );
 
-export const addArticleEpic = (action$, store, api: ApiService = apiService) =>
-  action$.ofType(ADD)
+export const $addArticleEpic = (action$, store, api: ApiService = apiService) =>
+  action$.ofType(addArticle.actionType)
     .mergeMap(action =>
-      api.put('blog/articles', action.article)
-        .map(response => addArticleSucceded(action.article))
+      api.put('blog/articles', action.payload.article)
+        .map(response => addArticleSucceded({article: action.payload.article}))
         .catch(err => Observable.of(
-          addArticleFailed(err.responseText),
+          addArticleFailed({error: err.responseText}),
         )),
     );
 
-export const loadArticlesEpic = (action$, store, api: ApiService = apiService) =>
-  action$.ofType(LOAD_ALL)
+export const $loadArticlesEpic = (action$, store, api: ApiService = apiService) =>
+  action$.ofType(loadAllArticles.actionType)
     .mergeMap(action =>
       api.get(`blog/articles`)
-        .map(response => loadAllArticlesSucceded(response.response))
+        .map(response => loadAllArticlesSucceded({articles: response.response}))
         .catch(err => Observable.of(
-          loadAllArticlesFailed(err.responseText),
+          loadAllArticlesFailed({error: err.responseText}),
         )),
     );
 
-export const deleteArticleEpic = (action$, store, api: ApiService = apiService) =>
-  action$.ofType(DELETE)
+export const $deleteArticleEpic = (action$, store, api: ApiService = apiService) =>
+  action$.ofType(deleteArticle.actionType)
     .mergeMap((action) =>
-      api.delete(`blog/articles/${action.article.id}`)
-        .map((response) => deleteArticleSucceded(action.article))
-        .catch((error) => Observable.of(deleteArticleFailed(error.responseText))),
+      api.delete(`blog/articles/${action.payload.article.id}`)
+        .map((response) => deleteArticleSucceded({article: action.payload.article}))
+        .catch((error) => Observable.of(deleteArticleFailed({error: error.responseText}))),
     );
 
-export const articleEpic = combineEpics(
-  loadArticleEpic,
-  loadArticlesEpic,
-  addArticleEpic,
-  deleteArticleEpic,
+export const $articleEpic = combineEpics(
+  $loadArticleEpic,
+  $loadArticlesEpic,
+  $addArticleEpic,
+  $deleteArticleEpic,
 );

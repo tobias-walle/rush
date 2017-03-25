@@ -6,7 +6,7 @@ import { addArticle } from '../redux/article.redux';
 function mapDispatchToProps(dispatch): ArticleFormProps {
   return {
     onSubmit: (values: ArticleFormValues) => {
-      dispatch(addArticle(new Article(values.subject, values.body)));
+      dispatch(addArticle({ article: new Article(values.subject, values.body) }));
     },
   };
 }

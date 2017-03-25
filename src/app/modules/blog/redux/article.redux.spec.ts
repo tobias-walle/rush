@@ -1,8 +1,8 @@
 import {
   articleReducer, addArticle, ArticleState, addArticleSucceded, addArticleFailed,
-  addArticleEpic, loadArticle, loadArticleSucceded, loadArticleFailed, loadArticleEpic, deleteArticle,
-  deleteArticleSucceded, deleteArticleFailed, deleteArticleEpic, loadAllArticles, loadAllArticlesSucceded,
-  loadAllArticlesFailed, loadArticlesEpic,
+  $addArticleEpic, loadArticle, loadArticleSucceded, loadArticleFailed, $loadArticleEpic, deleteArticle,
+  deleteArticleSucceded, deleteArticleFailed, $deleteArticleEpic, loadAllArticles, loadAllArticlesSucceded,
+  loadAllArticlesFailed, $loadArticlesEpic,
 } from './article.redux';
 import { Observable } from 'rxjs';
 import { ActionsObservable } from 'redux-observable';
@@ -14,9 +14,11 @@ describe('ArticleRedux', () => {
     it('should handle ADD', () => {
       // Should not change the state
       expect(articleReducer({}, addArticle({
-        id: 'test',
-        subject: 'subject',
-        body: 'body',
+        article: {
+          id: 'test',
+          subject: 'subject',
+          body: 'body',
+        }
       }))).toEqual({});
     });
 
@@ -35,7 +37,7 @@ describe('ArticleRedux', () => {
         ],
         articleAddError: null,
       };
-      expect(articleReducer(initialState, addArticleSucceded(article)))
+      expect(articleReducer(initialState, addArticleSucceded({article})))
         .toEqual(expectedState);
     });
 
@@ -45,7 +47,7 @@ describe('ArticleRedux', () => {
       const expectedState: ArticleState = {
         articleAddError: error,
       };
-      expect(articleReducer(initialState, addArticleFailed(error)))
+      expect(articleReducer(initialState, addArticleFailed({error})))
         .toEqual(expectedState);
     });
 
@@ -61,8 +63,8 @@ describe('ArticleRedux', () => {
           response: article,
         }),
       };
-      const expectedAction = addArticleSucceded(article);
-      addArticleEpic(ActionsObservable.of(addArticle(article)), {}, apiMock)
+      const expectedAction = addArticleSucceded({article});
+      $addArticleEpic(ActionsObservable.of(addArticle({article})), {}, apiMock)
         .subscribe((actualAction) => {
           expect(actualAction).toEqual(expectedAction);
           done();
@@ -82,8 +84,8 @@ describe('ArticleRedux', () => {
           responseText: error,
         }),
       };
-      const expectedAction = addArticleFailed(error);
-      addArticleEpic(ActionsObservable.of(addArticle(article)), {}, apiMock)
+      const expectedAction = addArticleFailed({error});
+      $addArticleEpic(ActionsObservable.of(addArticle({article})), {}, apiMock)
         .subscribe((actualAction) => {
           expect(actualAction).toEqual(expectedAction);
           done();
@@ -98,7 +100,7 @@ describe('ArticleRedux', () => {
         getArticleSuccess: false,
         getArticleError: null,
       };
-      expect(articleReducer({}, loadArticle('id'))).toEqual(
+      expect(articleReducer({}, loadArticle({articleId: 'id'}))).toEqual(
         expectedState,
       );
     });
@@ -114,7 +116,7 @@ describe('ArticleRedux', () => {
         getArticleSuccess: true,
         getArticleError: null,
       };
-      expect(articleReducer({}, loadArticleSucceded(article)))
+      expect(articleReducer({}, loadArticleSucceded({article})))
         .toEqual(expectedState);
     });
 
@@ -125,7 +127,7 @@ describe('ArticleRedux', () => {
         getArticleSuccess: false,
         getArticleError: error,
       };
-      expect(articleReducer({}, loadArticleFailed(error)))
+      expect(articleReducer({}, loadArticleFailed({error})))
         .toEqual(expectedState);
     });
 
@@ -141,9 +143,9 @@ describe('ArticleRedux', () => {
           response: article,
         }),
       };
-      const expectedAction = loadArticleSucceded(article);
-      loadArticleEpic(
-        ActionsObservable.of(loadArticle(article.id)), {}, apiMock,
+      const expectedAction = loadArticleSucceded({article});
+      $loadArticleEpic(
+        ActionsObservable.of(loadArticle({articleId: article.id})), {}, apiMock,
       )
         .subscribe((actualAction) => {
           expect(actualAction).toEqual(expectedAction);
@@ -164,9 +166,9 @@ describe('ArticleRedux', () => {
           responseText: error,
         }),
       };
-      const expectedAction = loadArticleFailed(error);
-      loadArticleEpic(
-        ActionsObservable.of(loadArticle(article.id)), {}, apiMock,
+      const expectedAction = loadArticleFailed({error});
+      $loadArticleEpic(
+        ActionsObservable.of(loadArticle({articleId: article.id})), {}, apiMock,
       )
         .subscribe((actualAction) => {
           expect(actualAction).toEqual(expectedAction);
@@ -205,7 +207,7 @@ describe('ArticleRedux', () => {
         articlesDownloadError: null,
         articles,
       };
-      const actualState = articleReducer(initialState, loadAllArticlesSucceded(articles));
+      const actualState = articleReducer(initialState, loadAllArticlesSucceded({articles}));
       expect(actualState).toEqual(expectedState);
     });
 
@@ -218,7 +220,7 @@ describe('ArticleRedux', () => {
         articlesDownloadError: error,
         articles: [],
       };
-      const actualState = articleReducer(initialState, loadAllArticlesFailed(error));
+      const actualState = articleReducer(initialState, loadAllArticlesFailed({error}));
       expect(actualState).toEqual(expectedState);
     });
 
@@ -241,8 +243,8 @@ describe('ArticleRedux', () => {
           response: articles,
         }),
       };
-      const expectedAction = loadAllArticlesSucceded(articles);
-      loadArticlesEpic(
+      const expectedAction = loadAllArticlesSucceded({articles});
+      $loadArticlesEpic(
         ActionsObservable.of(loadAllArticles()), {}, apiMock,
       )
         .subscribe((actualAction) => {
@@ -260,8 +262,8 @@ describe('ArticleRedux', () => {
         responseText: error,
       }),
     };
-    const expectedAction = loadAllArticlesFailed(error);
-    loadArticlesEpic(
+    const expectedAction = loadAllArticlesFailed({error});
+    $loadArticlesEpic(
       ActionsObservable.of(loadAllArticles()), {}, apiMock,
     )
       .subscribe((actualAction) => {
@@ -280,7 +282,7 @@ describe('DELETE...', () => {
     };
     const initialState = {};
     const expectedState = {};
-    const actualState = articleReducer(initialState, deleteArticle(article));
+    const actualState = articleReducer(initialState, deleteArticle({article}));
     expect(actualState).toEqual(expectedState);
   });
 
@@ -298,7 +300,7 @@ describe('DELETE...', () => {
     const expectedState = {
       articles: [],
     };
-    const actualState = articleReducer(initialState, deleteArticleSucceded(article));
+    const actualState = articleReducer(initialState, deleteArticleSucceded({article}));
     expect(actualState).toEqual(expectedState);
   });
 
@@ -310,7 +312,7 @@ describe('DELETE...', () => {
     const expectedState = {
       articleDeleteError: error,
     };
-    const actualState = articleReducer(initialState, deleteArticleFailed(error));
+    const actualState = articleReducer(initialState, deleteArticleFailed({error}));
     expect(actualState).toEqual(expectedState);
   });
 
@@ -326,9 +328,9 @@ describe('DELETE...', () => {
         response: article,
       }),
     };
-    const expectedAction = deleteArticleSucceded(article);
-    deleteArticleEpic(
-      ActionsObservable.of(deleteArticle(article)), {}, apiMock,
+    const expectedAction = deleteArticleSucceded({article});
+    $deleteArticleEpic(
+      ActionsObservable.of(deleteArticle({article})), {}, apiMock,
     )
       .subscribe((actualAction) => {
         expect(actualAction).toEqual(expectedAction);
@@ -349,9 +351,9 @@ describe('DELETE...', () => {
         responseText: error,
       }),
     };
-    const expectedAction = deleteArticleFailed(error);
-    deleteArticleEpic(
-      ActionsObservable.of(deleteArticle(article)), {}, apiMock,
+    const expectedAction = deleteArticleFailed({error});
+    $deleteArticleEpic(
+      ActionsObservable.of(deleteArticle({article})), {}, apiMock,
     )
       .subscribe((actualAction) => {
         expect(actualAction).toEqual(expectedAction);
