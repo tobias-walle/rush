@@ -71,7 +71,6 @@ module.exports = {
     new CopyWebpackPlugin([
       {from: 'src/app/assets', to: 'assets'}
     ]),
-    new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.LoaderOptionsPlugin({
       debug: true

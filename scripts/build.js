@@ -57,7 +57,6 @@ let startWorker = (target, color) => {
   let worker = cp.fork(__dirname + '/utils/buildWorker');
   worker.on('message', (message) => {
     if (message === 'compiled') {
-      console.log(afterFirstRun, numberOfWorker, numberOfWorkerFinishedBuilding);
       if (++numberOfWorkerFinishedBuilding === numberOfWorker && afterFirstRun) {
         log('Execute: ' + afterFirstRun.blue);
         let words = afterFirstRun.split(' ');

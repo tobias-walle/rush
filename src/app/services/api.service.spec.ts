@@ -44,7 +44,7 @@ describe('ApiService', () => {
   });
 
   it('should send a request', (done) => {
-    const expectedResponse = 'test';
+    const expectedResponse: any = 'test';
     const mockAjax: any = () => {
       return Observable.of(expectedResponse);
     };
@@ -57,7 +57,7 @@ describe('ApiService', () => {
   });
 
   it('should send a GET request', (done) => {
-    const expectedResponse = 'test';
+    const expectedResponse: any = 'test';
     const mockAjax: any = () => {
       return Observable.of(expectedResponse);
     };
@@ -70,7 +70,7 @@ describe('ApiService', () => {
   });
 
   it('should send a POST request', (done) => {
-    const expectedResponse = 'test';
+    const expectedResponse: any = 'test';
     const mockAjax: any = () => {
       return Observable.of(expectedResponse);
     };
@@ -83,7 +83,7 @@ describe('ApiService', () => {
   });
 
   it('should send a PUT request', (done) => {
-    const expectedResponse = 'test';
+    const expectedResponse: any = 'test';
     const mockAjax: any = () => {
       return Observable.of(expectedResponse);
     };
@@ -96,7 +96,7 @@ describe('ApiService', () => {
   });
 
   it('should send a PATCH request', (done) => {
-    const expectedResponse = 'test';
+    const expectedResponse: any = 'test';
     const mockAjax: any = () => {
       return Observable.of(expectedResponse);
     };
@@ -109,7 +109,7 @@ describe('ApiService', () => {
   });
 
   it('should send a DELETE request', (done) => {
-    const expectedResponse = 'test';
+    const expectedResponse: any = 'test';
     const mockAjax: any = () => {
       return Observable.of(expectedResponse);
     };

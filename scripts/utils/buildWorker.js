@@ -81,9 +81,7 @@ process.on('message', (message) => {
 });
 
 process.on('exit', () => {
-  console.log('EXIT');
   if (watcher) {
     watcher.unwatch();
   }
-  console.log('EXIT!');
 });
