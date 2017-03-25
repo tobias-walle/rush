@@ -35,14 +35,15 @@ module.exports = {
 
   module: {
     rules: [
-      {test: /\.tsx?$/, loaders: ['awesome-typescript-loader']},
+      {
+        test: /\.tsx?$/, loaders: ['awesome-typescript-loader']
+      },
       {
         test: /\.scss?$/, loaders: [
         'isomorphic-style-loader',
         'css-loader?sourceMap&modules&localIdentName=[name]_[local]_[hash:base64:5]',
         'postcss-loader',
-        'sass-loader?sourceMap'
-      ]
+        'sass-loader?sourceMap']
       },
       {
         test: /\.js$/,
@@ -57,22 +58,23 @@ module.exports = {
         test: /\.json$/,
         use: 'json-loader'
       }
-    ],
+    ]
   },
 
+  externals: nodeModules,
+
   plugins: [
-    new CheckerPlugin(),
     new webpack.DefinePlugin({
       'process.env.IS_SERVER_SIDE': JSON.stringify(true)
     }),
+    new CheckerPlugin(),
     new CopyWebpackPlugin([
       {from: 'src/app/assets', to: 'assets'}
     ]),
+    new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.LoaderOptionsPlugin({
       debug: true
-    }),
+    })
   ],
-
-  externals: nodeModules
 };

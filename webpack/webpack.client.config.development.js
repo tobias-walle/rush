@@ -61,16 +61,16 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.NamedModulesPlugin(),
-    new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'vendor.bundle.js'}),
     new webpack.DefinePlugin({
       'process.env.IS_SERVER_SIDE': JSON.stringify(false)
     }),
+    new CheckerPlugin(),
     new CopyWebpackPlugin([
       {from: 'src/app/assets', to: 'assets'}
     ]),
+    new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'vendor.bundle.js'}),
+    new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new CheckerPlugin(),
     new webpack.LoaderOptionsPlugin({
       debug: true
     })

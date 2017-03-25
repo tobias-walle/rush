@@ -7,14 +7,14 @@ let rootDir = path.resolve(__dirname, '..');
 
 module.exports = {
   entry: {
+    app: [
+      'babel-polyfill',
+      './src/app/client.tsx',
+    ],
     vendor: [
       'react',
       'react-dom'
     ],
-    app: [
-      'babel-polyfill',
-      './src/app/client.tsx',
-    ]
   },
   output: {
     filename: 'bundle.js',
@@ -30,7 +30,9 @@ module.exports = {
 
   module: {
     rules: [
-      {test: /\.tsx?$/, loaders: ['awesome-typescript-loader']},
+      {
+        test: /\.tsx?$/, loaders: ['awesome-typescript-loader']
+      },
       {
         test: /\.scss?$/, loaders: [
         'isomorphic-style-loader',
@@ -51,14 +53,14 @@ module.exports = {
   },
 
   plugins: [
-    new CheckerPlugin(),
-    new CopyWebpackPlugin([
-      {from: 'src/app/assets', to: 'assets'}
-    ]),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),
       'process.env.IS_SERVER_SIDE': JSON.stringify(false),
     }),
+    new CheckerPlugin(),
+    new CopyWebpackPlugin([
+      {from: 'src/app/assets', to: 'assets'}
+    ]),
     new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'vendor.bundle.js'}),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
