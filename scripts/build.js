@@ -22,8 +22,13 @@ const OPTIONS = {
     options: [true, false],
     description: 'Watches the build and updates on changes.'
   },
-  afterFirstRun: {
-    description: 'Can be used only in combination of the --watch Option. Command that should be executed after the first compilation.'
+  callback: {
+    description: 'Can be used only in combination of the --watch Option. Command that should be executed after the compilation.' +
+    'If the process ends the callback will be called again after the next build.'
+  },
+  forceRestart: {
+    description: 'Can be used in combination with the --callback Option. If the option is set, the callback will be ' +
+      'executed again after every new build. If the previous callback is still running it will be terminated.'
   },
 };
 
@@ -31,7 +36,7 @@ const OPTIONS = {
 const WEBPACK_BASE_PATH = './webpack';
 
 // Parses the command line arguments
-let {environment, watch, target, afterFirstRun} = require('./utils/ArgumentParser')(ARGUMENTS, OPTIONS);
+let {environment, watch, target, callback, forceRestart} = require('./utils/ArgumentParser')(ARGUMENTS, OPTIONS);
 
 // Helper to build the webpack config path for a specific target
 let buildWebpackConfigPath = (target) => {
@@ -55,22 +60,38 @@ let startWorker = (target, color) => {
 
   let workerConfig = {webpackConfigPath, environment, watch, target, color};
   let worker = cp.fork(__dirname + '/utils/buildWorker');
+  let callbackProcess = null;
   worker.on('message', (message) => {
     if (message === 'compiled') {
-      if (++numberOfWorkerFinishedBuilding === numberOfWorker && afterFirstRun) {
-        log('Execute: ' + afterFirstRun.blue);
-        let words = afterFirstRun.split(' ');
+      if (++numberOfWorkerFinishedBuilding === numberOfWorker && callback) {
+        const executeCommand = () => {
+          log('Execute: ' + callback.blue);
+          let words = callback.split(' ');
 
-        let command = words[0];
-        let args = words.slice(1);
+          let command = words[0];
+          let args = words.slice(1);
 
-        let firstRunProcess = cp.spawn(command, args, {
-          stdio: 'inherit'
-        });
-        firstRunProcess.on('close', (code) => {
-          // Reset number of worker
-          numberOfWorkerFinishedBuilding = 0;
-        });
+          callbackProcess = cp.spawn(command, args, {
+            stdio: 'inherit'
+          });
+          if (forceRestart) {
+            numberOfWorkerFinishedBuilding = 0;
+          }
+          callbackProcess.on('close', (code) => {
+            // Reset number of worker
+            numberOfWorkerFinishedBuilding = 0;
+            callbackProcess = null;
+          });
+        };
+
+        if (callbackProcess !== null) {
+          // Kill old process if it exists
+          callbackProcess.kill('SIGINT', () => {
+            executeCommand();
+          })
+        } else {
+          executeCommand();
+        }
       }
     }
   });
@@ -93,7 +114,6 @@ if (target) {
 
 // Setup clean up of the child processes
 let cleanUp = () => {
-  log('Clean Up Workers');
   // Cleanup worker
   setTimeout(() => {
     workers.forEach((w) => {
