@@ -11,7 +11,7 @@ import { createStore } from 'redux';
 import { WithStylesContext } from 'isomorphic-style-loader-utils';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { syncHistoryWithStore } from 'react-router-redux';
-import { DEVELOPMENT, DISABLE_SERVER_SIDE_RENDERING, RENDER_CSS_ON_CLIENT } from '../utils/config';
+import { DEVELOPMENT, DISABLE_SERVER_SIDE_RENDERING } from '../utils/config';
 import { ApiServer } from '../../api/index';
 import { getStoreMiddleware } from '../utils/redux-helper';
 import { HtmlComponent } from '../components/html.component';
@@ -42,7 +42,7 @@ export class BackendServer {
   webpackDevServer: any;
   apiServer: ApiServer;
 
-  constructor(options: BackendServerOptions,) {
+  constructor(options: BackendServerOptions) {
     this.setOptions(options);
   }
 
