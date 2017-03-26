@@ -41,10 +41,14 @@ module.exports = {
       {
         test: /\.scss?$/, loaders: [
         'isomorphic-style-loader',
-        'css-loader?modules&localIdentName=[name]_[local]_[hash:base64:5]',
+        'css-loader?sourceMap&modules&localIdentName=[name]_[local]_[hash:base64:5]',
         'postcss-loader',
-        'sass-loader?sourceMap'
-      ]
+        'sass-loader?sourceMap']
+      },
+      {
+        test: /\.js$/,
+        loader: 'source-map-loader',
+        enforce: 'pre'
       },
       {
         test: /\.(png|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -62,11 +66,15 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),
-      'process.env.IS_SERVER_SIDE': JSON.stringify(true),
+      'process.env.IS_SERVER_SIDE': JSON.stringify(true)
     }),
     new CheckerPlugin(),
     new CopyWebpackPlugin([
       {from: 'src/app/assets', to: 'assets'}
     ]),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.LoaderOptionsPlugin({
+      debug: true
+    })
   ],
 };

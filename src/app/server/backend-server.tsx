@@ -42,9 +42,7 @@ export class BackendServer {
   webpackDevServer: any;
   apiServer: ApiServer;
 
-  constructor(
-    options: BackendServerOptions,
-  ) {
+  constructor(options: BackendServerOptions,) {
     this.setOptions(options);
   }
 
@@ -140,19 +138,15 @@ export class BackendServer {
               </Provider>
             );
 
-            // Load styles if configured
+            // Load styles
             const css: string[] = [];
-            if (!RENDER_CSS_ON_CLIENT) {
-              console.log('Load main styles');
-
-              // Wrap app with style context
-              const OldAppComponent = withStyles(mainStyles)(RootComponent);
-              RootComponent = () => (
-                <WithStylesContext onInsertCss={styles => css.push(styles._getCss())}>
-                  <OldAppComponent/>
-                </WithStylesContext>
-              );
-            }
+            // Wrap app with style context
+            const OldAppComponent = withStyles(mainStyles)(RootComponent);
+            RootComponent = () => (
+              <WithStylesContext onInsertCss={styles => css.push(styles._getCss())}>
+                <OldAppComponent/>
+              </WithStylesContext>
+            );
 
             // Send the result
             const html = renderToString(

@@ -10,7 +10,7 @@ import { WithStylesContext } from 'isomorphic-style-loader-utils';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { AppContainer } from 'react-hot-loader';
 
-import { DEVELOPMENT, RENDER_CSS_ON_CLIENT, DISABLE_SERVER_SIDE_RENDERING } from './utils/config';
+import { DEVELOPMENT } from './utils/config';
 
 const history = browserHistory;
 
@@ -45,18 +45,16 @@ const getRootComponent = () => {
     />
   );
 
-  if (RENDER_CSS_ON_CLIENT || DISABLE_SERVER_SIDE_RENDERING) {
-    // Main styles
-    const mainStyles = require('./styles/main.scss');
+  // Main styles
+  const mainStyles = require('./styles/main.scss');
 
-    // Add Component style context
-    const OldRootComponent = withStyles(mainStyles)(RootComponent);
-    RootComponent = () => (
-      <WithStylesContext onInsertCss={styles => styles._insertCss()}>
-        <OldRootComponent/>
-      </WithStylesContext>
-    );
-  }
+  // Add Component style context
+  const OldRootComponent = withStyles(mainStyles)(RootComponent);
+  RootComponent = () => (
+    <WithStylesContext onInsertCss={styles => styles._insertCss()}>
+      <OldRootComponent/>
+    </WithStylesContext>
+  );
   return RootComponent;
 };
 

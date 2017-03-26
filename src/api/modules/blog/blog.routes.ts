@@ -1,7 +1,7 @@
-import { Router } from 'express';
+import * as express from 'express';
 import { BlogStorage } from './blog.storage';
 
-export const blogRouter = Router();
+export const blogRouter = express.Router();
 
 let storage;
 if (module['hot'] && module['hot']['data'] && module['hot']['data']['storage']) {

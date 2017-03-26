@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run --silent start:dev",
-    "start:dev": "node ./scripts/build.js development --watch --target server --after-first-run \"node ./dist/server/server.js\"",
-    "start:prod": "bnr start:prod -s",
+    "start:dev": "node ./scripts/build.js development --watch --target server --callback \"node ./dist/server/server.js\"",
+    "start:prod": "node ./scripts/build.js production --watch --callback \"node ./dist/server/server.js\" --force-restart",
     "build:dev": "node ./scripts/build.js development",
     "build:prod": "node ./scripts/build.js production",
     "build:server:dev": "node ./scripts/build.js development --target server",
@@ -17,13 +17,15 @@
     "watch:server:prod": "node ./scripts/build.js production --target server --watch",
     "watch:client:dev": "node ./scripts/build.js development --target client --watch",
     "watch:client:prod": "node ./scripts/build.js production --target client --watch",
-    "test": "./node_modules/.bin/karma start --single-run",
-    "lint": "./node_modules/.bin/tslint src/**/*.ts{,x}",
+    "test": "npm run --silent test:dev",
+    "test:dev": "karma start --single-run",
+    "test:prod": "bnr test:prod -s",
+    "lint": "tslint src/**/*.ts{,x}",
     "check": "npm run lint && npm run test"
   },
   "betterScripts": {
-    "start:prod": {
-      "command": "npm run build:prod --silent && node ./dist/server/server.js",
+    "test:prod": {
+      "command": "karma start --single-run",
       "env": {
         "NODE_ENV": "production"
       }

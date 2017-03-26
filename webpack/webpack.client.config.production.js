@@ -1,9 +1,9 @@
-let webpack = require('webpack');
-let path = require('path');
+const webpack = require('webpack');
+const path = require('path');
 const {CheckerPlugin} = require('awesome-typescript-loader');
-let CopyWebpackPlugin = require('copy-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-let rootDir = path.resolve(__dirname, '..');
+const rootDir = path.resolve(__dirname, '..');
 
 module.exports = {
   entry: {
@@ -13,7 +13,8 @@ module.exports = {
     ],
     vendor: [
       'react',
-      'react-dom'
+      'react-dom',
+      'redux'
     ],
   },
   output: {
@@ -21,6 +22,8 @@ module.exports = {
     path: rootDir + '/dist/client/',
     publicPath: '/static/',
   },
+
+  devtool: 'source-maps',
 
   resolve: {
     extensions: [
@@ -38,8 +41,12 @@ module.exports = {
         'isomorphic-style-loader',
         'css-loader?modules&localIdentName=[name]_[local]_[hash:base64:5]',
         'postcss-loader',
-        'sass-loader'
-      ]
+        'sass-loader']
+      },
+      {
+        test: /\.js$/,
+        loader: 'source-map-loader',
+        enforce: 'pre'
       },
       {
         test: /\.(png|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -61,11 +68,6 @@ module.exports = {
     new CopyWebpackPlugin([
       {from: 'src/app/assets', to: 'assets'}
     ]),
-    new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'vendor.bundle.js'}),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
-    }),
-  ],
+    new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'vendor.bundle.js'})
+  ]
 };

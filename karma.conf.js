@@ -1,5 +1,11 @@
 let webpack = require('webpack');
-let webpackConfig = require('./webpack/webpack.client.config.development');
+let webpackConfig;
+if (process.env.NODE_ENV === 'production') {
+  console.log('-- TEST PRODUCTION --');
+  webpackConfig = require('./webpack/webpack.client.config.production');
+} else {
+  webpackConfig = require('./webpack/webpack.client.config.development');
+}
 
 module.exports = (config) => {
   config.set({
