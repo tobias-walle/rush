@@ -1,6 +1,4 @@
-FROM node:alpine
-
-RUN node -v
+FROM yarnpkg/node-yarn:node7
 
 # Create app folder
 RUN mkdir -p /usr/src/app
@@ -8,10 +6,13 @@ WORKDIR /usr/src/app
 
 # Install dependecies
 COPY package.json /usr/src/app
-RUN npm install
+COPY yarn.lock /usr/src/app
+RUN yarn install --pure-lockfile
+
+# Copy other files
+COPY . /usr/src/app/
 
 # Build
-COPY . /usr/src/app/
 RUN npm run build:prod
 
 EXPOSE 3000
