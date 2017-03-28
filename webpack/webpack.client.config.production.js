@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const path = require('path');
-const {CheckerPlugin} = require('awesome-typescript-loader');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const rootDir = path.resolve(__dirname, '..');
@@ -26,6 +25,10 @@ module.exports = {
   devtool: 'source-maps',
 
   resolve: {
+    modules: [
+      'node_modules',
+      path.resolve(rootDir, 'src')
+    ],
     extensions: [
       '.webpack.js', '.web.js', '.ts', '.tsx', '.js'
     ]
@@ -64,10 +67,22 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify('production'),
       'process.env.IS_SERVER_SIDE': JSON.stringify(false),
     }),
-    new CheckerPlugin(),
     new CopyWebpackPlugin([
       {from: 'src/app/assets', to: 'assets'}
     ]),
-    new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'vendor.bundle.js'})
+    new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'vendor.bundle.js'}),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      },
+      output: {
+        comments: false
+      },
+      sourceMap: false
+    })
   ]
 };

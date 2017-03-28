@@ -1,23 +1,34 @@
 {
+  "compileOnSave": false,
+  "buildOnSave": false,
   "compilerOptions": {
     "outDir": "./dist/server",
     "lib": [
       "es2017",
       "dom"
     ],
-    "sourceMap": true,
-    "module": "commonjs",
+    "module": "es2015",
     "target": "es5",
+    "moduleResolution": "node",
     "jsx": "react",
-    "experimentalDecorators": true
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "removeComments": true
   },
   "awesomeTypescriptLoaderOptions": {
     "silent": true,
     "forkChecker": true,
-    "useWebpackText": true
+    "useWebpackText": true,
+    "useBabel": true,
+    "useCache": true
   },
   "include": [
     "./src/**/*.ts",
     "./src/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
   ]
 }
