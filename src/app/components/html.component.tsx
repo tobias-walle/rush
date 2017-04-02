@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/server';
-import * as serialize from 'serialize-javascript';
+const serialize = require('serialize-javascript');
 
 export class HtmlProps {
   store: any;
