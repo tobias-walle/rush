@@ -1,11 +1,17 @@
-# React with Redux Application [![Build Status](https://travis-ci.org/TobiasWalle/react-redux-app-template.svg?branch=master)](https://travis-ci.org/TobiasWalle/react-redux-app-template)
-
-A starting template for an isomorphic react with redux application.
-
-### Get Started
-
+## Get Started
+It is recommended to use yarn as the package manager.
 ```bash
-npm install
-npm start
+npm install -g yarn
 ```
+
+Before you start, install the dependencies.
+```bash
+yarn install
+```
+
+You can start the development server with:
+```bash
+yarn start
+```
+
 
