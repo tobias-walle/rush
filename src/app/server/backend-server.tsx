@@ -9,7 +9,7 @@ import { renderToString } from 'react-dom/server';
 import { createStore } from 'redux';
 import { WithStylesContext } from 'isomorphic-style-loader-utils';
 import { syncHistoryWithStore } from 'react-router-redux';
-import { DEVELOPMENT, DISABLE_SERVER_SIDE_RENDERING } from '../utils/config';
+import { DEVELOPMENT, DISABLE_SERVER_SIDE_RENDERING } from '../config';
 import { ApiServer } from '../../api/index';
 import { getStoreMiddleware } from '../utils/redux-helper';
 import { HtmlComponent } from '../components/html.component';

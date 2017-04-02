@@ -1,18 +1,6 @@
 import { Observable } from 'rxjs';
-import { DEVELOPMENT } from './utils/config';
+import { API_HOST, API_PORT, DEVELOPMENT, HOST, PORT, WEBPACK_DEV_HOST, WEBPACK_DEV_PORT } from './config';
 import { BackendServer, BackendServerOptions } from './server/backend-server';
-
-// Server Config
-const HOST = process.env.HOST || '127.0.0.1';
-const PORT = process.env.PORT || 3000;
-
-// Webpack dev server config
-const WEBPACK_DEV_HOST = process.env.WEBPACK_HOST || HOST || '127.0.0.1';
-const WEBPACK_DEV_PORT = process.env.WEBPACK_PORT || 3001;
-
-// API Config
-const API_HOST = process.env.API_HOST || HOST || '127.0.0.1';
-const API_PORT = process.env.API_PORT || 3002;
 
 // Start Server
 let server: BackendServer;

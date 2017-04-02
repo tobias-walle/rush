@@ -10,7 +10,7 @@ import { WithStylesContext } from 'isomorphic-style-loader-utils';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { AppContainer } from 'react-hot-loader';
 
-import { DEVELOPMENT } from './utils/config';
+import { DEVELOPMENT } from './config';
 
 const history = browserHistory;
 
