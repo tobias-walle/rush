@@ -1,0 +1,9 @@
+{
+  "generator-node": {
+    "promptValues": {
+      "authorName": "Tobias Walle",
+      "authorEmail": "tobias.walle@gmail.com",
+      "authorUrl": ""
+    }
+  }
+}
