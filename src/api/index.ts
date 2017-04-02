@@ -1,11 +1,11 @@
-import * as express from 'express';
-import * as morgan from 'morgan';
 import * as bodyParser from 'body-parser';
 import { Server } from 'http';
-import { blogRouter } from './modules/blog/blog.routes';
+import { Application } from 'express';
+const morgan = require('morgan');
+const express = require('express');
 
 export class ApiServer {
-  private app: express.Application;
+  private app: Application;
   private server: Server;
 
   /**
@@ -42,7 +42,7 @@ export class ApiServer {
    * Setup the api routes.
    */
   private setupRoutes() {
-    this.app.use('/blog/', blogRouter);
+    // Setup Routes here
   }
 
   /**

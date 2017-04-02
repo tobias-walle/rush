@@ -1,7 +1,7 @@
 import { browser } from 'protractor';
 
-export class ArticlesPage {
+export class MainPage {
   navigateTo() {
-    browser.get('http://localhost:3000/blog');
+    browser.get('http://localhost:3000/');
   }
 };

@@ -19,7 +19,6 @@
   "awesomeTypescriptLoaderOptions": {
     "silent": true,
     "forkChecker": true,
-    "useWebpackText": true,
     "useBabel": true,
     "useCache": true
   },

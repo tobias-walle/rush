@@ -1,10 +1,10 @@
-import { ArticlesPage } from './articles.page';
+import { MainPage } from './articles.page';
 
-describe('ArticlesPage', () => {
-  let page: ArticlesPage;
+describe('MainPage', () => {
+  let page: MainPage;
 
   beforeEach(() => {
-    page = new ArticlesPage();
+    page = new MainPage();
   });
 
   it('should navigate', () => {

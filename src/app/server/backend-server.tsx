@@ -1,21 +1,21 @@
 import * as http from 'http';
-import { Server } from 'http';
-import * as express from 'express';
 import * as path from 'path';
 import * as React from 'react';
+import { Server } from 'http';
 import { WebServer } from './webpack-dev-server';
 import { match, createMemoryHistory, RouterContext } from 'react-router';
 import { routes } from '../routes';
 import { renderToString } from 'react-dom/server';
 import { createStore } from 'redux';
 import { WithStylesContext } from 'isomorphic-style-loader-utils';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { DEVELOPMENT, DISABLE_SERVER_SIDE_RENDERING } from '../utils/config';
 import { ApiServer } from '../../api/index';
 import { getStoreMiddleware } from '../utils/redux-helper';
 import { HtmlComponent } from '../components/html.component';
 import { Provider } from 'react-redux';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
+const express = require('express');
 
 // Load main styles as string
 const mainStyles = require('../styles/main.scss');
