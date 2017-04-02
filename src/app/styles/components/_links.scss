@@ -1,9 +1,0 @@
-@import "../config/module";
-
-a {
-  // Reset link style
-  &.no-style {
-    color: $color-text-primary-dark;
-    text-decoration: none;
-  }
-}
