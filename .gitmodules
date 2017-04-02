@@ -1,0 +1,3 @@
+[submodule "generators/app/templates/typed-react-base"]
+	path = generators/app/templates/typed-react-base
+	url = git@github.com:TobiasWalle/typed-react-base.git
