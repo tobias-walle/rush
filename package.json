@@ -1,11 +1,11 @@
 {
   "name": "generator-trb",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Isomorphic React with Typescript, Redux, Webpack and Express",
   "homepage": "https://github.com/TobiasWalle/typed-react-base",
   "author": {
     "name": "Tobias Walle",
-    "email": "tobias.walle@gmail.com",
+    "email": "",
     "url": ""
   },
   "files": [
