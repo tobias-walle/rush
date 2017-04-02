@@ -39,7 +39,7 @@ if (DEVELOPMENT && module && module['hot']) {
       server.stopApiServer();
       server.stop();
 
-      // Copy webpackserver to new server
+      // Copy webpack server to the new server
       newServer.webpackDevServer = server.webpackDevServer;
 
       // Set new server as the primary server
@@ -62,8 +62,7 @@ if (DEVELOPMENT && module && module['hot']) {
           hot.check({
             ignoreDeclined: true,
             ignoreUnaccepted: true,
-          }).then((result) => {
-          })
+          }).then(() => {})
             .catch((err) => console.error('[HMR Check Promise]', err));
         } catch (err) {
           console.error('[HMR Check]', err);
