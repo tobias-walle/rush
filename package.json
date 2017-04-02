@@ -19,29 +19,18 @@
     "watch:client:prod": "node ./scripts/build.js production --target client --watch",
     "test": "npm run --silent test:dev",
     "test:dev": "karma start --single-run",
-    "test:prod": "bnr test:prod -s",
+    "test:prod": "NODE_ENV=production karma start --single-run",
     "test:e2e": "protractor protractor.conf.js",
     "lint": "tslint src/**/*.ts{,x}",
     "check": "npm run lint && npm run test"
   },
-  "betterScripts": {
-    "test:prod": {
-      "command": "karma start --single-run",
-      "env": {
-        "NODE_ENV": "production"
-      }
-    }
-  },
   "author": "Tobias Walle",
   "license": "ISC",
   "devDependencies": {
-    "@types/classnames": "0.0.32",
     "@types/enzyme": "^2.7.6",
     "@types/express": "^4.0.35",
-    "@types/immutability-helper": "^2.0.15",
     "@types/jasmine": "^2.5.46",
     "@types/morgan": "^1.7.32",
-    "@types/nock": "^8.2.1",
     "@types/node": "^7.0.11",
     "@types/react": "^15.0.20",
     "@types/react-dom": "^0.14.23",
@@ -55,10 +44,7 @@
     "awesome-typescript-loader": "^3.1.2",
     "babel-core": "^6.24.0",
     "babel-preset-latest": "^6.24.0",
-    "better-npm-run": "^0.0.15",
-    "clean-webpack-plugin": "^0.1.16",
     "colors": "^1.1.2",
-    "concurrently": "^3.4.0",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.27.3",
     "enzyme": "^2.8.0",
@@ -76,7 +62,6 @@
     "nodemon": "^1.11.0",
     "postcss-loader": "^1.3.3",
     "protractor": "^5.1.1",
-    "raw-loader": "^0.5.1",
     "react-addons-test-utils": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-hot-loader": "^3.0.0-beta.6",
@@ -97,10 +82,8 @@
   "dependencies": {
     "babel-polyfill": "^6.23.0",
     "body-parser": "^1.17.1",
-    "classnames": "^2.2.5",
     "express": "^4.15.2",
     "http-proxy": "^1.16.2",
-    "immutability-helper": "^2.1.2",
     "isomorphic-style-loader": "^1.1.0",
     "isomorphic-style-loader-utils": "^1.0.0",
     "morgan": "^1.8.1",
@@ -109,7 +92,6 @@
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-helmet": "^5.0.1",
-    "react-inline-css": "^2.3.0",
     "react-redux": "^5.0.3",
     "react-router": "^3",
     "react-router-redux": "^4.0.8",
