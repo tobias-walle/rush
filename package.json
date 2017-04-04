@@ -1,6 +1,6 @@
 {
   "name": "generator-trb",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Isomorphic React with Typescript, Redux, Webpack and Express",
   "homepage": "https://github.com/TobiasWalle/typed-react-base",
   "author": {
