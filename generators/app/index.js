@@ -41,6 +41,7 @@ module.exports = class extends Generator {
   }
 
   writing() {
+    this.config.save();
     this.fs.copy(
       this.templatePath('typed-react-base'),
       this.destinationPath('.')

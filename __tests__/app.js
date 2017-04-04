@@ -1,7 +1,7 @@
 'use strict';
-var path = require('path');
-var assert = require('yeoman-assert');
-var helpers = require('yeoman-test');
+const path = require('path');
+const assert = require('yeoman-assert');
+const helpers = require('yeoman-test');
 
 describe('generator-trb:app', () => {
   const PROJECT_NAME = 'my-project';
@@ -16,6 +16,12 @@ describe('generator-trb:app', () => {
       'package.json',
       'src',
       'webpack'
+    ]);
+  });
+
+  it('should create yo-rc', () => {
+    assert.file([
+      '.yo-rc.json'
     ]);
   });
 });
