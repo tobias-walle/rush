@@ -4,7 +4,7 @@ function firstLetterToUppercase(inputString) {
 
 function fromLispToCamelCase(inputString) {
   const words = inputString.split('-');
-  let result = words.splice(0, 1);
+  let result = words.splice(0, 1)[0];
   for (let word of words) {
     result += firstLetterToUppercase(word);
   }
@@ -15,8 +15,13 @@ function fromLispToUpperCamelCase(inputString) {
   return firstLetterToUppercase(fromLispToCamelCase(inputString));
 }
 
+function fromLispToUpperCase(inputString) {
+  return inputString.replace('-', '_').toUpperCase();
+}
+
 module.exports = {
   firstLetterToUppercase,
   fromLispToCamelCase,
-  fromLispToUpperCamelCase
+  fromLispToUpperCamelCase,
+  fromLispToUpperCase
 };
