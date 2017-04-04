@@ -15,7 +15,8 @@ describe('generator-trb:app', () => {
     assert.file([
       'package.json',
       'src',
-      'webpack'
+      'webpack',
+      '.gitignore'
     ]);
   });
 
