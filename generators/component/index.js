@@ -1,8 +1,9 @@
 'use strict';
 const Generator = require('yeoman-generator');
+const mkdirp = require('mkdirp');
+const path = require('path');
 const validate = require('../../utils/validate-utils');
 const utils = require('../../utils/general-utils');
-const mkdirp = require('mkdirp');
 
 module.exports = class extends Generator {
   constructor(args, opts) {
@@ -11,7 +12,13 @@ module.exports = class extends Generator {
     this.argument('name', {
       type: String,
       required: true,
-      desc: 'The name of the component.'
+      desc: 'The name of the component'
+    });
+
+    this.option('destination', {
+      alias: 'd',
+      type: String,
+      desc: 'The destination folder of the component'
     });
   }
 
@@ -26,29 +33,27 @@ module.exports = class extends Generator {
     }
   }
 
-  default() {
-    const name = this.options.name;
-    this.destinationRoot(this.contextRoot);
-    mkdirp(name);
-  }
-
   writing() {
     const name = this.options.name;
     const upperCamelCaseName = utils.fromLispToUpperCamelCase(name);
 
+    let destination = this.options.destination || this.contextRoot;
+    destination = path.join(destination, name);
+
+    mkdirp(name);
     this.fs.copyTpl(
       this.templatePath('template.component.tsx'),
-      this.destinationPath(name, `${name}.component.tsx`),
+      this.destinationPath(destination, `${name}.component.tsx`),
       {name, upperCamelCaseName}
     );
     this.fs.copyTpl(
       this.templatePath('template.component.spec.tsx'),
-      this.destinationPath(name, `${name}.component.spec.tsx`),
+      this.destinationPath(destination, `${name}.component.spec.tsx`),
       {name, upperCamelCaseName}
     );
     this.fs.copy(
       this.templatePath('template.component.scss'),
-      this.destinationPath(name, `${name}.component.scss`)
+      this.destinationPath(destination, `${name}.component.scss`)
     );
   }
 };
