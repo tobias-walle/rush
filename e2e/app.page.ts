@@ -1,6 +1,6 @@
 import { browser } from 'protractor';
 
-export class MainPage {
+export class AppPage {
   navigateTo() {
     browser.get('http://localhost:3000/');
   }
