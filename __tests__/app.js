@@ -4,14 +4,18 @@ var assert = require('yeoman-assert');
 var helpers = require('yeoman-test');
 
 describe('generator-trb:app', () => {
+  const PROJECT_NAME = 'my-project';
   beforeAll(() => {
     return helpers.run(path.join(__dirname, '../generators/app'))
-      .withPrompts({someAnswer: true});
+      .withPrompts({name: PROJECT_NAME});
   });
 
-  it('creates files', () => {
+  it('should create files', () => {
+    // Check some files
     assert.file([
-      'dummyfile.txt'
+      'package.json',
+      'src',
+      'webpack'
     ]);
   });
 });
