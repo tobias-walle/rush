@@ -42,15 +42,17 @@ module.exports = class extends Generator {
 
   writing() {
     this.config.save();
-    // Copy all non-dotfiles
     this.fs.copy(
       this.templatePath('typed-react-base/**/*'),
-      this.destinationPath()
-    );
-    // Copy all dotfiles
-    this.fs.copy(
-      this.templatePath('typed-react-base/**/.*'),
-      this.destinationPath()
+      this.destinationPath(),
+      {
+        globOptions: {
+          dot: true,
+          ignore: [
+            '**/.git'
+          ]
+        }
+      }
     );
   }
 
