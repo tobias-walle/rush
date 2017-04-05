@@ -3,18 +3,17 @@ import * as path from 'path';
 import * as React from 'react';
 import { Server } from 'http';
 import { WebServer } from './webpack-dev-server';
-import { match, createMemoryHistory, RouterContext } from 'react-router';
-import { routes } from '../routes';
-import { renderToString } from 'react-dom/server';
 import { createStore } from 'redux';
 import { WithStylesContext } from 'isomorphic-style-loader-utils';
-import { syncHistoryWithStore } from 'react-router-redux';
 import { DEVELOPMENT, DISABLE_SERVER_SIDE_RENDERING } from '../config';
 import { ApiServer } from '../../api/index';
-import { getStoreMiddleware } from '../utils/redux-helper';
 import { HtmlComponent } from '../components/html.component';
-import { Provider } from 'react-redux';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import { EntryComponent } from '../modules/root';
+import { ServerWrapperComponent } from './server-app-wrapper.component';
+import { renderToString } from 'react-router-server';
+import { getStoreMiddleware } from '../utils/redux-helper';
+const morgan = require('morgan');
 const express = require('express');
 
 // Load main styles as string
@@ -49,6 +48,11 @@ export class BackendServer {
   init() {
     this.app = express();
     this.httpServer = http.createServer(this.app);
+
+    // Middleware
+    if (DEVELOPMENT) {
+      this.app.use(morgan('dev'));
+    }
 
     // Create a proxy for the webpack dev server and the api
     this.httpProxy = require('http-proxy').createProxyServer({
@@ -103,66 +107,61 @@ export class BackendServer {
 
   setupHtmlRoutes() {
     this.app.use((req, res) => {
-      // Search for UI Routes
-      match({routes, location: req.originalUrl}, (error: any, nextLocation: Location, nextState: any) => {
-        if (error) {
-          // Send message if an error occurs
-          res.status(500).send(error.message);
-        } else if (nextLocation) {
-          // Redirect on redirection
-          res.redirect(302, nextLocation.pathname + nextLocation.search);
-        } else if (nextState) {
-          // Create history
-          const history = createMemoryHistory();
+      // Setup state
+      const initialState = {};
+      const store = createStore(
+        require('../modules/root').reducer,
+        initialState,
+        getStoreMiddleware()
+      );
 
-          // Setup state
-          const initialState = {};
-          const store = createStore(
-            require('../modules/root').reducer,
-            initialState,
-            getStoreMiddleware(history),
-          );
-
-          syncHistoryWithStore(history, store);
-
-          if (DISABLE_SERVER_SIDE_RENDERING) {
-            // Just provider Html without SSR
-            res.status(200).send(renderToString(
-              <HtmlComponent store={store}/>,
-            ));
-          } else {
-            // Prepare app
-            let RootComponent = () => (
-              <Provider store={store}>
-                <RouterContext {...nextState}/>
-              </Provider>
-            );
-
-            // Load styles
-            const css: string[] = [];
-            // Wrap app with style context
-            const OldAppComponent = withStyles(mainStyles)(RootComponent);
-            RootComponent = () => (
-              <WithStylesContext onInsertCss={styles => css.push(styles._getCss())}>
-                <OldAppComponent/>
-              </WithStylesContext>
-            );
-
-            // Send the result
-            const html = renderToString(
-              <HtmlComponent
-                store={store}
-                component={<RootComponent/>}
-                styles={css}
-              />,
-            );
+      if (DISABLE_SERVER_SIDE_RENDERING) {
+        // Just provider Html without SSR
+        renderToString(
+          <HtmlComponent store={store}/>,
+        )
+          .then(({html}) => {
             res.status(200).send(html);
-          }
-        } else {
-          // No routes where found, send 404
-          res.status(404).send('Not found');
-        }
-      });
+          })
+          .catch(err => console.error(err));
+        ;
+      } else {
+        // Load styles
+        const css: string[] = [];
+        // Wrap app with style context
+        const EntryComponentWithStyles = withStyles(mainStyles)(EntryComponent);
+
+        // Send the result
+        const context: any = {};
+        renderToString(
+          <HtmlComponent
+            store={store}
+            component={(
+              <ServerWrapperComponent
+                store={store}
+                url={req.url}
+                context={context}
+              >
+                <WithStylesContext onInsertCss={styles => css.push(styles._getCss())}>
+                  <EntryComponentWithStyles/>
+                </WithStylesContext>
+              </ServerWrapperComponent>
+            )}
+            styles={css}
+          />,
+        )
+          .then(({html}) => {
+            if (context.url) {
+              res.writeHead(302, {
+                Location: context.url
+              });
+              res.end();
+            } else {
+              res.send(html);
+            }
+          })
+          .catch(err => console.error(err));
+      }
     });
   }
 

@@ -110,7 +110,6 @@
     "no-unnecessary-initializer": true,
     "object-literal-key-quotes": "consistent",
     "object-literal-shorthand": true,
-    "prefer-method-signature": true,
     "member-ordering": [
       true,
       {

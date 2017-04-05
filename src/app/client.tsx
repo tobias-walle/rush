@@ -1,18 +1,14 @@
 import 'rxjs';
-import * as React from 'react';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { render } from 'react-dom';
 import { createStore } from 'redux';
-import { browserHistory } from 'react-router';
-import { syncHistoryWithStore } from 'react-router-redux';
-
 import { WithStylesContext } from 'isomorphic-style-loader-utils';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { AppContainer } from 'react-hot-loader';
-
 import { DEVELOPMENT } from './config';
 
-const history = browserHistory;
+import * as React from 'react';
+import withStyles from 'isomorphic-style-loader/lib/withStyles';
+import { EntryComponent } from './modules/root';
 
 // Load initial state
 let store: any;
@@ -22,40 +18,37 @@ const setupStore = () => {
   const reducer = require('./modules/root').reducer;
   const getStoreMiddleware = require('./utils/redux-helper').getStoreMiddleware;
 
-  let middleware = getStoreMiddleware(history);
+  let middleware = getStoreMiddleware();
   if (DEVELOPMENT) {
     // If not production, activate redux debug tools
     middleware = composeWithDevTools(middleware);
   }
 
   store = createStore(reducer, initialState, middleware);
-
-  syncHistoryWithStore(history, store);
 };
 setupStore();
 
 // Render the app
 const getRootComponent = () => {
-  const AppComponent = require('./components/app.component.tsx').AppComponent;
+  const ClientWrapperComponent = require('./client/client-wrapper.component.tsx').ClientWrapperComponent;
 
-  let RootComponent = () => (
-    <AppComponent
-      history={history}
-      store={store}
-    />
-  );
-
-  // Main styles
+  // Load styles
   const mainStyles = require('./styles/main.scss');
 
+  const RootComponent = withStyles(mainStyles)(() => (
+    <ClientWrapperComponent
+      store={store}
+    >
+      <EntryComponent/>
+    </ClientWrapperComponent>
+  ));
+
   // Add Component style context
-  const OldRootComponent = withStyles(mainStyles)(RootComponent);
-  RootComponent = () => (
+  return () => (
     <WithStylesContext onInsertCss={styles => styles._insertCss()}>
-      <OldRootComponent/>
+      <RootComponent/>
     </WithStylesContext>
   );
-  return RootComponent;
 };
 
 const RootComponent = getRootComponent();
@@ -77,7 +70,7 @@ if (module['hot']) {
     ), document.getElementById('container'));
   };
 
-  module['hot'].accept('./components/app.component.tsx', () => {
+  module['hot'].accept('./client/client-wrapper.component.tsx', () => {
     reRenderApp();
   });
 
