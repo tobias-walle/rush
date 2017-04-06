@@ -1,5 +1,7 @@
-import { Observable } from 'rxjs';
+require('source-map-support').install();
+import './polyfills';
 import { API_HOST, API_PORT, DEVELOPMENT, HOST, PORT, WEBPACK_DEV_HOST, WEBPACK_DEV_PORT } from './config';
+import { Observable } from 'rxjs';
 import { BackendServer, BackendServerOptions } from './server/backend-server';
 
 // Start Server
@@ -20,7 +22,7 @@ if (DEVELOPMENT) {
 server.startApiServer();
 server.start();
 
-// -- HOT RELOAD SETUP -- THIS IS STILL EXPERIMENTAL AND MAY HAVE SOME BUGS WHICH REQUIRES A FULL RELOAD
+// -- HOT RELOAD SETUP --
 if (DEVELOPMENT && module && module['hot']) {
   const hot = module['hot'];
 

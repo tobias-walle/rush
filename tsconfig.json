@@ -17,10 +17,12 @@
     "target": "es5",
     "moduleResolution": "node",
     "jsx": "react",
-    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "sourceMap": true,
-    "removeComments": true
+    "removeComments": true,
+    "noEmitHelpers": true,
+    "pretty": true
   },
   "awesomeTypescriptLoaderOptions": {
     "silent": true,

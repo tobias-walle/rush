@@ -13,8 +13,8 @@ import { EntryComponent } from '../modules/root';
 import { ServerWrapperComponent } from './server-app-wrapper.component';
 import { renderToString } from 'react-router-server';
 import { getStoreMiddleware } from '../utils/redux-helper';
-const morgan = require('morgan');
-const express = require('express');
+import * as morgan from 'morgan';
+import * as express from 'express';
 
 // Load main styles as string
 const mainStyles = require('../styles/main.scss');

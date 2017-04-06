@@ -1,6 +1,6 @@
 import { Server } from 'http';
-const Webpack = require('webpack');
-const WebpackDevServer = require('webpack-dev-server');
+import * as Webpack from 'webpack';
+import * as WebpackDevServer from 'webpack-dev-server';
 
 export class WebServer {
   private server: Server;

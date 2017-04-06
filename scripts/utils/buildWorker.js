@@ -19,7 +19,7 @@ let watcher;
 function cleanup(folder) {
   return Rx.Observable.create((observer) => {
     console.log('Cleanup "' + folder + '"...');
-    rimraf(folder, () => {
+    rimraf(folder, {}, () => {
       observer.next();
       observer.complete();
     });

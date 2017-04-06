@@ -7,7 +7,6 @@ const rootDir = path.resolve(__dirname, '..');
 module.exports = {
   entry: {
     app: [
-      'babel-polyfill',
       './src/app/client.tsx',
     ],
     vendor: [

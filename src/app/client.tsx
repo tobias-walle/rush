@@ -1,3 +1,4 @@
+import './polyfills';
 import 'rxjs';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { render } from 'react-dom';
