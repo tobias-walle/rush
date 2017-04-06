@@ -11,7 +11,6 @@ let nodeModules = {};
 fs.readdirSync('node_modules')
   .filter(x => ['.bin'].indexOf(x) === -1)
   .forEach(mod => nodeModules[mod] = `commonjs ${mod}`);
-console.log(Object.keys(nodeModules).length, 'node modules found');
 
 module.exports = {
   target: 'node',
