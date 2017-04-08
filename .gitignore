@@ -4,3 +4,4 @@ node_modules
 out-tsc
 npm-debug.log
 .awcache
+yarn-error.log
