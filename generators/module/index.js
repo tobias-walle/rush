@@ -1,7 +1,6 @@
 'use strict';
 const Generator = require('yeoman-generator');
 const validate = require('../../utils/validate-utils');
-const utils = require('../../utils/general-utils');
 
 module.exports = class extends Generator {
 
@@ -36,26 +35,19 @@ module.exports = class extends Generator {
     this.composeWith(require.resolve('../component'),
       {
         arguments: [name],
+        destination: this.settings.destination,
+        flat: true
+      }
+    );
+    this.composeWith(require.resolve('../duck'),
+      {
+        arguments: [name],
+        moduleName: name,
         destination: this.settings.destination
       }
     );
   }
 
   writing() {
-    const name = this.options.name;
-    const destination = this.settings.destination;
-    const camelCaseName = utils.fromLispToCamelCase(name);
-    const upperCamelCaseName = utils.fromLispToUpperCamelCase(name);
-
-    this.fs.copy(
-      this.templatePath('name.redux.ts'),
-      this.destinationPath(destination, `${name}.redux.ts`),
-      {name, camelCaseName, upperCamelCaseName}
-    );
-    this.fs.copy(
-      this.templatePath('name.routes.tsx'),
-      this.destinationPath(destination, `${name}.routes.tsx`),
-      {name, camelCaseName, upperCamelCaseName}
-    );
   }
 };
