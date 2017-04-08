@@ -70,7 +70,12 @@ module.exports = class extends Generator {
     if (error !== true) {
       this.env.error(error);
     }
-    this.options.elements = elements.split(' ');
+
+    if (elements !== '') {
+      this.options.elements = elements.split(' ');
+    } else {
+      this.options.elements = [];
+    }
   }
 
   writing() {
