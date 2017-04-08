@@ -5,7 +5,7 @@ declare const __karma__: any;
 __karma__.loaded = function () {};
 
 // Find tests
-let context = require['context']('./', true, /\.spec\.tsx?$/);
+const context = require['context']('./', true, /\.spec\.tsx?$/);
 // Load modules
 context.keys().map(context);
 __karma__.start();
