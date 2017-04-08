@@ -19,9 +19,22 @@ function fromLispToUpperCase(inputString) {
   return inputString.replace('-', '_').toUpperCase();
 }
 
+function fromLispToWords(inputString) {
+  return inputString.replace('-', ' ');
+}
+
+function fromLispToFirstLetterUppercaseWords(inputString) {
+  if (inputString === undefined || inputString === '') {
+    return [];
+  }
+  return inputString.split('-').map(word => firstLetterToUppercase(word)).join(' ');
+}
+
 module.exports = {
   firstLetterToUppercase,
   fromLispToCamelCase,
   fromLispToUpperCamelCase,
-  fromLispToUpperCase
+  fromLispToUpperCase,
+  fromLispToWords,
+  fromLispToFirstLetterUppercaseWords
 };

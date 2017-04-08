@@ -3,7 +3,9 @@ const Generator = require('yeoman-generator');
 const chalk = require('chalk');
 const path = require('path');
 const mkdirp = require('mkdirp');
+const fs = require('fs');
 const validate = require('../../utils/validate-utils');
+const utils = require('../../utils/general-utils');
 
 module.exports = class extends Generator {
   prompting() {
@@ -60,11 +62,18 @@ module.exports = class extends Generator {
 
   default() {
     if (path.basename(this.destinationPath()) !== this.props.name) {
-      this.log(
-        `Create the project folder "${this.props.name}"`
-      );
-      mkdirp(this.props.name);
-      this.destinationRoot(this.destinationRoot(this.props.name));
+      const projectFolder = this.destinationPath(this.props.name);
+      if (fs.existsSync(projectFolder)) {
+        this.log(
+          `Use "${this.props.name}" as the project folder.`
+        );
+      } else {
+        this.log(
+          `Create the project folder "${this.props.name}".`
+        );
+        mkdirp(this.props.name);
+      }
+      this.destinationRoot(projectFolder);
     }
   }
 
@@ -89,7 +98,7 @@ module.exports = class extends Generator {
     const pkgPath = this.destinationPath('package.json');
     let pkg = this.fs.readJSON(pkgPath);
     const {name, description, author, license, homepage, keywords} = this.props;
-    let keywordsArray = keywords === '' ? [] : keywords.split(',');
+    let keywordsArray = (keywords === '' || keywords === undefined) ? [] : keywords.split(',');
     pkg = Object.assign(pkg, {
       name,
       description,
@@ -99,6 +108,16 @@ module.exports = class extends Generator {
       keywords: keywordsArray
     });
     this.fs.writeJSON(pkgPath, pkg);
+
+    // Write README
+    this.fs.copyTpl(
+      this.templatePath('README.md'),
+      this.destinationPath('README.md'),
+      {
+        name: utils.fromLispToFirstLetterUppercaseWords(name),
+        description, author, license
+      }
+    );
   }
 
   install() {

@@ -1,6 +1,5 @@
 'use strict';
 const Generator = require('yeoman-generator');
-const mkdirp = require('mkdirp');
 const path = require('path');
 const validate = require('../../utils/validate-utils');
 const utils = require('../../utils/general-utils');
@@ -46,7 +45,6 @@ module.exports = class extends Generator {
     let destination = this.options.destination || this.contextRoot;
     if (!this.options.flat) {
       destination = path.join(destination, name);
-      mkdirp(name);
     }
     this.fs.copyTpl(
       this.templatePath('template.component.tsx'),

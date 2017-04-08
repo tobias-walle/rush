@@ -16,7 +16,8 @@ describe('generator-trb:app', () => {
       'package.json',
       'src',
       'webpack',
-      '.gitignore'
+      '.gitignore',
+      'README.md'
     ]);
   });
 
