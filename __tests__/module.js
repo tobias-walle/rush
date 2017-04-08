@@ -19,11 +19,4 @@ describe('generator-trb:module', () => {
       path.join('src', 'app', 'modules', MODULE_NAME, `${MODULE_NAME}.component.scss`)
     ]);
   });
-
-  it('renders redux file', () => {
-    assert.fileContent(
-      path.join('src', 'app', 'modules', MODULE_NAME, `${MODULE_NAME}.redux.ts`),
-      /.*HelloWorldState.*/gm
-    );
-  });
 });

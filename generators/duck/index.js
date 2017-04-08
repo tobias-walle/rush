@@ -71,10 +71,10 @@ module.exports = class extends Generator {
       this.env.error(error);
     }
 
-    if (elements !== '') {
-      this.options.elements = elements.split(' ');
-    } else {
+    if (elements === '') {
       this.options.elements = [];
+    } else {
+      this.options.elements = elements.split(' ');
     }
   }
 
