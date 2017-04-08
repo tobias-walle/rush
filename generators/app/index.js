@@ -78,8 +78,6 @@ module.exports = class extends Generator {
   }
 
   writing() {
-    this.config.save();
-
     // Copy files
     this.fs.copy(
       this.templatePath('typed-react-base/**/*'),
@@ -118,6 +116,11 @@ module.exports = class extends Generator {
         description, author, license
       }
     );
+
+    // Yoeman Config
+    this.config.set({
+      modulesPath: 'src/app/modules'
+    });
   }
 
   install() {

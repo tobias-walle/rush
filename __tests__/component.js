@@ -8,6 +8,7 @@ describe('generator-trb:component', () => {
 
   it('creates files', () => {
     return helpers.run(path.join(__dirname, '../generators/component'))
+      .withOptions({destination: '.'})
       .withArguments([COMPONENT_NAME])
       .then(() => {
         assert.file([
@@ -22,6 +23,7 @@ describe('generator-trb:component', () => {
 
   it('creates files flat', () => {
     helpers.run(path.join(__dirname, '../generators/component'))
+      .withOptions({destination: '.'})
       .withArguments([COMPONENT_NAME])
       .withOptions({flat: true})
       .then(() => {

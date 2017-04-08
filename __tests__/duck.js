@@ -6,8 +6,8 @@ var helpers = require('yeoman-test');
 describe('generator-trb:duck', () => {
   beforeAll(() => {
     return helpers.run(path.join(__dirname, '../generators/duck'))
-      .withArguments(['hello-world', 'a b c'])
-      .withOptions({moduleName: 'test'});
+      .withOptions({destination: '.'})
+      .withArguments(['hello-world', 'a b c']);
   });
 
   it('creates files', () => {

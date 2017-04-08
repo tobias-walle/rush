@@ -4,7 +4,9 @@ const ejs = require('ejs');
 const path = require('path');
 const utils = require('../../utils/general-utils');
 const validate = require('../../utils/validate-utils');
-const moduleUtils = require('../../utils/module-utils');
+const pathUtils = require('../../utils/path-utils');
+
+const generatorName = 'duck';
 
 function validateElements(elements) {
   if (!validate.isLispCase(elements, {withSpaces: true})) {
@@ -37,33 +39,11 @@ module.exports = class extends Generator {
       default: ''
     });
 
-    this.option('moduleName', {
-      alias: 'm',
-      type: String,
-      desc: 'The name of the module'
-    });
-
-    this.option('destination', {
-      alias: 'd',
-      type: String,
-      desc: 'The destination folder of the duck',
-      default: this.contextRoot
-    });
-  }
-
-  initializing() {
-    if (!this.options.moduleName) {
-      const moduleName = moduleUtils.findModuleName(this.contextRoot, 'src/app/modules');
-
-      if (!moduleName) {
-        this.env.error('Couldn\'t find module name. Please make sure you are in a module folder.');
-      }
-      this.options.moduleName = moduleName;
-    }
+    pathUtils.setupDestinationOptions(this, generatorName);
   }
 
   default() {
-    this.destinationRoot(this.contextRoot);
+    // Elements
     const elements = this.options.elements;
 
     const error = validateElements(elements);
@@ -76,12 +56,14 @@ module.exports = class extends Generator {
     } else {
       this.options.elements = elements.split(' ');
     }
+
+    // Destination Path
+    pathUtils.updateDestinationOption(this, generatorName);
   }
 
   writing() {
     const destination = this.options.destination;
     const elements = this.options.elements;
-    const moduleName = this.options.moduleName;
     const name = this.options.name;
 
     const duckTemplate = this.fs.read(this.templatePath('duck.ts'));
@@ -89,7 +71,7 @@ module.exports = class extends Generator {
     const reducer = `${utils.fromLispToCamelCase(name)}Reducer`;
     const epic = `$${utils.fromLispToCamelCase(name)}Epic`;
     const ducks = elements.map(element => {
-      const action = `app/${moduleName}/${utils.fromLispToUpperCase(element)}`;
+      const action = `app/${name}/${utils.fromLispToUpperCase(element)}`;
       const actionCreator = getActionCreatorName(element, name);
       return ejs.render(duckTemplate, {
         action,
