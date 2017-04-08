@@ -1,8 +1,12 @@
 {
-  "name": "react-redux-app",
+  "name": "typed-react-base",
   "version": "1.0.0",
-  "description": "My first react app with redux. Following the tutorial on https://medium.com/@rajaraodv/step-by-step-guide-to-building-react-redux-apps-using-mocks-48ca0f47f9a#.loitituz1",
-  "main": "index.js",
+  "description": "Isomorphic React with Typescript, Redux, Wepack and Express",
+  "main": "dist/server/server.js",
+  "author": "Tobias Walle",
+  "homepage": "https://github.com/TobiasWalle/typed-react-base",
+  "license": "ISC",
+  "keywords": [],
   "scripts": {
     "start": "npm run --silent start:dev",
     "start:dev": "node ./scripts/build.js development --watch --target server --callback \"node ./dist/server/server.js\"",
@@ -24,8 +28,6 @@
     "lint": "tslint src/**/*.ts{,x}",
     "check": "npm run lint && npm run test"
   },
-  "author": "Tobias Walle",
-  "license": "ISC",
   "devDependencies": {
     "@types/enzyme": "^2.7.6",
     "@types/express": "^4.0.35",
