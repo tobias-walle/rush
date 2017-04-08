@@ -16,3 +16,5 @@ export const API_PORT = process.env.API_PORT || 3002;
 
 // Other
 export const DISABLE_SERVER_SIDE_RENDERING: boolean = false;
+// Disable Server Side style rendering in the development environment, so there are no problems with hot reloading
+export const DISABLE_SERVER_SIDE_STYLE_RENDERING: boolean = DEVELOPMENT;

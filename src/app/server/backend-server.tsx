@@ -5,7 +5,7 @@ import { Server } from 'http';
 import { WebServer } from './webpack-dev-server';
 import { createStore } from 'redux';
 import { WithStylesContext } from 'isomorphic-style-loader-utils';
-import { DEVELOPMENT, DISABLE_SERVER_SIDE_RENDERING } from '../config';
+import { DEVELOPMENT, DISABLE_SERVER_SIDE_RENDERING, DISABLE_SERVER_SIDE_STYLE_RENDERING } from '../config';
 import { ApiServer } from '../../api/index';
 import { HtmlComponent } from '../components/html.component';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
@@ -147,7 +147,7 @@ export class BackendServer {
                 </WithStylesContext>
               </ServerWrapperComponent>
             )}
-            styles={css}
+            styles={!DISABLE_SERVER_SIDE_STYLE_RENDERING ? css : []}
           />,
         )
           .then(({html}) => {
