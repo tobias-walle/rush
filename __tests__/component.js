@@ -2,6 +2,7 @@
 const path = require('path');
 const assert = require('yeoman-assert');
 const helpers = require('yeoman-test');
+const utils = require('../utils/general-utils');
 
 describe('generator-trb:component', () => {
   const COMPONENT_NAME = 'hello-world';
@@ -16,6 +17,17 @@ describe('generator-trb:component', () => {
           path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.tsx`),
           path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.spec.tsx`),
           path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.scss`)
+        ]);
+
+        assert.fileContent([
+          [
+            path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.tsx`),
+            new RegExp(`.*${utils.fromLispToUpperCamelCase(COMPONENT_NAME)}Component.*`)
+          ],
+          [
+            path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.spec.tsx`),
+            new RegExp(`.*${utils.fromLispToUpperCamelCase(COMPONENT_NAME)}Component.*`)
+          ]
         ]);
         return Promise.resolve();
       });

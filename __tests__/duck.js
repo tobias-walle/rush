@@ -1,18 +1,26 @@
 'use strict';
-var path = require('path');
-var assert = require('yeoman-assert');
-var helpers = require('yeoman-test');
+const path = require('path');
+const assert = require('yeoman-assert');
+const helpers = require('yeoman-test');
+const utils = require('../utils/general-utils');
 
 describe('generator-trb:duck', () => {
+  const DUCK_NAME = 'hello-world';
+
   beforeAll(() => {
     return helpers.run(path.join(__dirname, '../generators/duck'))
       .withOptions({destination: '.'})
-      .withArguments(['hello-world', 'a b c']);
+      .withArguments([DUCK_NAME, 'a b c']);
   });
 
   it('creates files', () => {
     assert.file([
-      'hello-world.duck.ts'
+      `${DUCK_NAME}.duck.ts`
     ]);
+
+    assert.fileContent(
+      `${DUCK_NAME}.duck.ts`,
+      new RegExp(`.*${utils.fromLispToUpperCamelCase(DUCK_NAME)}.*`, 'gm')
+    );
   });
 });

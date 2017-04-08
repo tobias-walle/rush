@@ -2,6 +2,7 @@
 const path = require('path');
 const assert = require('yeoman-assert');
 const helpers = require('yeoman-test');
+const utils = require('../utils/general-utils');
 
 describe('generator-trb:app', () => {
   const PROJECT_NAME = 'my-project';
@@ -25,5 +26,19 @@ describe('generator-trb:app', () => {
     assert.file([
       '.yo-rc.json'
     ]);
+  });
+
+  it('should modify the package.json', () => {
+    assert.fileContent(
+      'package.json',
+      new RegExp(`^.*${PROJECT_NAME}.*$`, 'mg')
+    );
+  });
+
+  it('should generate a README', () => {
+    assert.fileContent(
+      'README.md',
+      new RegExp(`^.*${utils.fromLispToFirstLetterUppercaseWords(PROJECT_NAME)}.*$`, 'mg')
+    );
   });
 });
