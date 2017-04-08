@@ -23,12 +23,7 @@ function getActionCreatorName(element, duckName) {
 module.exports = class extends Generator {
   constructor(args, opts) {
     super(args, opts);
-
-    this.argument('name', {
-      type: String,
-      required: true,
-      desc: 'The name of the duck module'
-    });
+    pathUtils.setupDestinationOptions(this, generatorName);
 
     this.argument('elements', {
       type: String,
@@ -38,8 +33,6 @@ module.exports = class extends Generator {
       ' reducers.',
       default: ''
     });
-
-    pathUtils.setupDestinationOptions(this, generatorName);
   }
 
   default() {
@@ -58,7 +51,7 @@ module.exports = class extends Generator {
     }
 
     // Destination Path
-    pathUtils.updateDestinationOption(this, generatorName);
+    pathUtils.updateDestinationOption(this);
   }
 
   writing() {

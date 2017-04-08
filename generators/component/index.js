@@ -1,7 +1,6 @@
 'use strict';
 const Generator = require('yeoman-generator');
 const path = require('path');
-const validate = require('../../utils/validate-utils');
 const utils = require('../../utils/general-utils');
 const pathUtils = require('../../utils/path-utils');
 
@@ -10,12 +9,6 @@ const generatorName = 'component';
 module.exports = class extends Generator {
   constructor(args, opts) {
     super(args, opts);
-
-    this.argument('name', {
-      type: String,
-      required: true,
-      desc: 'The name of the component'
-    });
 
     pathUtils.setupDestinationOptions(this, generatorName);
 
@@ -32,17 +25,16 @@ module.exports = class extends Generator {
     if (name === undefined) {
       this.env.error('The component name has to be defined');
     }
-    if (!validate.isLispCase(name)) {
-      this.env.error('Only lower case characters and hyphens are allowed in the component name');
-    }
   }
 
   default() {
-    pathUtils.updateDestinationOption(this, generatorName);
+    pathUtils.updateDestinationOption(this);
   }
 
   writing() {
     const name = this.options.name;
+    console.log(this.options);
+    console.log('Name', name);
     const upperCamelCaseName = utils.fromLispToUpperCamelCase(name);
 
     let destination = this.options.destination;
