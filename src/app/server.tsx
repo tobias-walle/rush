@@ -1,5 +1,5 @@
 require('source-map-support').install();
-import './polyfills';
+import '../polyfills';
 import { API_HOST, API_PORT, DEVELOPMENT, HOST, PORT, WEBPACK_DEV_HOST, WEBPACK_DEV_PORT } from './config';
 import { Observable } from 'rxjs';
 import { BackendServer, BackendServerOptions } from './server/backend-server';

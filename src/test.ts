@@ -1,3 +1,4 @@
+import './polyfills';
 declare const __karma__: any;
 
 // Prevent karma from running
