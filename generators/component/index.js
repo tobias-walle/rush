@@ -20,6 +20,12 @@ module.exports = class extends Generator {
       type: String,
       desc: 'The destination folder of the component'
     });
+
+    this.option('flat', {
+      alias: 'f',
+      type: Boolean,
+      desc: 'If True, there will be no folder created for this component'
+    });
   }
 
   initializing() {
@@ -38,9 +44,10 @@ module.exports = class extends Generator {
     const upperCamelCaseName = utils.fromLispToUpperCamelCase(name);
 
     let destination = this.options.destination || this.contextRoot;
-    destination = path.join(destination, name);
-
-    mkdirp(name);
+    if (!this.options.flat) {
+      destination = path.join(destination, name);
+      mkdirp(name);
+    }
     this.fs.copyTpl(
       this.templatePath('template.component.tsx'),
       this.destinationPath(destination, `${name}.component.tsx`),

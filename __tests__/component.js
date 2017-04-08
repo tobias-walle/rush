@@ -5,17 +5,34 @@ const helpers = require('yeoman-test');
 
 describe('generator-trb:component', () => {
   const COMPONENT_NAME = 'hello-world';
-  beforeAll(() => {
-    return helpers.run(path.join(__dirname, '../generators/component'))
-      .withArguments([COMPONENT_NAME]);
-  });
 
   it('creates files', () => {
-    assert.file([
-      COMPONENT_NAME,
-      path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.tsx`),
-      path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.spec.tsx`),
-      path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.scss`)
-    ]);
+    return helpers.run(path.join(__dirname, '../generators/component'))
+      .withArguments([COMPONENT_NAME])
+      .then(() => {
+        assert.file([
+          COMPONENT_NAME,
+          path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.tsx`),
+          path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.spec.tsx`),
+          path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.scss`)
+        ]);
+        return Promise.resolve();
+      });
   });
-});
+
+  it('creates files flat', () => {
+    helpers.run(path.join(__dirname, '../generators/component'))
+      .withArguments([COMPONENT_NAME])
+      .withOptions({flat: true})
+      .then(() => {
+        assert.file([
+          COMPONENT_NAME,
+          path.join(`${COMPONENT_NAME}.component.tsx`),
+          path.join(`${COMPONENT_NAME}.component.spec.tsx`),
+          path.join(`${COMPONENT_NAME}.component.scss`)
+        ]);
+        return Promise.resolve();
+      });
+  });
+})
+;
