@@ -24,7 +24,7 @@ module.exports = {
     path: rootDir + '/dist/server/',
   },
 
-  devtool: 'source-maps',
+  devtool: 'inline-source-map',
 
   resolve: {
     extensions: [

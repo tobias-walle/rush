@@ -26,6 +26,10 @@ module.exports = {
   devtool: 'source-maps',
 
   resolve: {
+    modules: [
+      'node_modules',
+      path.resolve(rootDir, 'src')
+    ],
     extensions: [
       '.webpack.js', '.web.js', '.ts', '.tsx', '.js'
     ]
