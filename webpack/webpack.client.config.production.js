@@ -7,7 +7,7 @@ const rootDir = path.resolve(__dirname, '..');
 module.exports = {
   entry: {
     app: [
-      './src/app/client.tsx',
+      './src/app/client.entry.tsx',
     ],
     vendor: [
       'react',

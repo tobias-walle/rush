@@ -9,7 +9,7 @@ module.exports = {
   entry: {
     app: [
       'react-hot-loader/patch',
-      './src/app/client.tsx',
+      './src/app/client.entry.tsx',
     ],
     vendor: [
       'react-hot-loader/patch',
