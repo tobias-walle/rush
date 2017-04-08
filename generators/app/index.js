@@ -10,19 +10,47 @@ module.exports = class extends Generator {
     // Have Yeoman greet the user.
     this.log('Welcome to the ' + chalk.blue('react-base') + ' generator!');
 
-    const prompts = [{
-      type: 'input',
-      name: 'name',
-      message: 'What is the name of the project?',
-      validate: name => {
-        if (validate.isEmpty(name)) {
-          return 'The project name has to be set.';
-        } else if (!validate.isLispCase(name)) {
-          return 'Only lower case letters, digits and hyphens are allowed in the project name. For Example: my-project';
+    const prompts = [
+      {
+        type: 'input',
+        name: 'name',
+        message: 'What is the name of the project?',
+        validate: name => {
+          if (validate.isEmpty(name)) {
+            return 'The project name has to be set';
+          } else if (!validate.isLispCase(name)) {
+            return 'Only lower case letters, digits and hyphens are allowed in the project name. For Example: my-project';
+          }
+          return true;
         }
-        return true;
+      },
+      {
+        type: 'input',
+        name: 'description',
+        message: 'Description?'
+      },
+      {
+        type: 'input',
+        name: 'author',
+        message: 'Author?'
+      },
+      {
+        type: 'input',
+        name: 'homepage',
+        message: 'Homepage?'
+      },
+      {
+        type: 'input',
+        name: 'keywords',
+        message: 'Keywords (separated by comma)?'
+      },
+      {
+        type: 'input',
+        name: 'license',
+        message: 'License?',
+        default: 'MIT'
       }
-    }];
+    ];
 
     return this.prompt(prompts).then(props => {
       // To access props later use this.props.someAnswer;
@@ -42,6 +70,8 @@ module.exports = class extends Generator {
 
   writing() {
     this.config.save();
+
+    // Copy files
     this.fs.copy(
       this.templatePath('typed-react-base/**/*'),
       this.destinationPath(),
@@ -54,6 +84,21 @@ module.exports = class extends Generator {
         }
       }
     );
+
+    // Update package.json
+    const pkgPath = this.destinationPath('package.json');
+    let pkg = this.fs.readJSON(pkgPath);
+    const {name, description, author, license, homepage, keywords} = this.props;
+    let keywordsArray = keywords === '' ? [] : keywords.split(',');
+    pkg = Object.assign(pkg, {
+      name,
+      description,
+      author,
+      license,
+      homepage,
+      keywords: keywordsArray
+    });
+    this.fs.writeJSON(pkgPath, pkg);
   }
 
   install() {
