@@ -3,6 +3,7 @@ const helpers = require('./utils/helpers');
 const path = require('path');
 const cp = require('child_process');
 const colors = require('colors');
+const Logger = require('./utils/logger');
 
 // Config
 // - Arguments
@@ -44,10 +45,9 @@ let buildWebpackConfigPath = (target) => {
 };
 
 // Create a logger
+const logger = new Logger(false, false, true);
 let log = (msg) => {
-  let date = new Date();
-  let logPrefix = (`[${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}] `.bold);
-  console.log(`${logPrefix}${msg}`);
+  logger.log(msg);
 };
 
 

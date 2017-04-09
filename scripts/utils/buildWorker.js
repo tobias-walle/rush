@@ -13,12 +13,14 @@ const Rx = require('rxjs');
 const webpack = require('webpack');
 const colors = require('colors');
 const rimraf = require('rimraf');
+const Logger = require('./logger');
 
 let watcher;
+let logger;
 
 function cleanup(folder) {
   return Rx.Observable.create((observer) => {
-    console.log('Cleanup "' + folder + '"...');
+    logger.log('Cleanup "' + folder + '"...');
     rimraf(folder, {}, () => {
       observer.next();
       observer.complete();
@@ -29,18 +31,18 @@ function cleanup(folder) {
 process.on('message', (message) => {
   let {webpackConfigPath, environment, watch, target, color} = JSON.parse(message);
 
+  // Setup Logging
+  logger = new Logger(`${environment}|${target}`, color);
+  let log = (msg) => {
+    logger.log(msg);
+  };
+
   let webpackConfig = require(webpackConfigPath);
   cleanup(webpackConfig.output.path).subscribe(() => {
-    // Setup Logging
-    let log = (msg) => {
-      let date = new Date();
-      let logPrefix = `[${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} ${environment}|${target}] `[color];
-      console.log(`${logPrefix}${msg}`);
-    };
 
     let callback = (err, stats) => {
       if (err) {
-        console.error(`Compile Error:${err}`.red);
+        logger.error(`Compile Error:${err}`.red);
         log(stats.toString('normal'));
       } else {
         let {startTime, endTime} = stats;
