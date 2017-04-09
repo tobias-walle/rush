@@ -1,6 +1,9 @@
 import { Server } from 'http';
 import * as Webpack from 'webpack';
 import * as WebpackDevServer from 'webpack-dev-server';
+import { loggerFactory } from '../logging';
+
+const logger = loggerFactory.getLogger('server.webpack');
 
 export class WebServer {
   private server: Server;
@@ -25,12 +28,12 @@ export class WebServer {
     const compiler: any = Webpack(webpackConfig);
 
     compiler.plugin('compile', () => {
-      console.log('Bundling client...');
+      logger.debug('Bundling client...');
       bundleStart = Date.now();
     });
 
     compiler.plugin('done', () => {
-      console.log(`Bundled client in ${Date.now() - bundleStart} ms!`);
+      logger.debug(`Bundled client in ${Date.now() - bundleStart} ms!`);
     });
 
     this.bundler = new WebpackDevServer(compiler, {
@@ -52,8 +55,8 @@ export class WebServer {
    */
   start() {
     this.server = this.bundler.listen(this.port, this.host, () => {
-      console.log(`Webpack Dev Server is running on ${this.host}:${this.port}/`);
-      console.log('Bundling project, please wait...');
+      logger.info(`Webpack Dev Server is running on ${this.host}:${this.port}/`);
+      logger.debug('Bundling project, please wait...');
     });
   }
 
@@ -62,7 +65,7 @@ export class WebServer {
    */
   stop() {
     if (this.server) {
-      console.log('Stop Webpack Dev Server');
+      logger.info('Stop Webpack Dev Server');
       this.server.close();
     }
   }

@@ -1,8 +1,12 @@
+import { LoggerFactory } from 'typescript-logging';
 require('source-map-support').install();
 import '../polyfills';
 import { API_HOST, API_PORT, DEVELOPMENT, HOST, PORT, WEBPACK_DEV_HOST, WEBPACK_DEV_PORT } from './config';
 import { Observable } from 'rxjs';
 import { BackendServer, BackendServerOptions } from './server/backend-server';
+import { loggerFactory } from './logging';
+
+const loggerHmr = loggerFactory.getLogger('server.entry.HMR');
 
 // Start Server
 let server: BackendServer;
@@ -27,12 +31,12 @@ if (DEVELOPMENT && module && module['hot']) {
   const hot = module['hot'];
 
   // Check for changes in backend server
-  console.log('[HMR] Hot Module Replacement is activated');
+  loggerHmr.debug('Hot Module Replacement is activated');
   hot.accept([
     require.resolve('./server/backend-server.tsx'),
     require.resolve('./config')
   ], () => {
-    console.log('[HMR] Reload Backend Server');
+    loggerHmr.debug('Reload Backend Server');
     try {
       // Create a new server
       const newServer = new BackendServer(options);
@@ -52,7 +56,7 @@ if (DEVELOPMENT && module && module['hot']) {
       server.start();
 
     } catch (err) {
-      console.error('Hot Reload failed:', err);
+      loggerHmr.error('Hot Reload failed:', err);
     }
   });
 
@@ -66,9 +70,9 @@ if (DEVELOPMENT && module && module['hot']) {
             ignoreUnaccepted: true,
           }).then(() => {
           })
-            .catch((err) => console.error('[HMR Check Promise]', err));
+            .catch((err) => loggerHmr.error(err.toString()));
         } catch (err) {
-          console.error('[HMR Check]', err);
+          loggerHmr.error(err);
         }
       },
     );

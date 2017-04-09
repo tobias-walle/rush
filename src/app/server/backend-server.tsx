@@ -8,16 +8,15 @@ import { WithStylesContext } from 'isomorphic-style-loader-utils';
 import { DEVELOPMENT, DISABLE_SERVER_SIDE_RENDERING, DISABLE_SERVER_SIDE_STYLE_RENDERING } from '../config';
 import { ApiServer } from '../../api/index';
 import { HtmlComponent } from '../components/html.component';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { EntryComponent } from '../modules/root';
 import { ServerWrapperComponent } from './server-app-wrapper.component';
 import { renderToString } from 'react-router-server';
 import { getStoreMiddleware } from '../utils/redux-helper';
 import * as morgan from 'morgan';
 import * as express from 'express';
+import { loggerFactory } from '../logging';
 
-// Load main styles as string
-const mainStyles = require('../styles/main.scss');
+const logger = loggerFactory.getLogger('server.backend');
 
 export class BackendServerOptions {
   host?: string = 'localhost';
@@ -123,7 +122,7 @@ export class BackendServer {
           .then(({html}) => {
             res.status(200).send(html);
           })
-          .catch(err => console.error(err));
+          .catch(err => logger.error(err));
         ;
       } else {
         // Load styles
@@ -158,7 +157,7 @@ export class BackendServer {
               res.send(html);
             }
           })
-          .catch(err => console.error(err));
+          .catch(err => logger.error(err));
       }
     });
   }
@@ -183,12 +182,12 @@ export class BackendServer {
 
   start() {
     this.httpServer.listen(this.options.port, () => {
-      console.log(`Server is running on ${this.options.host}:${this.options.port}/`);
+      logger.info(`Server is running on ${this.options.host}:${this.options.port}/`);
     });
   }
 
   stop() {
-    console.log('Stop Backend Server');
+    logger.info('Stop Backend Server');
     this.httpServer.close();
   }
 }

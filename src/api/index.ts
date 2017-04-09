@@ -1,8 +1,11 @@
 import * as bodyParser from 'body-parser';
 import { Server } from 'http';
 import { Application } from 'express';
+import { loggerFactory } from '../app/logging';
 const morgan = require('morgan');
 const express = require('express');
+
+const logger = loggerFactory.getLogger('server.api');
 
 export class ApiServer {
   private app: Application;
@@ -51,7 +54,7 @@ export class ApiServer {
   start() {
     if (this.port !== undefined && this.port !== null) {
       this.server = this.app.listen(this.port, () => {
-        console.log(`Api Server is running on ${this.host}:${this.port}/`);
+        logger.info(`Api Server is running on ${this.host}:${this.port}/`);
       });
     } else {
       throw Error('The port of the API Server is not defined.');
@@ -62,7 +65,7 @@ export class ApiServer {
    * Stop the API Server
    */
   stop() {
-    console.log('Stop API server');
+    logger.info('Stop API server');
     if (this.server) {
       this.server.close();
     }
