@@ -12,7 +12,6 @@ fs.readdirSync('node_modules')
   .filter(x => ['.bin'].indexOf(x) === -1)
   .forEach(mod => nodeModules[mod] = `commonjs ${mod}`);
 const keys = Object.keys(nodeModules);
-console.log(keys.length, keys.includes('react'));
 
 module.exports = {
   target: 'node',
