@@ -7,12 +7,12 @@ const rootDir = path.resolve(__dirname, '..');
 module.exports = {
   entry: {
     app: [
-      rootDir + '/src/app/client.entry.tsx',
+      './src/app/client.entry.tsx',
     ],
   },
   output: {
     filename: 'bundle.js',
-    path: rootDir + '/dist/client/',
+    path: path.resolve(rootDir, 'dist/client/'),
     publicPath: '/static/',
   },
 
@@ -62,7 +62,7 @@ module.exports = {
       'process.env.IS_SERVER_SIDE': JSON.stringify(false),
     }),
     new CopyWebpackPlugin([
-      {from: rootDir + '/src/app/assets', to: 'assets'}
+      {from: 'src/app/assets', to: 'assets'}
     ]),
     new webpack.LoaderOptionsPlugin({
       minimize: true,

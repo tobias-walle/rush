@@ -9,12 +9,12 @@ module.exports = {
   entry: {
     app: [
       'react-hot-loader/patch',
-      rootDir + '/src/app/client.entry.tsx',
+      './src/app/client.entry.tsx',
     ],
   },
   output: {
     filename: 'bundle.js',
-    path: rootDir + '/dist/client/',
+    path: path.resolve(rootDir, 'dist/client/'),
     publicPath: '/static/',
   },
 
@@ -22,7 +22,7 @@ module.exports = {
 
   devServer: {
     hot: true,
-    contentBase: rootDir + '/dist/client/',
+    contentBase: path.resolve(rootDir, 'dist/client/'),
     publicPath: '/static/'
   },
 
@@ -70,7 +70,7 @@ module.exports = {
     }),
     new CheckerPlugin(),
     new CopyWebpackPlugin([
-      {from: rootDir + '/src/app/assets', to: 'assets'}
+      {from: 'src/app/assets', to: 'assets'}
     ]),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),

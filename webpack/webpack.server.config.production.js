@@ -10,11 +10,11 @@ let rootDir = path.resolve(__dirname, '..');
 module.exports = {
   target: 'node',
   entry: [
-    rootDir + '/src/app/server.entry.tsx',
+    path.resolve(rootDir, 'src/app/server.entry.tsx'),
   ],
   output: {
     filename: 'server.js',
-    path: rootDir + '/dist/server/',
+    path: path.resolve(rootDir, 'dist/server/'),
   },
 
   devtool: 'inline-source-map',
@@ -57,7 +57,7 @@ module.exports = {
     }),
     new CheckerPlugin(),
     new CopyWebpackPlugin([
-      {from: rootDir + '/src/app/assets', to: 'assets'}
+      {from: path.resolve(rootDir, 'src/app/assets'), to: 'assets'}
     ]),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.LoaderOptionsPlugin({
