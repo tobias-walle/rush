@@ -14,7 +14,7 @@ function getModulesPath(yoConfig) {
   const modulesPath = yoConfig.get('modulesPath');
   if (!modulesPath) {
     throw Error('Your ".yo-rc.json" does not have the option "modulePath" or does not exists. ' +
-      'Please make sure you are in an typed-react-base project and the "modulePath" option  is set.');
+      'Please make sure you are in an typed-react-base project and the "modulesPath" option  is set.');
   }
   return modulesPath;
 }

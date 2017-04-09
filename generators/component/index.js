@@ -33,8 +33,6 @@ module.exports = class extends Generator {
 
   writing() {
     const name = this.options.name;
-    console.log(this.options);
-    console.log('Name', name);
     const upperCamelCaseName = utils.fromLispToUpperCamelCase(name);
 
     let destination = this.options.destination;
