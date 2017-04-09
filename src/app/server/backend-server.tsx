@@ -129,8 +129,6 @@ export class BackendServer {
         // Load styles
         const css: string[] = [];
         // Wrap app with style context
-        const EntryComponentWithStyles = withStyles(mainStyles)(EntryComponent);
-
         // Send the result
         const context: any = {};
         renderToString(
@@ -143,7 +141,7 @@ export class BackendServer {
                 context={context}
               >
                 <WithStylesContext onInsertCss={styles => css.push(styles._getCss())}>
-                  <EntryComponentWithStyles/>
+                  <EntryComponent/>
                 </WithStylesContext>
               </ServerWrapperComponent>
             )}

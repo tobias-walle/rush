@@ -9,11 +9,6 @@ module.exports = {
     app: [
       './src/app/client.entry.tsx',
     ],
-    vendor: [
-      'react',
-      'react-dom',
-      'redux'
-    ],
   },
   output: {
     filename: 'bundle.js',
@@ -69,7 +64,6 @@ module.exports = {
     new CopyWebpackPlugin([
       {from: 'src/app/assets', to: 'assets'}
     ]),
-    new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'vendor.bundle.js'}),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
       debug: false

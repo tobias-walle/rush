@@ -6,14 +6,13 @@ import { createStore } from 'redux';
 import { WithStylesContext } from 'isomorphic-style-loader-utils';
 import { AppContainer } from 'react-hot-loader';
 import { DEVELOPMENT } from './config';
-
 import * as React from 'react';
-import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import { EntryComponent } from './modules/root';
+import { ClientWrapperComponent } from './client/client-wrapper.component';
 
 // Load initial state
 let store: any;
-const setupStore = () => {
+const setupStore = (reload = false) => {
   // Imports
   const initialState = window['__data'];
   const reducer = require('./modules/root').reducer;
@@ -25,60 +24,38 @@ const setupStore = () => {
     middleware = composeWithDevTools(middleware);
   }
 
-  store = createStore(reducer, initialState, middleware);
+  if (reload) {
+    store.replaceReducer(reducer);
+  } else {
+    store = createStore(reducer, initialState, middleware);
+  }
 };
 setupStore();
 
-// Render the app
-const getRootComponent = () => {
-  const ClientWrapperComponent = require('./client/client-wrapper.component.tsx').ClientWrapperComponent;
-
-  // Load styles
-  const mainStyles = require('./styles/main.scss');
-
-  const RootComponent = withStyles(mainStyles)(() => (
-    <ClientWrapperComponent
-      store={store}
-    >
-      <EntryComponent/>
-    </ClientWrapperComponent>
-  ));
-
-  // Add Component style context
-  return () => (
-    <WithStylesContext onInsertCss={styles => styles._insertCss()}>
-      <RootComponent/>
-    </WithStylesContext>
+// Render
+const renderApp = () => {
+  render(
+    <AppContainer>
+      <WithStylesContext onInsertCss={styles => styles._insertCss()}>
+        <ClientWrapperComponent
+          store={store}
+        >
+          <EntryComponent/>
+        </ClientWrapperComponent>
+      </WithStylesContext>
+    </AppContainer>, document.getElementById('container'),
   );
 };
-
-const RootComponent = getRootComponent();
-render(
-  <AppContainer>
-    <RootComponent/>
-  </AppContainer>, document.getElementById('container'),
-);
+renderApp();
 
 if (module['hot']) {
-
-  const reRenderApp = () => {
-    const NextRootComponent = getRootComponent();
-
-    render((
-      <AppContainer>
-        <NextRootComponent />
-      </AppContainer>
-    ), document.getElementById('container'));
-  };
-
-  module['hot'].accept('./client/client-wrapper.component.tsx', () => {
-    reRenderApp();
+  module['hot'].accept(['./client/client-wrapper.component.tsx'], () => {
+    renderApp();
   });
 
-  module['hot'].accept(['./modules/root', './utils/redux-helper'], () => {
-    console.log('Hot Reload root');
-    setupStore();
-    reRenderApp();
+  module['hot'].accept(['./modules/root.ts', './utils/redux-helper.ts'], () => {
+    setupStore(true);
+    renderApp();
   });
 
   module['hot'].accept();

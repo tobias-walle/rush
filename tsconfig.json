@@ -7,12 +7,6 @@
       "es2017",
       "dom"
     ],
-    "baseUrl": ".",
-    "paths": {
-      "*": [
-        "node_modules/@types/*"
-      ]
-    },
     "module": "es2015",
     "target": "es5",
     "moduleResolution": "node",
@@ -27,6 +21,9 @@
   "awesomeTypescriptLoaderOptions": {
     "silent": true,
     "forkChecker": true,
+    "useWebpackText": true,
+    "doTypeCheck": true,
+    "useTranspileModule": true,
     "useBabel": true,
     "useCache": true
   },

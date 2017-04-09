@@ -28,14 +28,14 @@ if (DEVELOPMENT && module && module['hot']) {
 
   // Check for changes in backend server
   console.log('[HMR] Hot Module Replacement is activated');
-  hot.accept(require.resolve('./server/backend-server.tsx'), () => {
+  hot.accept([
+    require.resolve('./server/backend-server.tsx'),
+    require.resolve('./config')
+  ], () => {
     console.log('[HMR] Reload Backend Server');
     try {
-      // Reload backend server
-      const NewBackendServer = require('./server/backend-server.tsx').BackendServer;
-
       // Create a new server
-      const newServer = new NewBackendServer(options);
+      const newServer = new BackendServer(options);
 
       // Stop old server
       server.stopApiServer();
@@ -64,7 +64,8 @@ if (DEVELOPMENT && module && module['hot']) {
           hot.check({
             ignoreDeclined: true,
             ignoreUnaccepted: true,
-          }).then(() => {})
+          }).then(() => {
+          })
             .catch((err) => console.error('[HMR Check Promise]', err));
         } catch (err) {
           console.error('[HMR Check]', err);

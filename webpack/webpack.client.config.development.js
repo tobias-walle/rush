@@ -11,11 +11,6 @@ module.exports = {
       'react-hot-loader/patch',
       './src/app/client.entry.tsx',
     ],
-    vendor: [
-      'react-hot-loader/patch',
-      'react',
-      'react-dom'
-    ],
   },
   output: {
     filename: 'bundle.js',
@@ -24,6 +19,12 @@ module.exports = {
   },
 
   devtool: 'source-maps',
+
+  devServer: {
+    hot: true,
+    contentBase: rootDir + '/dist/client/',
+    publicPath: '/static/'
+  },
 
   resolve: {
     modules: [
@@ -71,7 +72,6 @@ module.exports = {
     new CopyWebpackPlugin([
       {from: 'src/app/assets', to: 'assets'}
     ]),
-    new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'vendor.bundle.js'}),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.LoaderOptionsPlugin({

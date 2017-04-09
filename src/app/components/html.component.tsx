@@ -38,7 +38,6 @@ export const HtmlComponent = (props: HtmlProps) => {
       dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())};`}}
       charSet='UTF-8'
     />
-    <script src='/static/vendor.bundle.js'/>
     <script src='/static/bundle.js'/>
     </body>
     </html>
