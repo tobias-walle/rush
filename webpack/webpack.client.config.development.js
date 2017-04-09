@@ -9,7 +9,7 @@ module.exports = {
   entry: {
     app: [
       'react-hot-loader/patch',
-      './src/app/client.entry.tsx',
+      rootDir + '/src/app/client.entry.tsx',
     ],
   },
   output: {
@@ -70,7 +70,7 @@ module.exports = {
     }),
     new CheckerPlugin(),
     new CopyWebpackPlugin([
-      {from: 'src/app/assets', to: 'assets'}
+      {from: rootDir + '/src/app/assets', to: 'assets'}
     ]),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),

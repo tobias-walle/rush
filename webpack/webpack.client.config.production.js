@@ -7,7 +7,7 @@ const rootDir = path.resolve(__dirname, '..');
 module.exports = {
   entry: {
     app: [
-      './src/app/client.entry.tsx',
+      rootDir + '/src/app/client.entry.tsx',
     ],
   },
   output: {
@@ -62,7 +62,7 @@ module.exports = {
       'process.env.IS_SERVER_SIDE': JSON.stringify(false),
     }),
     new CopyWebpackPlugin([
-      {from: 'src/app/assets', to: 'assets'}
+      {from: rootDir + '/src/app/assets', to: 'assets'}
     ]),
     new webpack.LoaderOptionsPlugin({
       minimize: true,

@@ -27,19 +27,11 @@ function cleanup(folder) {
 }
 
 process.on('message', (message) => {
-  let {webpackConfigPath, environment, initialRun, watch, target, color} = JSON.parse(message);
+  let {webpackConfigPath, environment, watch, target, color} = JSON.parse(message);
 
   let webpackConfig = require(webpackConfigPath);
   cleanup(webpackConfig.output.path).subscribe(() => {
-    // Get webpack
-
-    // Setup compiler
-    let compiler = webpack(webpackConfig, (err) => {
-      if (err) {
-        console.error(`Compiler Creation Error:${err}`.red);
-      }
-    });
-
+    // Setup Logging
     let log = (msg) => {
       let date = new Date();
       let logPrefix = `[${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} ${environment}|${target}] `[color];
@@ -63,6 +55,9 @@ process.on('message', (message) => {
         }
       }
     };
+
+    // Setup Compiler
+    let compiler = webpack(webpackConfig);
 
     compiler.plugin('compilation', () => {
       log(`Start bundling`);

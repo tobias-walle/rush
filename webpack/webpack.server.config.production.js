@@ -10,7 +10,7 @@ let rootDir = path.resolve(__dirname, '..');
 module.exports = {
   target: 'node',
   entry: [
-    './src/app/server.entry.tsx',
+    rootDir + '/src/app/server.entry.tsx',
   ],
   output: {
     filename: 'server.js',
@@ -57,7 +57,7 @@ module.exports = {
     }),
     new CheckerPlugin(),
     new CopyWebpackPlugin([
-      {from: 'src/app/assets', to: 'assets'}
+      {from: rootDir + '/src/app/assets', to: 'assets'}
     ]),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.LoaderOptionsPlugin({
