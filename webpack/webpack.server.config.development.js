@@ -1,25 +1,17 @@
-let webpack = require('webpack');
-let fs = require('fs');
-let path = require('path');
+const webpack = require('webpack');
+const fs = require('fs');
+const path = require('path');
 const {CheckerPlugin} = require('awesome-typescript-loader');
-let CopyWebpackPlugin = require('copy-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const nodeExternals = require('webpack-node-externals');
 
 let rootDir = path.resolve(__dirname, '..');
 
-// Create a list of node_modules, so there are not bundled
-let nodeModules = {};
-fs.readdirSync('node_modules')
-  .filter(x => ['.bin'].indexOf(x) === -1)
-  .forEach(mod => nodeModules[mod] = `commonjs ${mod}`);
-const keys = Object.keys(nodeModules);
-
 module.exports = {
   target: 'node',
-  entry: {
-    app: [
-      './src/app/server.entry.tsx',
-    ]
-  },
+  entry: [
+    './src/app/server.entry.tsx',
+  ],
   output: {
     filename: 'server.js',
     path: rootDir + '/dist/server/',
@@ -29,7 +21,7 @@ module.exports = {
 
   resolve: {
     extensions: [
-      '.webpack.js', '.web.js', '.ts', '.tsx', '.js'
+      '.ts', '.tsx', '.js', '.jsx'
     ]
   },
 
@@ -46,11 +38,6 @@ module.exports = {
         'sass-loader?sourceMap']
       },
       {
-        test: /\.js$/,
-        loader: 'source-map-loader',
-        enforce: 'pre'
-      },
-      {
         test: /\.(png|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'url-loader?limit=100000'
       },
@@ -61,7 +48,7 @@ module.exports = {
     ]
   },
 
-  externals: nodeModules,
+  externals: [nodeExternals()],
 
   plugins: [
     new webpack.DefinePlugin({
