@@ -1538,6 +1538,13 @@ create-hmac@^1.1.0, create-hmac@^1.1.2:
     create-hash "^1.1.0"
     inherits "^2.0.1"
 
+create-react-class@^15.5.1:
+  version "15.5.2"
+  resolved "https://registry.yarnpkg.com/create-react-class/-/create-react-class-15.5.2.tgz#6a8758348df660b88326a0e764d569f274aad681"
+  dependencies:
+    fbjs "^0.8.9"
+    object-assign "^4.1.1"
+
 cross-spawn-async@^2.1.1:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/cross-spawn-async/-/cross-spawn-async-2.2.5.tgz#845ff0c0834a3ded9d160daca6d390906bb288cc"
@@ -4493,7 +4500,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.2, prop-types@~15.5.0:
+prop-types@^15.0.0, prop-types@^15.5.2, prop-types@^15.5.4, prop-types@~15.5.0:
   version "15.5.4"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.4.tgz#2ed3692716a5060f8cc020946d8238e7419d92c0"
   dependencies:
@@ -4645,12 +4652,13 @@ react-dom@^15.5.3:
     object-assign "^4.1.0"
     prop-types "~15.5.0"
 
-react-helmet@^5.0.1:
-  version "5.0.2"
-  resolved "https://registry.yarnpkg.com/react-helmet/-/react-helmet-5.0.2.tgz#2905f9e174650b74c26983d75dc45f3ebf561890"
+react-helmet@^5.0.3:
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/react-helmet/-/react-helmet-5.0.3.tgz#c6da63ee96e83aa7c8fe6d041f28dd288b1b006d"
   dependencies:
     deep-equal "^1.0.1"
     object-assign "^4.1.1"
+    prop-types "^15.5.4"
     react-side-effect "^1.1.0"
 
 react-hot-loader@^3.0.0-beta.6:
@@ -4670,15 +4678,17 @@ react-proxy@^3.0.0-alpha.0:
   dependencies:
     lodash "^4.6.1"
 
-react-redux@^5.0.3:
-  version "5.0.3"
-  resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.0.3.tgz#86c3b68d56e74294a42e2a740ab66117ef6c019f"
+react-redux@^5.0.4:
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.0.4.tgz#1563babadcfb2672f57f9ceaa439fb16bf85d55b"
   dependencies:
+    create-react-class "^15.5.1"
     hoist-non-react-statics "^1.0.3"
     invariant "^2.0.0"
     lodash "^4.2.0"
     lodash-es "^4.2.0"
     loose-envify "^1.1.0"
+    prop-types "^15.0.0"
 
 react-router-dom@^4.0.0:
   version "4.0.0"
@@ -4819,9 +4829,9 @@ redux-devtools-extension@^2.13.0:
   version "2.13.0"
   resolved "https://registry.yarnpkg.com/redux-devtools-extension/-/redux-devtools-extension-2.13.0.tgz#c8300d72630c00999302526204d47c360cc0637f"
 
-redux-mock-store@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/redux-mock-store/-/redux-mock-store-1.2.2.tgz#38007dc38f12ca8d965c7521afee5ccacc234d03"
+redux-mock-store@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/redux-mock-store/-/redux-mock-store-1.2.3.tgz#1b3ad299da91cb41ba30d68e3b6f024475fb9e1b"
 
 redux-observable@^0.14.1:
   version "0.14.1"
@@ -5718,9 +5728,9 @@ typedarray@~0.0.5:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typescript-logging@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/typescript-logging/-/typescript-logging-0.3.0.tgz#f2e3931e22575ac28d46d667ef937c46da339de4"
+typescript-logging@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/typescript-logging/-/typescript-logging-0.3.1.tgz#d8dc3b2edcc28aa84fed86d132088374e4eefe65"
   dependencies:
     stacktrace-js "1.3.1"
 
