@@ -29,7 +29,7 @@ const OPTIONS = {
   },
   forceRestart: {
     description: 'Can be used in combination with the --callback Option. If the option is set, the callback will be ' +
-      'executed again after every new build. If the previous callback is still running it will be terminated.'
+    'executed again after every new build. If the previous callback is still running it will be terminated.'
   },
 };
 
@@ -55,12 +55,12 @@ let log = (msg) => {
 let numberOfWorker = target ? 1 : OPTIONS.target.options.length;
 let numberOfWorkerFinishedBuilding = 0;
 
+let callbackProcess = null;
 let startWorker = (target, color) => {
   let webpackConfigPath = path.resolve(buildWebpackConfigPath(target));
 
   let workerConfig = {webpackConfigPath, environment, watch, target, color};
   let worker = cp.fork(__dirname + '/utils/buildWorker');
-  let callbackProcess = null;
   worker.on('message', (message) => {
     if (message === 'compiled') {
       if (++numberOfWorkerFinishedBuilding === numberOfWorker && callback) {
@@ -86,9 +86,12 @@ let startWorker = (target, color) => {
 
         if (callbackProcess !== null) {
           // Kill old process if it exists
-          callbackProcess.kill('SIGINT', () => {
+          log('Close old process...');
+          helpers.onProcessClosed(callbackProcess, () => {
+            callbackProcess = null;
             executeCommand();
-          })
+          });
+          callbackProcess.kill('SIGINT');
         } else {
           executeCommand();
         }
@@ -130,8 +133,5 @@ let cleanUp = () => {
     });
   });
 };
-process.on('exit', cleanUp);
-process.on('SIGINT', cleanUp);
-process.on('SIGTERM', cleanUp);
-process.on('uncaughtException', cleanUp);
+helpers.onProcessClosed(process, cleanUp);
 

@@ -51,5 +51,12 @@ module.exports = {
       }
     }
     return result;
+  },
+
+  onProcessClosed(process, callback) {
+    process.on('exit', callback);
+    process.on('SIGINT', callback);
+    process.on('SIGTERM', callback);
+    process.on('uncaughtException', callback);
   }
 };
