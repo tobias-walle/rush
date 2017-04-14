@@ -7,7 +7,7 @@ import { WithStylesContext } from 'isomorphic-style-loader-utils';
 import { AppContainer } from 'react-hot-loader';
 
 import * as React from 'react';
-import { DEVELOPMENT } from './config';
+import { DEVELOPMENT } from '../config';
 import { EntryComponent } from './modules/root';
 import { ClientWrapperComponent } from './client/client-wrapper.component';
 

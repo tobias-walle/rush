@@ -1,9 +1,14 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "./dist/client"
+    "outDir": "./dist/spec"
   },
-  "files": [
-    "./src/client.entry.tsx"
+  "include": [
+    "./src/**/*.ts",
+    "./src/**/*.tsx"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules"
   ]
 }

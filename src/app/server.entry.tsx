@@ -2,16 +2,16 @@ require('source-map-support').install();
 import '../polyfills';
 import { Observable } from 'rxjs';
 import { BackendServer, BackendServerOptions } from './server/backend-server';
-import { loggerFactory } from './logging';
+import { loggerFactory } from '../logging';
 
 const loggerHmr = loggerFactory.getLogger('server.entry.HMR');
 
 // Start Server
 let server: BackendServer;
 let options: BackendServerOptions;
-let config = require('./config');
+let config = require('./../config');
 const updateOptions = () => {
-  config = require('./config');
+  config = require('./../config');
   options = {
     host: config.HOST,
     port: config.PORT,
@@ -27,7 +27,6 @@ if (config.DEVELOPMENT) {
   server.startWebpackDevServer();
 }
 
-server.startApiServer();
 server.start();
 
 // -- HOT RELOAD SETUP --
@@ -39,7 +38,7 @@ if (config.DEVELOPMENT && module && module['hot']) {
   hot.accept([
     require.resolve('../polyfills'),
     require.resolve('./server/backend-server.tsx'),
-    require.resolve('./config')
+    require.resolve('../config')
   ], () => {
     loggerHmr.debug('Reload Backend Server');
     try {
@@ -49,7 +48,6 @@ if (config.DEVELOPMENT && module && module['hot']) {
       const newServer = new NewBackendServer(options);
 
       // Stop old server
-      server.stopApiServer();
       server.stop();
 
       // Copy webpack server to the new server
@@ -59,7 +57,6 @@ if (config.DEVELOPMENT && module && module['hot']) {
       server = newServer;
 
       // Start server again
-      server.startApiServer();
       server.start();
 
     } catch (err) {

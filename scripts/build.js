@@ -16,8 +16,10 @@ const ARGUMENTS = {
 // - Options
 const OPTIONS = {
   target: {
-    options: ['client', 'server'],
-    description: 'Define the target that should be compiled. If nothing is set both targets will be compiled.'
+    options: ['client', 'server', 'api'],
+    multiple: true,
+    description: 'Define one or several target that should be compiled. The different targets are separated by a comma.' +
+    ' If nothing is set, all targets will be compiled.'
   },
   watch: {
     options: [true, false],
@@ -37,7 +39,7 @@ const OPTIONS = {
 const WEBPACK_BASE_PATH = './webpack';
 
 // Parses the command line arguments
-let {environment, watch, target, callback, forceRestart} = require('./utils/ArgumentParser')(ARGUMENTS, OPTIONS);
+let {environment, watch, target = OPTIONS.target.options, callback, forceRestart} = require('./utils/ArgumentParser')(ARGUMENTS, OPTIONS);
 
 // Helper to build the webpack config path for a specific target
 let buildWebpackConfigPath = (target) => {
@@ -52,7 +54,7 @@ let log = (msg) => {
 
 
 // Counter for checking how many workers have completed their first run
-let numberOfWorker = target ? 1 : OPTIONS.target.options.length;
+let numberOfWorker = target.length;
 let numberOfWorkerFinishedBuilding = 0;
 
 let callbackProcess = null;
@@ -105,14 +107,15 @@ let startWorker = (target, color) => {
 
 
 let workers = [];
-if (target) {
-  workers.push(startWorker(target, 'yellow'));
-} else {
-  let logColors = ['yellow', 'cyan', 'red', 'magenta'];
-  let i = 0;
-  for (let target of OPTIONS.target.options) {
-    workers.push(startWorker(target, logColors[i++ % logColors.length]));
-  }
+let logColors = {
+  'client': 'cyan',
+  'server': 'yellow',
+  'api': 'green',
+  'default': 'magenta'
+};
+for (let t of target) {
+  const color = logColors[t] || logColors['default'];
+  workers.push(startWorker(t, color));
 }
 
 // Setup clean up of the child processes

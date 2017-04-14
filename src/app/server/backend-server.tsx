@@ -4,30 +4,29 @@ import * as React from 'react';
 import { Server } from 'http';
 import { WebServer } from './webpack-dev-server';
 import { createStore } from 'redux';
-import { WithStyles, WithStylesContext } from 'isomorphic-style-loader-utils';
-import { DEVELOPMENT, DISABLE_SERVER_SIDE_RENDERING, DISABLE_SERVER_SIDE_STYLE_RENDERING } from '../config';
-import { ApiServer } from '../../api/index';
+import { WithStylesContext } from 'isomorphic-style-loader-utils';
+import { DEVELOPMENT, DISABLE_SERVER_SIDE_RENDERING, DISABLE_SERVER_SIDE_STYLE_RENDERING } from '../../config';
 import { HtmlComponent } from '../components/html.component';
 import { EntryComponent } from '../modules/root';
 import { ServerWrapperComponent } from './server-app-wrapper.component';
 import { renderToString } from 'react-router-server';
 import { getStoreMiddleware } from '../utils/redux-helper';
+import * as fs from 'fs';
 import * as morgan from 'morgan';
 import * as express from 'express';
-import { loggerFactory } from '../logging';
-import * as fs from 'fs';
+import { loggerFactory } from '../../logging';
 
 const STATIC_PATH = '/static';
 
 const logger = loggerFactory.getLogger('server.backend');
 
 export class BackendServerOptions {
-  host?: string = 'localhost';
-  port?: number = 3000;
-  webpackDevHost?: string = 'localhost';
-  webpackDevPort?: number = 3001;
-  apiHost?: string = 'localhost';
-  apiPort?: number = 3002;
+  host: string;
+  port: number;
+  webpackDevHost: string;
+  webpackDevPort: number;
+  apiHost: string;
+  apiPort: number;
 }
 
 export class BackendServer {
@@ -41,7 +40,6 @@ export class BackendServer {
 
   httpServer: Server;
   webpackDevServer: any;
-  apiServer: ApiServer;
 
   constructor(options: BackendServerOptions) {
     this.setOptions(options);
@@ -85,6 +83,7 @@ export class BackendServer {
   }
 
   setupApiRoutes() {
+    // Http Proxy
     this.app.use('/api', (req, res) => {
       this.httpProxy.web(req, res, {
           target: `http://${this.options.apiHost}:${this.options.apiPort}/`,
@@ -92,6 +91,7 @@ export class BackendServer {
       );
     });
 
+    // WebSocket proxy
     this.httpServer.on('upgrade', (req, socket, head) => {
       this.httpProxy.ws(req, socket, head, {
         target: {
@@ -185,17 +185,8 @@ export class BackendServer {
     this.webpackDevServer.start();
   }
 
-  startApiServer(host = this.options.apiHost, port = this.options.apiPort) {
-    this.apiServer = new ApiServer(host, port);
-    this.apiServer.start();
-  }
-
   stopWebpackDevServer() {
     this.webpackDevServer.stop();
-  }
-
-  stopApiServer() {
-    this.apiServer.stop();
   }
 
   start() {

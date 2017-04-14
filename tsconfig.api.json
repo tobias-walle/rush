@@ -1,9 +1,9 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "./dist/spec"
+    "outDir": "./dist/api"
   },
   "files": [
-    "./src/app/client.entry.tsx"
+    "./src/api/api.entry.tsx"
   ]
 }

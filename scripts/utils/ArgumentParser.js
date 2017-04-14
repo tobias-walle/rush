@@ -44,6 +44,7 @@ module.exports = (ARGUMENT_CONFIG, OPTION_CONFIG) => {
     // Validate Arguments
     for (let i = 0; i < argv._.length; i++) {
       let key = Object.keys(ARGUMENT_CONFIG)[i];
+
       let possibleValues = ARGUMENT_CONFIG[key];
       if (possibleValues.indexOf(argv._[i]) === -1) {
         console.error(`${helpers.capitalizeString(key)} '${argv._[i]}' does not exists. ` +
@@ -60,16 +61,19 @@ module.exports = (ARGUMENT_CONFIG, OPTION_CONFIG) => {
     for (let key in argv) {
       if (argv.hasOwnProperty(key) !== undefined && key !== '_') {
         // Check if option exists
-        let keyCamelCase = helpers.camelCaseString(key);
-        if (Object.keys(OPTION_CONFIG).indexOf(keyCamelCase) !== -1) {
-          let option = argv[key];
-          let possibleOptions = OPTION_CONFIG[keyCamelCase].options;
-          if (possibleOptions && possibleOptions.indexOf(option) === -1) {
-            console.error(`Option '${key}' cannot have the value '${option}'. ` +
+        let optionName = helpers.camelCaseString(key);
+        if (optionExists(OPTION_CONFIG, optionName)) {
+          let optionValue = argv[key];
+          if (optionsIsValid(OPTION_CONFIG, optionName, optionValue)) {
+            if (OPTION_CONFIG[optionName].multiple) {
+              optionValue = optionValue.split(',');
+            }
+            options[optionName] = optionValue;
+          } else {
+            console.error(`Option '${key}' cannot have the value '${optionValue}'. ` +
               `Possible values are ${OPTION_CONFIG[key].options.map(s => `'${s}'`).join(', ')}`);
             process.exit(0);
           }
-          options[keyCamelCase] = option;
         } else {
           console.error(`Option '${key}' not found.`);
           process.exit(0);
@@ -82,5 +86,26 @@ module.exports = (ARGUMENT_CONFIG, OPTION_CONFIG) => {
   }
 };
 
+function optionExists(OPTION_CONFIG, optionName) {
+  return Object.keys(OPTION_CONFIG).indexOf(optionName) !== -1
+}
+
+function optionsIsValid(OPTION_CONFIG, optionName, optionValue) {
+  const option = OPTION_CONFIG[optionName];
+  let possibleOptions = option.options;
+  if (!possibleOptions) {
+    return true;
+  } else if (option.multiple) {
+    const optionValues = optionValue.split(',');
+    for (const v of optionValues) {
+      if (possibleOptions.indexOf(v) === -1) {
+        return false;
+      }
+    }
+    return true;
+  } else {
+    return possibleOptions.indexOf(optionValue) !== -1;
+  }
+}
 
 
