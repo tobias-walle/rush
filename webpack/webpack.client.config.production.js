@@ -1,6 +1,9 @@
 const webpack = require('webpack');
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
+const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
+const BundleAnalyzer = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const rootDir = path.resolve(__dirname, '..');
 
@@ -11,7 +14,7 @@ module.exports = {
     ],
   },
   output: {
-    filename: 'bundle.js',
+    filename: '[name].[chunkhash].js',
     path: path.resolve(rootDir, 'dist/client/'),
     publicPath: '/static/',
   },
@@ -50,9 +53,19 @@ module.exports = {
   },
 
   plugins: [
+    new BundleAnalyzer({
+      analyzerMode: 'server'
+    }),
+    new ManifestPlugin(),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),
       'process.env.IS_SERVER_SIDE': JSON.stringify(false),
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: (module) => {
+        return module.context && module.context.indexOf('node_modules') !== -1;
+      }
     }),
     new CopyWebpackPlugin([
       {from: 'src/app/assets', to: 'assets'}

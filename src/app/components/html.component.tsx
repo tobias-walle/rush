@@ -4,16 +4,12 @@ const serialize = require('serialize-javascript');
 
 export class HtmlProps {
   store: any;
+  scripts?: string[];
   component?: React.ReactElement<any>;
   styles?: string[];
 }
 
-export const HtmlComponent = (props: HtmlProps) => {
-  const {component, store} = props;
-  let styles = props.styles;
-  if (styles === undefined) {
-    styles = [];
-  }
+export const HtmlComponent = ({component, store, scripts = [], styles = []}: HtmlProps) => {
   const content: string = component ? ReactDOM.renderToString(component) : '';
 
   let head: JSX.Element;
@@ -38,7 +34,7 @@ export const HtmlComponent = (props: HtmlProps) => {
       dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())};`}}
       charSet='UTF-8'
     />
-    <script src='/static/bundle.js'/>
+    {scripts.map(scriptPath => <script src={scriptPath}/>)}
     </body>
     </html>
   );

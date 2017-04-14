@@ -79,6 +79,6 @@ process.on('message', (message) => {
 
 process.on('exit', () => {
   if (watcher) {
-    watcher.unwatch();
+    watcher.close();
   }
 });

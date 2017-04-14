@@ -13,7 +13,7 @@ module.exports = {
     ],
   },
   output: {
-    filename: 'bundle.js',
+    filename: '[name].js',
     path: path.resolve(rootDir, 'dist/client/'),
     publicPath: '/static/',
   },
@@ -69,7 +69,12 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.IS_SERVER_SIDE': JSON.stringify(false)
     }),
-    new CheckerPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: (module) => {
+        return module.context && module.context.indexOf('node_modules') !== -1;
+      }
+    }),
     new CopyWebpackPlugin([
       {from: 'src/app/assets', to: 'assets'}
     ]),

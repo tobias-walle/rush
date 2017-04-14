@@ -15,6 +15,9 @@ import { getStoreMiddleware } from '../utils/redux-helper';
 import * as morgan from 'morgan';
 import * as express from 'express';
 import { loggerFactory } from '../logging';
+import * as fs from 'fs';
+
+const STATIC_PATH = '/static';
 
 const logger = loggerFactory.getLogger('server.backend');
 
@@ -74,7 +77,7 @@ export class BackendServer {
   }
 
   setupWebpackDevServerRoutes() {
-    this.app.all('/static/*', (req, res) => {
+    this.app.all(`${STATIC_PATH}/*`, (req, res) => {
       this.httpProxy.web(req, res, {
         target: `http://${this.options.webpackDevHost}:${this.options.webpackDevPort}/`,
       });
@@ -101,11 +104,24 @@ export class BackendServer {
   }
 
   setupStaticRoutes() {
-    this.app.use('/static', express.static(this.publicPath));
+    this.app.use(STATIC_PATH, express.static(this.publicPath));
   }
 
   setupHtmlRoutes() {
+    // Scripts paths
+    let scripts;
+    let jsFileNames = ['vendor.js', 'app.js'];
+    if (!DEVELOPMENT) {
+      // In production, the file names must be loaded dynamically
+      const manifestPath = path.join(this.publicPath, 'manifest.json');
+      const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
+      jsFileNames = jsFileNames.map(fileName => manifest[fileName]);
+    }
+    // Map the filenames to the script paths
+    scripts = jsFileNames.map(fileName => path.join(STATIC_PATH, fileName));
+
     this.app.use((req, res) => {
+
       // Setup state
       const initialState = {};
       const store = createStore(
@@ -117,7 +133,7 @@ export class BackendServer {
       if (DISABLE_SERVER_SIDE_RENDERING) {
         // Just provider Html without SSR
         renderToString(
-          <HtmlComponent store={store}/>,
+          <HtmlComponent scripts={scripts} store={store}/>,
         )
           .then(({html}) => {
             res.status(200).send(html);
@@ -130,20 +146,22 @@ export class BackendServer {
         // Wrap app with style context
         // Send the result
         const context: any = {};
+        const component = (
+          <ServerWrapperComponent
+            store={store}
+            url={req.url}
+            context={context}
+          >
+            <WithStylesContext onInsertCss={styles => css.push(styles._getCss())}>
+              <EntryComponent/>
+            </WithStylesContext>
+          </ServerWrapperComponent>
+        );
         renderToString(
           <HtmlComponent
             store={store}
-            component={(
-              <ServerWrapperComponent
-                store={store}
-                url={req.url}
-                context={context}
-              >
-                <WithStylesContext onInsertCss={styles => css.push(styles._getCss())}>
-                  <EntryComponent/>
-                </WithStylesContext>
-              </ServerWrapperComponent>
-            )}
+            scripts={scripts}
+            component={component}
             styles={!DISABLE_SERVER_SIDE_STYLE_RENDERING ? css : []}
           />,
         )
