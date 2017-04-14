@@ -18,7 +18,8 @@ module.exports = {
     publicPath: '/static/',
   },
 
-  devtool: 'source-maps',
+  devtool: 'eval-source-maps',
+  cache: true,
 
   devServer: {
     hot: true,

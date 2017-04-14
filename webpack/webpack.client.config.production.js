@@ -16,8 +16,6 @@ module.exports = {
     publicPath: '/static/',
   },
 
-  devtool: 'source-maps',
-
   resolve: {
     modules: [
       'node_modules',
@@ -39,11 +37,6 @@ module.exports = {
         'css-loader?modules&localIdentName=[name]_[local]_[hash:base64:5]',
         'postcss-loader',
         'sass-loader']
-      },
-      {
-        test: /\.js$/,
-        loader: 'source-map-loader',
-        enforce: 'pre'
       },
       {
         test: /\.(png|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
