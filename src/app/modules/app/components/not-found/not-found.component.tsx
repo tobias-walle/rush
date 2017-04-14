@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
 
-export interface NotFoundComponentProps extends RouteComponentProps<any> {
+export interface NotFoundComponentProps {
 }
 
 export class NotFoundComponent extends React.Component<NotFoundComponentProps, {}> {

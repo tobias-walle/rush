@@ -2,6 +2,7 @@ import * as React from 'react';
 import { WithStyles } from 'isomorphic-style-loader-utils';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { Switch, Route } from 'react-router';
+import { Link } from 'react-router-dom';
 const styles = require('./app.component.scss');
 
 export interface AppComponentProps {
@@ -16,7 +17,7 @@ export class AppComponent extends React.Component<AppComponentProps, {}> {
           <Route exact={true} path='/'>
             <p>AppComponent works!</p>
           </Route>
-          <Route component={NotFoundComponent}/>
+          <Route render={props => <NotFoundComponent/>} />
         </Switch>
       </div>
     );

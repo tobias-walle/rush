@@ -5,8 +5,9 @@ import { render } from 'react-dom';
 import { createStore } from 'redux';
 import { WithStylesContext } from 'isomorphic-style-loader-utils';
 import { AppContainer } from 'react-hot-loader';
-import { DEVELOPMENT } from './config';
+
 import * as React from 'react';
+import { DEVELOPMENT } from './config';
 import { EntryComponent } from './modules/root';
 import { ClientWrapperComponent } from './client/client-wrapper.component';
 
