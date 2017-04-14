@@ -11,12 +11,13 @@ const logFormat = new LogFormat(
   true
 );
 
-// Set log level to debug in development and error in production
+// Set log level
+const logLevelServer = DEVELOPMENT ? LogLevel.Debug : LogLevel.Info;
 const logLevel = DEVELOPMENT ? LogLevel.Debug : LogLevel.Error;
 
 // Define the log rules
 const options = new LoggerFactoryOptions()
-  .addLogGroupRule(new LogGroupRule(new RegExp('server.+'), logLevel, logFormat))
+  .addLogGroupRule(new LogGroupRule(new RegExp('server.+'), logLevelServer, logFormat))
   .addLogGroupRule(new LogGroupRule(new RegExp('.+'), logLevel, logFormat));
 
 export const loggerFactory = LFService.createNamedLoggerFactory('LoggerFactory', options);
