@@ -29,7 +29,14 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/, loaders: ['awesome-typescript-loader']
+        test: /\.tsx?$/,
+        use: {
+          loader: 'awesome-typescript-loader',
+          options: {
+            silent: true,
+            configFileName: 'tsconfig.server.json'
+          }
+        }
       },
       {
         test: /\.scss?$/, loaders: [

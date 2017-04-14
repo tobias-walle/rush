@@ -40,7 +40,14 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/, loaders: ['react-hot-loader/webpack', 'awesome-typescript-loader']
+        test: /\.tsx?$/,
+        use: {
+          loader: 'awesome-typescript-loader',
+          options: {
+            silent: true,
+            configFileName: 'tsconfig.client.json'
+          }
+        }
       },
       {
         test: /\.scss?$/, loaders: [

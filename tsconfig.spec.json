@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist/client"
+  },
+  "files": [
+    "./src/client.entry.tsx"
+  ]
+}
