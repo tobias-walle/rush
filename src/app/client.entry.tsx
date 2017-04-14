@@ -9,11 +9,6 @@ import { DEVELOPMENT } from './config';
 import * as React from 'react';
 import { EntryComponent } from './modules/root';
 import { ClientWrapperComponent } from './client/client-wrapper.component';
-import { loggerFactory } from './logging';
-
-const logger = loggerFactory.getLogger('test');
-logger.debug('test');
-logger.info('test');
 
 // Load initial state
 let store: any;

@@ -1,4 +1,3 @@
-import { LoggerFactory } from 'typescript-logging';
 require('source-map-support').install();
 import '../polyfills';
 import { API_HOST, API_PORT, DEVELOPMENT, HOST, PORT, WEBPACK_DEV_HOST, WEBPACK_DEV_PORT } from './config';
