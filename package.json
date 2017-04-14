@@ -80,6 +80,7 @@
     "url-loader": "^0.5.8",
     "webpack": "^2.4.0",
     "webpack-dev-server": "^2.4.2",
+    "webpack-merge": "^4.1.0",
     "webpack-node-externals": "^1.5.4"
   },
   "dependencies": {
