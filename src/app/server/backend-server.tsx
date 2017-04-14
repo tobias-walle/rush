@@ -4,7 +4,7 @@ import * as React from 'react';
 import { Server } from 'http';
 import { WebServer } from './webpack-dev-server';
 import { createStore } from 'redux';
-import { WithStylesContext } from 'isomorphic-style-loader-utils';
+import { WithStyles, WithStylesContext } from 'isomorphic-style-loader-utils';
 import { DEVELOPMENT, DISABLE_SERVER_SIDE_RENDERING, DISABLE_SERVER_SIDE_STYLE_RENDERING } from '../config';
 import { ApiServer } from '../../api/index';
 import { HtmlComponent } from '../components/html.component';
@@ -147,15 +147,15 @@ export class BackendServer {
         // Send the result
         const context: any = {};
         const component = (
-          <ServerWrapperComponent
-            store={store}
-            url={req.url}
-            context={context}
-          >
-            <WithStylesContext onInsertCss={styles => css.push(styles._getCss())}>
+          <WithStylesContext onInsertCss={styles => css.push(styles._getCss())}>
+            <ServerWrapperComponent
+              store={store}
+              url={req.url}
+              context={context}
+            >
               <EntryComponent/>
-            </WithStylesContext>
-          </ServerWrapperComponent>
+            </ServerWrapperComponent>
+          </WithStylesContext>
         );
         renderToString(
           <HtmlComponent
