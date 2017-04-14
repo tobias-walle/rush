@@ -48,17 +48,16 @@ if (config.DEVELOPMENT && module && module['hot']) {
       const newServer = new NewBackendServer(options);
 
       // Stop old server
-      server.stop();
+      server.stop().subscribe(() => {
+        // Copy webpack server to the new server
+        newServer.webpackDevServer = server.webpackDevServer;
 
-      // Copy webpack server to the new server
-      newServer.webpackDevServer = server.webpackDevServer;
+        // Set new server as the primary server
+        server = newServer;
 
-      // Set new server as the primary server
-      server = newServer;
-
-      // Start server again
-      server.start();
-
+        // Start server again
+        server.start();
+      });
     } catch (err) {
       loggerHmr.error('Hot Reload failed:', err);
     }

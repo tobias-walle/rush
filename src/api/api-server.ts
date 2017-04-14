@@ -1,9 +1,9 @@
 import { loggerFactory } from '../logging';
 import * as express from 'express';
 import * as http from 'http';
-import { ApiRouter } from './api-router';
 import { Observable } from 'rxjs';
 import * as enableDestroy from 'server-destroy';
+import { ApiRouter } from './api-router';
 
 const logger = loggerFactory.getLogger('server.api');
 

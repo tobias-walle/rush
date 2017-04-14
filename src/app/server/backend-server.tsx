@@ -14,7 +14,9 @@ import { getStoreMiddleware } from '../utils/redux-helper';
 import * as fs from 'fs';
 import * as morgan from 'morgan';
 import * as express from 'express';
+import * as enableDestroy from 'server-destroy';
 import { loggerFactory } from '../../logging';
+import { Observable } from 'rxjs';
 
 const STATIC_PATH = '/static';
 
@@ -48,6 +50,7 @@ export class BackendServer {
   init() {
     this.app = express();
     this.httpServer = http.createServer(this.app);
+    enableDestroy(this.httpServer);
 
     // Middleware
     if (DEVELOPMENT) {
@@ -185,18 +188,16 @@ export class BackendServer {
     this.webpackDevServer.start();
   }
 
-  stopWebpackDevServer() {
-    this.webpackDevServer.stop();
-  }
-
   start() {
     this.httpServer.listen(this.options.port, () => {
       logger.info(`Server is running on ${this.options.host}:${this.options.port}/`);
     });
   }
 
-  stop() {
+  stop(): Observable<any> {
     logger.info('Stop Backend Server');
-    this.httpServer.close();
+    const closeObservable = Observable.fromEvent(this.httpServer, 'close').publishReplay(1).refCount();
+    (this.httpServer as any).destroy();
+    return closeObservable;
   }
 }
