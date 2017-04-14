@@ -20,9 +20,9 @@ import { Observable } from 'rxjs';
 
 const STATIC_PATH = '/static';
 
-const logger = loggerFactory.getLogger('server.backend');
+const logger = loggerFactory.getLogger('server.ui');
 
-export class BackendServerOptions {
+export class UIServerOptions {
   host: string;
   port: number;
   webpackDevHost: string;
@@ -31,19 +31,19 @@ export class BackendServerOptions {
   apiPort: number;
 }
 
-export class BackendServer {
+export class UIServer {
   private rootDir = path.resolve();
   private publicPath = path.resolve(this.rootDir + '/dist/client');
 
   private app: any;
   private httpProxy: any;
 
-  options: BackendServerOptions;
+  options: UIServerOptions;
 
   httpServer: Server;
   webpackDevServer: any;
 
-  constructor(options: BackendServerOptions) {
+  constructor(options: UIServerOptions) {
     this.setOptions(options);
   }
 
@@ -72,7 +72,7 @@ export class BackendServer {
     this.setupHtmlRoutes();
   }
 
-  setOptions(options: BackendServerOptions) {
+  setOptions(options: UIServerOptions) {
     this.options = Object.seal(options);
     this.init();
   }
@@ -190,12 +190,12 @@ export class BackendServer {
 
   start() {
     this.httpServer.listen(this.options.port, () => {
-      logger.info(`Server is running on ${this.options.host}:${this.options.port}/`);
+      logger.info(`UI Server is running on ${this.options.host}:${this.options.port}/`);
     });
   }
 
   stop(): Observable<any> {
-    logger.info('Stop Backend Server');
+    logger.info('Stop UI Server');
     const closeObservable = Observable.fromEvent(this.httpServer, 'close').publishReplay(1).refCount();
     (this.httpServer as any).destroy();
     return closeObservable;

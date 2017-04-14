@@ -1,14 +1,14 @@
 require('source-map-support').install();
 import '../polyfills';
 import { Observable } from 'rxjs';
-import { BackendServer, BackendServerOptions } from './server/backend-server';
+import { UIServer, UIServerOptions } from './server/ui-server';
 import { loggerFactory } from '../logging';
 
-const loggerHmr = loggerFactory.getLogger('server.entry.HMR');
+const loggerHmr = loggerFactory.getLogger('server.HMR');
 
 // Start Server
-let server: BackendServer;
-let options: BackendServerOptions;
+let server: UIServer;
+let options: UIServerOptions;
 let config = require('./../config');
 const updateOptions = () => {
   config = require('./../config');
@@ -22,7 +22,7 @@ const updateOptions = () => {
   };
 };
 updateOptions();
-server = new BackendServer(options);
+server = new UIServer(options);
 if (config.DEVELOPMENT) {
   server.startWebpackDevServer();
 }
@@ -37,14 +37,14 @@ if (config.DEVELOPMENT && module && module['hot']) {
   loggerHmr.debug('Hot Module Replacement is activated');
   hot.accept([
     require.resolve('../polyfills'),
-    require.resolve('./server/backend-server.tsx'),
+    require.resolve('./server/ui-server.tsx'),
     require.resolve('../config')
   ], () => {
     loggerHmr.debug('Reload Backend Server');
     try {
       // Create a new server
       updateOptions();
-      const NewBackendServer = require('./server/backend-server').BackendServer;
+      const NewBackendServer = require('./server/ui-server').BackendServer;
       const newServer = new NewBackendServer(options);
 
       // Stop old server
