@@ -35,6 +35,8 @@
     "test:dev": "karma start --single-run",
     "test:prod": "NODE_ENV=production karma start --single-run",
     "test:e2e": "protractor protractor.conf.js",
+    "webdriver:update": "webdriver-manager update",
+    "webdriver:start": "webdriver-manager start",
     "lint": "tslint src/**/*.ts{,x} -c './tslint.json' --project './tsconfig.json'",
     "lint:fix": "tslint src/**/*.ts{,x} -c './tslint.json' --fix --project './tsconfig.json'",
     "check": "npm run lint && npm run test"
