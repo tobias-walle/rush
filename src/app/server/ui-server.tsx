@@ -17,9 +17,9 @@ import * as express from 'express';
 import * as enableDestroy from 'server-destroy';
 import { loggerFactory } from '../../logging';
 import { Observable } from 'rxjs';
+import createMemoryHistory from 'history/createMemoryHistory';
 
 const STATIC_PATH = '/static';
-
 const logger = loggerFactory.getLogger('server.ui');
 
 export class UIServerOptions {
@@ -47,6 +47,9 @@ export class UIServer {
     this.setOptions(options);
   }
 
+  /**
+   * Run the initial setup of the server. This create the server instance and setups all the routes.
+   */
   init() {
     this.app = express();
     this.httpServer = http.createServer(this.app);
@@ -72,11 +75,18 @@ export class UIServer {
     this.setupHtmlRoutes();
   }
 
+  /**
+   * Set the options of the server.
+   * @param options The options to set.
+   */
   setOptions(options: UIServerOptions) {
     this.options = Object.seal(options);
     this.init();
   }
 
+  /**
+   * Setup routes for the webpack development server proxy.
+   */
   setupWebpackDevServerRoutes() {
     this.app.all(`${STATIC_PATH}/*`, (req, res) => {
       this.httpProxy.web(req, res, {
@@ -85,6 +95,9 @@ export class UIServer {
     });
   }
 
+  /**
+   * Setup routes for the api proxy.
+   */
   setupApiRoutes() {
     // Http Proxy
     this.app.use('/api', (req, res) => {
@@ -106,13 +119,19 @@ export class UIServer {
     });
   }
 
+  /**
+   * Setup routes to static content.
+   */
   setupStaticRoutes() {
     this.app.use(STATIC_PATH, express.static(this.publicPath));
   }
 
-  setupHtmlRoutes() {
+  /**
+   * Create an array of paths with the scripts, which should loaded by the client initially.
+   * @return {string[]} An array of string with the public paths to the scripts.
+   */
+  createScriptPaths() {
     // Scripts paths
-    let scripts;
     let jsFileNames = ['vendor.js', 'app.js'];
     if (!DEVELOPMENT) {
       // In production, the file names must be loaded dynamically
@@ -121,28 +140,26 @@ export class UIServer {
       jsFileNames = jsFileNames.map(fileName => manifest[fileName]);
     }
     // Map the filenames to the script paths
-    scripts = jsFileNames.map(fileName => path.join(STATIC_PATH, fileName));
+    return jsFileNames.map(fileName => path.join(STATIC_PATH, fileName));
+  }
+
+  /**
+   * Setup the routes for sending the html documents to the client.
+   */
+  setupHtmlRoutes() {
+    const scriptPaths = this.createScriptPaths();
+    const store = createReduxStore();
 
     this.app.use((req, res) => {
-
-      // Setup state
-      const initialState = {};
-      const store = createStore(
-        require('../modules/root').reducer,
-        initialState,
-        getStoreMiddleware()
-      );
-
       if (DISABLE_SERVER_SIDE_RENDERING) {
         // Just provider Html without SSR
         renderToString(
-          <HtmlComponent scripts={scripts} store={store}/>,
+          <HtmlComponent scripts={scriptPaths} store={store}/>,
         )
           .then(({html}) => {
             res.status(200).send(html);
           })
           .catch(err => logger.error(err));
-        ;
       } else {
         // Load styles
         const css: string[] = [];
@@ -163,7 +180,7 @@ export class UIServer {
         renderToString(
           <HtmlComponent
             store={store}
-            scripts={scripts}
+            scripts={scriptPaths}
             component={component}
             styles={!DISABLE_SERVER_SIDE_STYLE_RENDERING ? css : []}
           />,
@@ -183,21 +200,46 @@ export class UIServer {
     });
   }
 
-  startWebpackDevServer(host = this.options.webpackDevHost, port = this.options.webpackDevPort) {
-    this.webpackDevServer = new WebServer(host, port);
+  /**
+   * Start the webpack development server.
+   */
+  startWebpackDevServer() {
+    this.webpackDevServer = new WebServer(this.options.webpackDevHost, this.options.webpackDevPort);
     this.webpackDevServer.start();
   }
 
+  /**
+   * Start the http server.
+   */
   start() {
     this.httpServer.listen(this.options.port, () => {
       logger.info(`UI Server is running on ${this.options.host}:${this.options.port}/`);
     });
   }
 
+  /**
+   * Stop the http server.
+   * @return {Observable<any>} Observable that resolves once the ui server is closed.
+   */
   stop(): Observable<any> {
     logger.info('Stop UI Server');
     const closeObservable = Observable.fromEvent(this.httpServer, 'close').publishReplay(1).refCount();
     (this.httpServer as any).destroy();
     return closeObservable;
   }
+}
+
+/**
+ * Create the redux store, which should be send to the client.
+ * @return {Store<any>} The redux store
+ */
+function createReduxStore() {
+  // Setup state
+  const initialState = {};
+  const history = createMemoryHistory();
+  return createStore(
+    require('../modules/root').reducer,
+    initialState,
+    getStoreMiddleware(history)
+  );
 }

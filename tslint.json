@@ -61,7 +61,7 @@
     ],
     "jsdoc-format": true,
     "no-angle-bracket-type-assertion": true,
-    "no-consecutive-blank-lines": true,
+    "no-consecutive-blank-lines": false,
     "no-unnecessary-initializer": true,
     "object-literal-key-quotes": "consistent-as-needed",
     "object-literal-shorthand": true,

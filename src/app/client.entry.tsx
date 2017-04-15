@@ -1,25 +1,25 @@
 import '../polyfills';
 import 'rxjs/Observable';
+import * as React from 'react';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { render } from 'react-dom';
 import { createStore } from 'redux';
 import { WithStylesContext } from 'isomorphic-style-loader-utils';
 import { AppContainer } from 'react-hot-loader';
-
-import * as React from 'react';
+import { History } from 'history';
+import createBrowserHistory from 'history/createBrowserHistory';
 import { DEVELOPMENT } from '../config';
-import { EntryComponent } from './modules/root';
-import { ClientWrapperComponent } from './client/client-wrapper.component';
 
 // Load initial state
 let store: any;
+const history: History = createBrowserHistory();
 const setupStore = (reload = false) => {
   // Imports
   const initialState = window['__data'];
   const reducer = require('./modules/root').reducer;
   const getStoreMiddleware = require('./utils/redux-helper').getStoreMiddleware;
 
-  let middleware = getStoreMiddleware();
+  let middleware = getStoreMiddleware(history);
   if (DEVELOPMENT) {
     // If not production, activate redux debug tools
     middleware = composeWithDevTools(middleware);
@@ -35,11 +35,14 @@ setupStore();
 
 // Render
 const renderApp = () => {
+  const EntryComponent = require('./modules/root').EntryComponent;
+  const ClientWrapperComponent = require('./client/client-wrapper.component').ClientWrapperComponent;
   render(
     <AppContainer>
       <WithStylesContext onInsertCss={styles => styles._insertCss()}>
         <ClientWrapperComponent
           store={store}
+          history={history}
         >
           <EntryComponent/>
         </ClientWrapperComponent>

@@ -44,8 +44,8 @@ if (config.DEVELOPMENT && module && module['hot']) {
     try {
       // Create a new server
       updateOptions();
-      const NewBackendServer = require('./server/ui-server').BackendServer;
-      const newServer = new NewBackendServer(options);
+      const NewUIServer = require('./server/ui-server').UIServer;
+      const newServer = new NewUIServer(options);
 
       // Stop old server
       server.stop().subscribe(() => {
