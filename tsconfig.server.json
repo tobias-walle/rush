@@ -4,6 +4,6 @@
     "outDir": "./dist/server"
   },
   "files": [
-    "./src/server.entry.tsx"
+    "./src/app/server.entry.tsx"
   ]
 }
