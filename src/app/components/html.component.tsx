@@ -34,7 +34,7 @@ export const HtmlComponent = ({component, store, scripts = [], styles = []}: Htm
       dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())};`}}
       charSet='UTF-8'
     />
-    {scripts.map(scriptPath => <script src={scriptPath}/>)}
+    {scripts.map(scriptPath => <script src={scriptPath} key={scriptPath}/>)}
     </body>
     </html>
   );
