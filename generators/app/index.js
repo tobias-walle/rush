@@ -119,7 +119,10 @@ module.exports = class extends Generator {
 
     // Yoeman Config
     this.config.set({
-      modulesPath: 'src/app/modules'
+      modulesPath: 'src/app/modules',
+      componentsBasePath: 'components',
+      containersBasePath: 'container',
+      ducksBasePath: ''
     });
   }
 

@@ -37,8 +37,9 @@ function setupDestinationOptions(generatorInstance, generatorName) {
  * Update the destination option relative to the selected module.
  * @param generatorInstance The instance of the generator.
  */
-function updateDestinationOption(generatorInstance) {
+function updateDestinationOption(generatorInstance, generatorName) {
   const options = generatorInstance.options;
+  const basePath = generatorInstance.config.get(`${generatorName}sBasePath`) || '';
   // Split name from path
   const pathFragments = options.name.split('/');
   options.name = pathFragments.splice(pathFragments.length - 1, 1)[0];
@@ -55,7 +56,7 @@ function updateDestinationOption(generatorInstance) {
           moduleUtils.getModulesPath(generatorInstance.config)
         ));
     }
-    destination = path.join(destination, generatorInstance.options.namePath);
+    destination = path.join(destination, basePath, generatorInstance.options.namePath);
   } catch (e) {
     generatorInstance.env.error(e);
   }

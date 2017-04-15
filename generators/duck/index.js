@@ -51,7 +51,7 @@ module.exports = class extends Generator {
     }
 
     // Destination Path
-    pathUtils.updateDestinationOption(this);
+    pathUtils.updateDestinationOption(this, generatorName);
   }
 
   writing() {

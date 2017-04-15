@@ -7,7 +7,7 @@ describe('generator-trb:container', () => {
   const CONTAINER_NAME = 'hello-world';
   beforeAll(() => {
     return helpers.run(path.join(__dirname, '../generators/container'))
-      .withOptions({destination: '.'})
+      .withOptions({destination: '.', module: 'app'})
       .withArguments([CONTAINER_NAME]);
   });
 

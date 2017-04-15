@@ -29,7 +29,7 @@ module.exports = class extends Generator {
   }
 
   default() {
-    pathUtils.updateDestinationOption(this);
+    pathUtils.updateDestinationOption(this, generatorName);
   }
 
   writing() {
