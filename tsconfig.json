@@ -32,15 +32,5 @@
     "useTranspileModule": true,
     "useBabel": true,
     "useCache": true
-  },
-  "include": [
-    "./src/**/*.ts",
-    "./src/**/*.tsx"
-  ],
-  "exclude": [
-    "dist",
-    "node_modules",
-    "**/*.spec.ts",
-    "**/*.spec.tsx"
-  ]
+  }
 }
