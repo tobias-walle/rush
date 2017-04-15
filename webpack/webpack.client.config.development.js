@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
-const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
+const {CheckerPlugin} = require('awesome-typescript-loader');
+const {TsConfigPathsPlugin} = require('awesome-typescript-loader');
 
 const rootDir = path.resolve(__dirname, '..');
 
@@ -80,6 +81,7 @@ module.exports = {
         return module.context && module.context.indexOf('node_modules') !== -1;
       }
     }),
+    new CheckerPlugin(),
     new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.LoaderOptionsPlugin({
