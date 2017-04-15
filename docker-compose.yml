@@ -1,0 +1,12 @@
+version: '2'
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    ports:
+    - "3002:3002"
+  web:
+    build: .
+    ports:
+    - "3000:3000"

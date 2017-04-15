@@ -13,14 +13,12 @@ RUN yarn install --pure-lockfile
 COPY . /usr/src/app/
 
 # Build
-RUN yarn run build:server:prod
-RUN yarn run build:client:prod
-
+RUN yarn run build:api:prod
 
 # Install pm2
 RUN yarn global add pm2
 
 # Start server
 EXPOSE 3000
-CMD ["pm2-docker", "start", "./dist/server/server.js"]
+CMD ["pm2-docker", "start", "./dist/api/api.js"]
 
