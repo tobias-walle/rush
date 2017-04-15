@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
 
@@ -48,7 +47,7 @@ module.exports = {
       },
       {
         test: /\.(png|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url-loader?limit=100000'
+        loader: 'file-loader?name=[name].[hash].[ext]'
       },
       {
         test: /\.json$/,
@@ -69,9 +68,6 @@ module.exports = {
         return module.context && module.context.indexOf('node_modules') !== -1;
       }
     }),
-    new CopyWebpackPlugin([
-      {from: 'src/app/assets', to: 'assets'}
-    ]),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
       debug: false

@@ -2,7 +2,6 @@ const webpack = require('webpack');
 const fs = require('fs');
 const path = require('path');
 const {CheckerPlugin} = require('awesome-typescript-loader');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
 
@@ -51,7 +50,7 @@ module.exports = {
       },
       {
         test: /\.(png|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url-loader?limit=100000'
+        loader: 'file-loader?name=[name].[hash].[ext]'
       },
       {
         test: /\.json$/,
@@ -67,9 +66,6 @@ module.exports = {
       'process.env.IS_SERVER_SIDE': JSON.stringify(true)
     }),
     new CheckerPlugin(),
-    new CopyWebpackPlugin([
-      {from: path.resolve(rootDir, 'src/app/assets'), to: 'assets'}
-    ]),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.LoaderOptionsPlugin({
       debug: true
