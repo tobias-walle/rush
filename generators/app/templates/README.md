@@ -25,19 +25,24 @@ For more details about the available commands please refer to the
 [Typed React Base Documentation](https://github.com/TobiasWalle/typed-react-base).
 
 ## Build
-Run `npm run build:prod` to build the production code. This generates a `client` and `server` folder under
-`dist`. To start the production server open `dist/server/server.js`.
+Run `yarn run build:prod` to build the production code. This generates a `client`, `server` and `api` folder under
+`dist`. To start the production server open `dist/server/server.js` and `dist/api/api.js`.
 
 ## Docker
-Run `docker build` to build a docker image of the project. For more details, please refer to the 
-[Docker Documentation](https://docs.docker.com/engine/getstarted/step_four/#step-2-build-an-image-from-your-dockerfile).
+Run `docker-compose up` to start the web server and the api server in a docker container. For more details, please refer to the 
+[Docker Documentation](https://docs.docker.com/engine/getstarted/step_four/#step-2-build-an-image-from-your-dockerfile)
+and the [Docker Compose Documentation](https://docs.docker.com/compose/).
 
 ## Unit Testing
-Run `npm test` to start the unit tests with [Karma](https://karma-runner.github.io/1.0/index.html).
+Run `yarn test` to start the unit tests with [Karma](https://karma-runner.github.io/1.0/index.html).
 
 ## E2E Testing
-Run `npm test:e2e` to execute the end-to-end tests with [protractor](http://www.protractortest.org).
-You need to have a selenium server and the application running. For more details, please refer
+Run `yarn run webdriver:update` first to update the webdriver. 
+Run `yarn run webdriver:start` to start the webdriver.
+
+Run `yarn run test:e2e` to execute the end-to-end tests with [protractor](http://www.protractortest.org).
+It is required that the webdriver and the web server are running.
+For more details, please refer
 to the [protractor documentation](http://www.protractortest.org/#/tutorial).
 
 ## Further help
