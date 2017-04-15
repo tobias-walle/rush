@@ -29,7 +29,7 @@ function setupDestinationOptions(generatorInstance, generatorName) {
   });
 
   if (!validate.validateName(options.name)) {
-    this.env.error('Only lower case characters and hyphens are allowed in the component name');
+    this.env.error(`Only lower case characters and hyphens are allowed in the ${generatorName} name`);
   }
 }
 

@@ -28,14 +28,6 @@ module.exports = class extends Generator {
     });
   }
 
-  initializing() {
-    // Check if name is valid
-    const name = this.options.name;
-    if (name === undefined) {
-      this.env.error('The component name has to be defined');
-    }
-  }
-
   default() {
     pathUtils.updateDestinationOption(this);
   }
