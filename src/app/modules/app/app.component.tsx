@@ -2,7 +2,6 @@ import * as React from 'react';
 import { WithStyles } from 'isomorphic-style-loader-utils';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { Switch, Route } from 'react-router';
-import { Link } from 'react-router-dom';
 const styles = require('./app.component.scss');
 
 export interface AppComponentProps {

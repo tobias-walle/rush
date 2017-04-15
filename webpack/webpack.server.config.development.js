@@ -4,6 +4,7 @@ const path = require('path');
 const {CheckerPlugin} = require('awesome-typescript-loader');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
+const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
 
 let rootDir = path.resolve(__dirname, '..');
 
@@ -23,6 +24,9 @@ module.exports = {
   resolve: {
     extensions: [
       '.ts', '.tsx', '.js', '.jsx'
+    ],
+    plugins: [
+      new TsConfigPathsPlugin(),
     ]
   },
 
