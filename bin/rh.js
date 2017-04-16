@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 const spawn = require('child_process').spawn;
 const yoCommand = 'yo';
-const firstArgument = process.argv[2] || '';
+const args = process.argv;
+const firstArgument = args[2] || '';
 const isFirstArgumentAnOption = firstArgument[0] === '-';
 const subGenerator = firstArgument && !isFirstArgumentAnOption ? firstArgument : 'app';
 const generatorName = `rush:${subGenerator}`;
 const parameterStart = isFirstArgumentAnOption ? 2 : 3;
-const arguments = [generatorName].concat(process.argv.slice(parameterStart));
 
-spawn(yoCommand, arguments, {stdio: 'inherit'});
+spawn(yoCommand, [generatorName].concat(args.slice(parameterStart)), {stdio: 'inherit'});
 
