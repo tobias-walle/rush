@@ -1,6 +1,6 @@
 {
   "name": "generator-rush",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-rc.1",
   "description": "Light speed development of web applications with React, Typescript, Webpack, Server Side Rendering, Tree Shaking and a lot more",
   "homepage": "https://github.com/TobiasWalle/rush",
   "author": {
