@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const spawn = require('child_process').spawn;
 const yoCommand = 'yo';
-const firstArgument = process.argv[2];
+const firstArgument = process.argv[2] || '';
 const isFirstArgumentAnOption = firstArgument[0] === '-';
 const subGenerator = firstArgument && !isFirstArgumentAnOption ? firstArgument : 'app';
 const generatorName = `rush:${subGenerator}`;
