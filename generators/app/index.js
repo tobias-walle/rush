@@ -12,9 +12,10 @@ module.exports = class extends Generator {
     super(args, opts);
     this.option('upgrade', {
       type: Boolean,
-      desc: 'If true, the generator tries to find an existing generator configuration' +
-      'and just regenerates the project. Set this flag if you want to update an existing project. ' +
-      'You have to be in the project folder, so yeoman can find the configuration.'
+      desc: 'If true, the generator tries to find an existing generator configuration ' +
+      'and just regenerates the project. Set this flag if you want to ' +
+      'update an existing project. You have to be in the project folder so yeoman can ' +
+      'find the configuration.'
     });
   }
 

@@ -8,8 +8,6 @@ const path = require('path');
  * @param generatorName The name of the generator.
  */
 function setupDestinationOptions(generatorInstance, generatorName) {
-  const options = generatorInstance.options;
-
   generatorInstance.argument('name', {
     type: String,
     required: true,
@@ -27,24 +25,28 @@ function setupDestinationOptions(generatorInstance, generatorName) {
     type: String,
     desc: `The destination folder of the ${generatorName}`
   });
-
-  if (!validate.validateName(options.name)) {
-    this.env.error(`Only lower case characters and hyphens are allowed in the ${generatorName} name`);
-  }
 }
 
 /**
  * Update the destination option relative to the selected module.
  * @param generatorInstance The instance of the generator.
+ * @param generatorName the name of the generator
  */
 function updateDestinationOption(generatorInstance, generatorName) {
   const options = generatorInstance.options;
+
+  // Validate
+  if (!validate.validateName(options.name)) {
+    this.env.error(`Only lower case characters and hyphens are allowed in the ${generatorName} name`);
+  }
+
   const basePath = generatorInstance.config.get(`${generatorName}sBasePath`) || '';
   // Split name from path
   const pathFragments = options.name.split('/');
   options.name = pathFragments.splice(pathFragments.length - 1, 1)[0];
   options.namePath = pathFragments.length ? pathFragments.join('/') : '';
   generatorInstance.options = options;
+
 
   let destination = options.destination;
   try {

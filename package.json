@@ -1,8 +1,8 @@
 {
-  "name": "generator-trb",
-  "version": "0.6.1",
-  "description": "Isomorphic React with Typescript, Redux, Webpack and Express",
-  "homepage": "https://github.com/TobiasWalle/typed-react-base",
+  "name": "rush",
+  "version": "1.0.0-beta.1",
+  "description": "Start developing modern Web Applications with React, Typescript, Webpack and a lot more!",
+  "homepage": "https://github.com/TobiasWalle/rush",
   "author": {
     "name": "Tobias Walle",
     "email": "",
@@ -55,6 +55,6 @@
       "node": true
     }
   },
-  "repository": "TobiasWalle/generator-trb",
+  "repository": "TobiasWalle/rush",
   "license": "MIT"
 }

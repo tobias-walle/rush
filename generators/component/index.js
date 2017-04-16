@@ -15,15 +15,16 @@ module.exports = class extends Generator {
     this.option('flat', {
       alias: 'f',
       type: Boolean,
-      desc: 'If True, there will be no folder created for this component',
+      desc: 'Generates the component files directly into the destination folder, without generating a subfolder ' +
+      'with the component name.',
       default: false
     });
 
     this.option('stateless', {
       alias: 's',
       type: Boolean,
-      desc: 'Should the component be a stateless component? This also means, there will be no style file generated' +
-      'for this component.',
+      desc: 'Generates a stateless component instead of a stateful one. This also means there will be' +
+      ' no styles generated for this component',
       default: false
     });
   }
