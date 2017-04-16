@@ -1,8 +1,22 @@
-# Rush
+# <img src="https://cdn.rawgit.com/TobiasWalle/rush/227f186f/media/logo.svg" width="500">
+
 [![Build Status](https://travis-ci.org/TobiasWalle/typed-react-base.svg?branch=master)](https://travis-ci.org/TobiasWalle/typed-react-base)
 
 Start developing modern Web Applications with React, Typescript, Webpack and a lot more!
 Rush gives you all the tools you want, but still leaves you with all the freedom you need!
+
+## Table of contents
+- [Features](#features)
+- [Get Started](#get-started)
+- [Generators](#generators)
+  * [App](#app)
+  * [Module](#module)
+  * [Component](#component)
+  * [Container](#container)
+  * [Duck](#duck)
+- [Scripts](#scripts)
+  * [NPM Scripts](#npm-scripts)
+  * [Build Script](#build-script)
 
 ## Features
 ### Modular [React](https://facebook.github.io/react/) and [Redux](http://redux.js.org/) with [Typescript](https://www.typescriptlang.org/)
@@ -52,61 +66,6 @@ $ cd <project-folder>
 Run `yarn start` and open [http://localhost:3000/](http://localhost:3000/) in your favorite browser.
 
 Everything is setup and you can start developing!
-
-## Scripts
-### NPM Scripts
-The newly generated project comes with the following npm scripts:
-
-| Script               | Description                                                                                                                        | 
-|----------------------|------------------------------------------------------------------------------------------------------------------------------------| 
-| start                | Shortcut for `start:dev`                                                                                                           | 
-| start:dev            | Build and start the ui server and the api server                                                                                   | 
-| start:prod           | Build and start the ui server and the api server for production                                                                    | 
-| start:server:dev     | Build and start the ui server                                                                                                      | 
-| start:api:dev        | Build and start the api server                                                                                                     | 
-| start:server:prod    | Build and start the ui server for production                                                                                       | 
-| start:api:prod       | Build and start the api server for production                                                                                      | 
-| run:server           | Start the ui server. This commands assumes the server is already build.                                                            | 
-| run:api              | Start the api server. This commands assumes the server is already build.                                                           | 
-| build:dev            | Build the ui server, api server and client.                                                                                        | 
-| build:prod           | Build the ui server, api server and client for production.                                                                         | 
-| build:`<target>`:`<env>` | Build for a specific target and environment (Replace `<target>` with `client`, `server` or `api` and `<env>` with `dev` or `prod`) | 
-| test                 | Shortcut for `test:dev`                                                                                                            | 
-| test:dev             | Run the unit tests with the development build                                                                                      | 
-| test:prod            | Run the unit tests with the production build                                                                                       | 
-| test:e2e             | Run the protractor e2e tests. Please make sure you run `webdriver:update` and `webdriver:start` before                             | 
-| webdriver:update     | Update the selenium webdriver for protractor                                                                                       | 
-| webdriver:start      | Start the selenium webdriver for protractor                                                                                        | 
-| lint                 | Run tslint to check the project files for errors                                                                                   | 
-| lint:fix             | Run tslint and fix errors that can be fixed                                                                                        | 
-| check                | Run tslint and the unit tests                                                                                                      | 
-
-### Build Script
-All the build processes are handled by an build script, which is located in the `scripts` folder. As an alternative
-to the npm scripts, you can use the build script directly:
-
-```bash
-./scripts/build.js <enviroment> <options>
-```
-
-Run `./scripts/build.js` without any arguments to see the available arguments and options.
-
-_Parameters:_
-
-  _`enviroment`_ The target environment for the build. Possible values are `production` and `development`. 
-  
-_Options:_
-
-  `--target` The target of the build. Possible values are `client`, `server` or `api`. There are also multiple values
-  possible if there are separated by a comma. For example `client,server` will select `client` and `server` as a target.
-
-  `--watch` If this flag is enabled, the builder will watch the build and update the server on changes.
-  
-  `--callback` Callback that will be executed after the builds are finished. If the callback process ends, the callback
-  will be restarted on the next build.
-  
-  `--force-restart` This option can only be used in combination with the `callback` option. If set, this forces the
-  callback to restart on every new build, even if the process is still running.
 
 ## Generators
 The following generators are available:
@@ -241,4 +200,58 @@ _Options:_
   `-d --destination` Set's the destination folder of the duck relative to the current folder. You don't need
   to set this if the `module` option is already defined.
  
+## Scripts
+### NPM Scripts
+The newly generated project comes with the following npm scripts:
+
+| Script               | Description                                                                                                                        | 
+|----------------------|------------------------------------------------------------------------------------------------------------------------------------| 
+| start                | Shortcut for `start:dev`                                                                                                           | 
+| start:dev            | Build and start the ui server and the api server                                                                                   | 
+| start:prod           | Build and start the ui server and the api server for production                                                                    | 
+| start:server:dev     | Build and start the ui server                                                                                                      | 
+| start:api:dev        | Build and start the api server                                                                                                     | 
+| start:server:prod    | Build and start the ui server for production                                                                                       | 
+| start:api:prod       | Build and start the api server for production                                                                                      | 
+| run:server           | Start the ui server. This commands assumes the server is already build.                                                            | 
+| run:api              | Start the api server. This commands assumes the server is already build.                                                           | 
+| build:dev            | Build the ui server, api server and client.                                                                                        | 
+| build:prod           | Build the ui server, api server and client for production.                                                                         | 
+| build:`<target>`:`<env>` | Build for a specific target and environment (Replace `<target>` with `client`, `server` or `api` and `<env>` with `dev` or `prod`) | 
+| test                 | Shortcut for `test:dev`                                                                                                            | 
+| test:dev             | Run the unit tests with the development build                                                                                      | 
+| test:prod            | Run the unit tests with the production build                                                                                       | 
+| test:e2e             | Run the protractor e2e tests. Please make sure you run `webdriver:update` and `webdriver:start` before                             | 
+| webdriver:update     | Update the selenium webdriver for protractor                                                                                       | 
+| webdriver:start      | Start the selenium webdriver for protractor                                                                                        | 
+| lint                 | Run tslint to check the project files for errors                                                                                   | 
+| lint:fix             | Run tslint and fix errors that can be fixed                                                                                        | 
+| check                | Run tslint and the unit tests                                                                                                      | 
+
+### Build Script
+All the build processes are handled by an build script, which is located in the `scripts` folder. As an alternative
+to the npm scripts, you can use the build script directly:
+
+```bash
+./scripts/build.js <enviroment> <options>
+```
+
+Run `./scripts/build.js` without any arguments to see the available arguments and options.
+
+_Parameters:_
+
+  _`enviroment`_ The target environment for the build. Possible values are `production` and `development`. 
+  
+_Options:_
+
+  `--target` The target of the build. Possible values are `client`, `server` or `api`. There are also multiple values
+  possible if there are separated by a comma. For example `client,server` will select `client` and `server` as a target.
+
+  `--watch` If this flag is enabled, the builder will watch the build and update the server on changes.
+  
+  `--callback` Callback that will be executed after the builds are finished. If the callback process ends, the callback
+  will be restarted on the next build.
+  
+  `--force-restart` This option can only be used in combination with the `callback` option. If set, this forces the
+  callback to restart on every new build, even if the process is still running.
 

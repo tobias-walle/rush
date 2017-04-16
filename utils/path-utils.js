@@ -47,7 +47,6 @@ function updateDestinationOption(generatorInstance, generatorName) {
   options.namePath = pathFragments.length ? pathFragments.join('/') : '';
   generatorInstance.options = options;
 
-
   let destination = options.destination;
   try {
     if (!destination) {
