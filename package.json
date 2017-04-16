@@ -10,8 +10,12 @@
   },
   "files": [
     "generators",
-    "utils"
+    "utils",
+    "bin"
   ],
+  "bin": {
+    "rh": "./bin/rh.js"
+  },
   "main": "generators/index.js",
   "keywords": [
     "isomorphic",
@@ -21,6 +25,7 @@
     "webpack",
     "typescript",
     "typed",
+    "server-side-rendering",
     "yeoman-generator"
   ],
   "devDependencies": {
