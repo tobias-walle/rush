@@ -1,6 +1,8 @@
 # <img src="https://cdn.rawgit.com/TobiasWalle/rush/227f186f/media/logo.svg" width="500">
 
 [![Build Status](https://travis-ci.org/TobiasWalle/typed-react-base.svg?branch=master)](https://travis-ci.org/TobiasWalle/typed-react-base)
+[![npm version](https://badge.fury.io/js/generator-rush.svg)](https://badge.fury.io/js/generator-rush)
+[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.png?v=103)](https://opensource.org/licenses/mit-license.php)
 
 Start developing modern Web Applications with React, Typescript, Webpack and a lot more!
 Rush gives you all the tools you want, but still leaves you with all the freedom you need!
