@@ -1,4 +1,5 @@
-# Rush
+# ![logo](https://cdn.rawgit.com/TobiasWalle/rush/731a4434/media/logo.svg)
+
 [![Build Status](https://travis-ci.org/TobiasWalle/typed-react-base.svg?branch=master)](https://travis-ci.org/TobiasWalle/typed-react-base)
 
 Start developing modern Web Applications with React, Typescript, Webpack and a lot more!
