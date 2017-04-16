@@ -7,14 +7,6 @@ Rush gives you all the tools you want, but still leaves you with all the freedom
 
 ## Table of contents
 - [Features](#features)
-  * [Modular [React](https://facebook.github.io/react/) and [Redux](http://redux.js.org/) with [Typescript](https://www.typescriptlang.org/)](#modular--react--https---facebookgithubio-react---and--redux--http---reduxjsorg---with--typescript--https---wwwtypescriptlangorg--)
-  * [SSO you Single Page Application with Server Side Rendering](#sso-you-single-page-application-with-server-side-rendering)
-  * [Never restart again! [Hot Reload](https://webpack.js.org/concepts/hot-module-replacement/#components/sidebar/sidebar.jsx) client and server](#never-restart-again---hot-reload--https---webpackjsorg-concepts-hot-module-replacement--components-sidebar-sidebarjsx--client-and-server)
-  * [Feel the power of [Webpack](https://webpack.js.org/)](#feel-the-power-of--webpack--https---webpackjsorg--)
-  * [Concentrate on important stuff! [Generate](http://yeoman.io/) everything](#concentrate-on-important-stuff---generate--http---yeomanio---everything)
-  * [Be prepared for production with [code splitting](https://webpack.js.org/guides/code-splitting/#components/sidebar/sidebar.jsx), minimizing and [tree shaking](https://webpack.js.org/guides/tree-shaking/)](#be-prepared-for-production-with--code-splitting--https---webpackjsorg-guides-code-splitting--components-sidebar-sidebarjsx---minimizing-and--tree-shaking--https---webpackjsorg-guides-tree-shaking--)
-  * [Make it beautiful with [SCSS](http://sass-lang.com/) and auto prefixing](#make-it-beautiful-with--scss--http---sass-langcom---and-auto-prefixing)
-  * [An a lot more...](#an-a-lot-more)
 - [Get Started](#get-started)
 - [Generators](#generators)
   * [App](#app)
