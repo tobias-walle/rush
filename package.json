@@ -46,7 +46,8 @@
   "scripts": {
     "prepublish": "nsp check",
     "pretest": "eslint . --ignore-path .gitignore --ignore-pattern 'generators/**/templates/*' --fix",
-    "test": "jest"
+    "test": "jest",
+    "update-readme": "git checkout origin/master -- README.md"
   },
   "eslintConfig": {
     "extends": "xo-space",

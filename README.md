@@ -118,6 +118,13 @@ The following generators are available:
   * [rush:duck](#duck)
   
 ### App
+```bash
+$ yo rush <arguments> <option>
+```
+or
+```bash
+$ yo rush:app <arguments> <option>
+```
 Setups the app and generates all the boilerplate for you.
 
 _Options:_
@@ -131,6 +138,9 @@ _Options:_
   You have to be in the project folder so yeoman can find the configuration. The default is `false`.
 
 ### Module
+```bash
+$ yo rush:module <arguments> <option>
+```
 Generates a new module under `./src/app/modules`. A module is a self contained unit which can contain several components
 containers and a redux state. It is also a reference point for other generators.
 
@@ -143,6 +153,9 @@ _Options:_
   `-h --help` Print the generator's options and usage
  
 ### Component
+```bash
+$ yo rush:component <arguments> <option>
+```
 Generates a new react component in the specific module or under a specific path. This command will also
 generate the test and style files for the component.
 The default path output is 
@@ -172,6 +185,9 @@ _Options:_
   styles generated for this component. The default is `false`.
  
 ### Container
+```bash
+$ yo rush:container <arguments> <option>
+```
 Generates a new react-redux container for a specific component. For more information checkout their 
 [documenation](https://github.com/reactjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options)
 Per default the container will be generated into
@@ -198,6 +214,9 @@ _Options:_
   to set this if the `module` option is already defined.
  
 ### Duck
+```bash
+$ yo rush:duck <arguments> <option>
+```
 Rush is intended to be used with the [redux modular duck pattern](https://github.com/erikras/ducks-modular-redux).
 To reduce the boilerplate code the library [https://github.com/mhoyer/redux-typed-ducks](redux-typed-ducks) is used.
 The duck generator can automatically generate a basic duck file for you.
