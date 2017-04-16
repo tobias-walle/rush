@@ -20,29 +20,37 @@ Rush gives you all the tools you want, but still leaves you with all the freedom
   * [Build Script](#build-script)
 
 ## Features
+
 ### Modular [React](https://facebook.github.io/react/) and [Redux](http://redux.js.org/) with [Typescript](https://www.typescriptlang.org/)
   Scale your application by using the power of React and Redux, in combination with Typescript.
   Rush provides you with an extreme modular architecture, which allows you to add features without sacrificing
   control.
+  
 ### SSO you Single Page Application with Server Side Rendering
   Combine the speed of Single Page Applications with the advantages of classic Websites. Rush renders everything
   on the server and after it reaches the client, it becomes a single page application. This allows you to do search
   engine optimization, while providing the best possible experience for the user!
+  
 ### Never restart again! [Hot Reload](https://webpack.js.org/concepts/hot-module-replacement/#components/sidebar/sidebar.jsx) client and server
   Development speed is important! That's why we hot reload everything. With the help of webpack, we automatically 
   update the server, client and the api server while you are writing code!
+  
 ### Feel the power of [Webpack](https://webpack.js.org/)
   Webpack is amazing. But it can be pretty overwhelming, especially at the beginning. Rush already sets up everything 
   for you so you can immediately start coding! But you also have all the freedom to customize everything later.
+  
 ### Concentrate on important stuff! [Generate](http://yeoman.io/) everything
   Generate new modules, components, containers and redux stores with your command line! Rush comes with a lot of
   subgenerators to make your life as easy as possible.
+  
 ### Be prepared for production with [code splitting](https://webpack.js.org/guides/code-splitting/#components/sidebar/sidebar.jsx), minimizing and [tree shaking](https://webpack.js.org/guides/tree-shaking/)
   We already prepared the production builds for you! Just run the command and your application is ready to be 
   deployed!
+  
 ### Make it beautiful with [SCSS](http://sass-lang.com/) and auto prefixing
   Define your styles with the full power SCSS. For every component, Rush automatically generates a scss for you.
   Because of auto prefixing, you can completely forget about '-webkit', '-moz' and co.
+  
 ### An a lot more...
   * Keep your code clean with [TsLint]()
   * Unit testing with [Karma]()
@@ -208,6 +216,7 @@ _Options:_
   to set this if the `module` option is already defined.
  
 ## Scripts
+
 ### NPM Scripts
 The newly generated project comes with the following npm scripts:
 
