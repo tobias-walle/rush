@@ -111,11 +111,11 @@ _Options:_
 ## Generators
 The following generators are available:
 
-  * [rush | rush:app](#App)
-  * [rush:module](#Module)
-  * [rush:component](#Component)
-  * [rush:container](#Container)
-  * [rush:duck](#Duck)
+  * [rush | rush:app](#app)
+  * [rush:module](#module)
+  * [rush:component](#component)
+  * [rush:container](#container)
+  * [rush:duck](#duck)
   
 ### App
 Setups the app and generates all the boilerplate for you.
