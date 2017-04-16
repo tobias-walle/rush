@@ -52,7 +52,9 @@
     "prepublish": "nsp check",
     "pretest": "eslint . --ignore-path .gitignore --ignore-pattern 'generators/**/templates/*' --fix",
     "test": "jest",
-    "update-readme": "git fetch && git checkout origin/master -- README.md"
+    "update": "npm run update-readme & npm run update-app",
+    "update-readme": "git fetch && git checkout origin/master -- README.md",
+    "update-app": "git submodule update --recursive --remote"
   },
   "eslintConfig": {
     "extends": "xo-space",
