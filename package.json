@@ -1,5 +1,5 @@
 {
-  "name": "rush",
+  "name": "generator-rush",
   "version": "1.0.0-beta.1",
   "description": "Start developing modern Web Applications with React, Typescript, Webpack and a lot more!",
   "homepage": "https://github.com/TobiasWalle/rush",
