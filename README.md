@@ -69,10 +69,10 @@ Run `yarn start` and open [http://localhost:3000/](http://localhost:3000/) in yo
 Everything is setup and you can start developing!
 
 ## The rh command
-Rush uses [yeoman](http://yeoman.io/) for the scaffolding, but wraps everything into it's own command
-to save you some typing. The Rush command is `rh` which is the equivalent of `yo rush`. To start a generator
+Rush uses [yeoman](http://yeoman.io/) for the scaffolding. But to save you some typing it wraps the yeoman command 
+into it's own command. The Rush command is `rh` which is the equivalent of `yo rush`. To start a generator
 with the rush command you run, for example, `rh component new-component` instead of `yo rush:component new-component`.
-Which command you use is your personal choice. There is no disadvantage in using the yo command.
+There is no disadvantage in using the original `yo` command. All the following examples use the `rh` command.
 
 ## Generators
 The following generators are available:
