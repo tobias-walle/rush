@@ -1,7 +1,7 @@
 {
   "name": "generator-rush",
   "version": "1.0.0-beta.1",
-  "description": "Start developing modern Web Applications with React, Typescript, Webpack and a lot more!",
+  "description": "Light speed development of web applications with React, Typescript, Webpack, Server Side Rendering, Tree Shaking and a lot more",
   "homepage": "https://github.com/TobiasWalle/rush",
   "author": {
     "name": "Tobias Walle",
