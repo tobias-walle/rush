@@ -6,22 +6,14 @@
 ## Get Started
 Run `yarn install` to download the dependencies. You can also install the dependencies via npm, but yarn is recommended.
 
-Run `yarn start` to start the development server. Then visit http://localhost:3000 to see the application. This project 
-uses [Hot Module Replacement](https://webpack.github.io/docs/hot-module-replacement.html) on the client
-and the server side so code changes will be loaded automatically.
+Run `yarn start` to start the development server. Then visit [http://localhost:3000](http://localhost:3000) to see the 
+application. This project uses [Hot Module Replacement](https://webpack.github.io/docs/hot-module-replacement.html) on 
+the client and the server side, so code changes will be loaded automatically.
 
 ## Code Scaffolding
-The project uses [yeoman](http://yeoman.io/) in combination with the 
-[Rush Generator](https://www.npmjs.com/package/generator-rush).
-This allows the Generation of code snippets.
+The project uses [Rush](https://github.com/TobiasWalle/rush) for scaffolding.
 
-Run `yo trb:module <name>` to generate a new module.
-
-Run `yo trb:component <name>` to generate a new component.
-
-Run `yo trb:duck <name>` to generate a new [redux duck file](https://github.com/erikras/ducks-modular-redux).
-
-For more details about the available commands please refer to the 
+For a list of the available commands and other features please refer to the 
 [Rush Documentation](https://github.com/TobiasWalle/rush).
 
 ## Build
@@ -46,9 +38,8 @@ For more details, please refer
 to the [protractor documentation](http://www.protractortest.org/#/tutorial).
 
 ## Further help
-For more documentation about the Features of the [Rush](https://github.com/TobiasWalle/rush)
-and the available features and best practices, check out the 
-[Documentation](https://github.com/TobiasWalle/rush).
+For more information about the available features and best practices of [Rush](https://github.com/TobiasWalle/rush)
+check out the [Documentation](https://github.com/TobiasWalle/rush).
 
 ## License
 <%- license ? license + ' ' : '' -%>© <%- author %>
