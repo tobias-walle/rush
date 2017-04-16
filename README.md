@@ -8,6 +8,7 @@ Rush gives you all the tools you want, but still leaves you with all the freedom
 ## Table of contents
 - [Features](#features)
 - [Get Started](#get-started)
+- [The rh command](#the-rh-command)
 - [Generators](#generators)
   * [App](#app)
   * [Module](#module)
@@ -57,7 +58,7 @@ $ npm install -g yo generator-rush yarn
 
 To generate a new project run:
 ```bash
-$ yo rush
+$ rh
 ```
 Navigate into the project folder:
 ```bash
@@ -66,6 +67,12 @@ $ cd <project-folder>
 Run `yarn start` and open [http://localhost:3000/](http://localhost:3000/) in your favorite browser.
 
 Everything is setup and you can start developing!
+
+## The rh command
+Rush uses [yeoman](http://yeoman.io/) for the scaffolding, but wraps everything into it's own command
+to save you some typing. The Rush command is `rh` which is the equivalent of `yo rush`. To start a generator
+with the rush command you run, for example, `rh component new-component` instead of `yo rush:component new-component`.
+Which command you use is your personal choice. There is no disadvantage in using the yo command.
 
 ## Generators
 The following generators are available:
@@ -78,11 +85,11 @@ The following generators are available:
   
 ### App
 ```bash
-$ yo rush <arguments> <option>
+$ rh <arguments> <option>
 ```
 or
 ```bash
-$ yo rush:app <arguments> <option>
+$ rh app <arguments> <option>
 ```
 Setups the app and generates all the boilerplate for you.
 
@@ -98,7 +105,7 @@ _Options:_
 
 ### Module
 ```bash
-$ yo rush:module <arguments> <option>
+$ rh module <arguments> <option>
 ```
 Generates a new module under `./src/app/modules`. A module is a self contained unit which can contain several components
 containers and a redux state. It is also a reference point for other generators.
@@ -113,7 +120,7 @@ _Options:_
  
 ### Component
 ```bash
-$ yo rush:component <arguments> <option>
+$ rh component <arguments> <option>
 ```
 Generates a new react component in the specific module or under a specific path. This command will also
 generate the test and style files for the component.
@@ -145,7 +152,7 @@ _Options:_
  
 ### Container
 ```bash
-$ yo rush:container <arguments> <option>
+$ rh container <arguments> <option>
 ```
 Generates a new react-redux container for a specific component. For more information checkout their 
 [documenation](https://github.com/reactjs/react-redux/blob/master/docs/api.md#connectmapstatetoprops-mapdispatchtoprops-mergeprops-options)
@@ -174,7 +181,7 @@ _Options:_
  
 ### Duck
 ```bash
-$ yo rush:duck <arguments> <option>
+$ rh duck <arguments> <option>
 ```
 Rush is intended to be used with the [redux modular duck pattern](https://github.com/erikras/ducks-modular-redux).
 To reduce the boilerplate code the library [https://github.com/mhoyer/redux-typed-ducks](redux-typed-ducks) is used.
