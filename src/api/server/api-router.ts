@@ -33,8 +33,8 @@ export class ApiRouter {
    */
   setupRoutes() {
     // Setup Routes here
-    this.router.post('/', (req, res) => {
-      res.send('Hello World');
+    this.router.get('/', (req, res) => {
+      res.send('Api is working!');
     });
   }
 

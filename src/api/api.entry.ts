@@ -8,7 +8,7 @@ const loggerHmr = loggerFactory.getLogger('server.api.HMR');
 let apiServer;
 const startServer = () => {
   const config = require('../config');
-  const NewApiServer = require('./api-server').ApiServer;
+  const NewApiServer = require('./server/api-server').ApiServer;
 
   const start = () => {
     apiServer = new NewApiServer(config.API_HOST, config.API_PORT);
@@ -32,7 +32,7 @@ if (module['hot']) {
   const hot = module['hot'];
   hot.accept([
     require.resolve('../config'),
-    require.resolve('./api-server'),
+    require.resolve('./server/api-server'),
   ], () => {
     loggerHmr.debug('Reload Api Server');
     startServer();

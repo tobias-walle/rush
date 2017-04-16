@@ -1,4 +1,4 @@
-import { loggerFactory } from '../logging';
+import { loggerFactory } from '../../logging';
 import * as express from 'express';
 import * as http from 'http';
 import { Observable } from 'rxjs';
