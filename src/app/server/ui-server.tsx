@@ -159,7 +159,10 @@ export class UIServer {
           .then(({html}) => {
             res.status(200).send(html);
           })
-          .catch(err => logger.error(err));
+          .catch(err => {
+            logger.error(err);
+            res.status(500).send(err.toString());
+          });
       } else {
         // Load styles
         const css: string[] = [];
@@ -195,7 +198,10 @@ export class UIServer {
               res.send(html);
             }
           })
-          .catch(err => logger.error(err));
+          .catch(err => {
+            logger.error(err);
+            res.status(500).send(err.toString());
+          });
       }
     });
   }
