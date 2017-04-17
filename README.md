@@ -4,12 +4,13 @@
 [![npm version](https://badge.fury.io/js/generator-rush.svg)](https://badge.fury.io/js/generator-rush)
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.png?v=103)](https://opensource.org/licenses/mit-license.php)
 
-Start developing modern Web Applications with React, Typescript, Webpack and a lot more!
-Rush gives you all the tools you want, but still leaves you with all the freedom you need!
+Scaffolding generator for the development of modern Web Applications with React, Typescript and Webpack.
+Rush creates the boilerplate code and allows you to concentrate on the business logic!
 
 ## Table of contents
 - [Features](#features)
 - [Get Started](#get-started)
+- [Developer Tools](#developer-tools)
 - [The rh command](#the-rh-command)
 - [Generators](#generators)
   * [App](#app)
@@ -17,6 +18,7 @@ Rush gives you all the tools you want, but still leaves you with all the freedom
   * [Component](#component)
   * [Container](#container)
   * [Duck](#duck)
+- [Logging](#logging)
 - [Scripts](#scripts)
   * [NPM Scripts](#npm-scripts)
   * [Build Script](#build-script)
@@ -28,7 +30,7 @@ Rush gives you all the tools you want, but still leaves you with all the freedom
   Rush provides you with an extreme modular architecture, which allows you to add features without sacrificing
   control.
   
-### SSO you Single Page Application with Server Side Rendering
+### SSO your Single Page Application with Server Side Rendering
   Combine the speed of Single Page Applications with the advantages of classic Websites. Rush renders everything
   on the server and after it reaches the client, it becomes a single page application. This allows you to do search
   engine optimization, while providing the best possible experience for the user!
@@ -78,6 +80,13 @@ Run `yarn start` and open [http://localhost:3000/](http://localhost:3000/) in yo
 
 Everything is setup and you can start developing!
 
+## Developer Tools
+It is highly recommended to use Rush in combination with the following Chrome extensions:
+
+ * [Redux DevTools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en)
+ * [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
+
+
 ## The rh command
 Rush uses [yeoman](http://yeoman.io/) for the scaffolding. But to save you some typing it wraps the yeoman command 
 into it's own command. The Rush command is `rh` which is the equivalent of `yo rush`. To start a generator
@@ -101,7 +110,7 @@ or
 ```bash
 $ rh app <arguments> <option>
 ```
-Setups the app and generates all the boilerplate for you.
+Set up the app and generates all the boilerplate for you.
 
 _Options:_
 
@@ -216,6 +225,29 @@ _Options:_
   
   `-d --destination` Set's the destination folder of the duck relative to the current folder. You don't need
   to set this if the `module` option is already defined.
+  
+## Logging
+Per default, the generated project has a tslint rule which forbids the use `console.log`. This is to prevent that
+verbose console logs are forgotten and included in the production build.
+
+To have more control we included [Typescript Logging](https://github.com/mreuvers/typescript-logging). You can use
+it like the following:
+
+```typescript
+import { loggerFactory } from '@src/logging';
+
+const logger = loggerFactory.getLogger('logger-name');
+
+logger.debug('This is a debug message');
+logger.info('This is an info message');
+logger.warn('This is an warning');
+logger.fatal('This is a fatal message');
+logger.error('This is an error');
+```
+
+Debug messages not be printed in the production build. You can control the logging levels in the `./src/logging.ts` 
+file. For more information, please refer to the 
+[official documentation](https://github.com/mreuvers/typescript-logging).
  
 ## Scripts
 
