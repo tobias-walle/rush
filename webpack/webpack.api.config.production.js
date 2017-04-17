@@ -15,5 +15,19 @@ module.exports = merge.smartStrategy({
     filename: 'api.js',
     path: path.resolve(rootDir, 'dist/api/'),
   },
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: {
+          loader: 'awesome-typescript-loader',
+          options: {
+            silent: true,
+            configFileName: 'tsconfig.api.json'
+          }
+        }
+      }
+    ]
+  },
 });
 
