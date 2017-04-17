@@ -124,7 +124,7 @@ module.exports = class extends Generator {
           dot: true,
           ignore: [
             '**/.git',
-            '**/media'
+            '**/media/**/*'
           ]
         }
       }
