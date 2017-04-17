@@ -49,7 +49,7 @@
     "testEnvironment": "node"
   },
   "scripts": {
-    "prepublish": "nsp check",
+    "prepublish": "nsp check && npm test",
     "pretest": "eslint . --ignore-path .gitignore --ignore-pattern 'generators/**/templates/*' --fix",
     "test": "jest",
     "update": "npm run update-readme & npm run update-app",
