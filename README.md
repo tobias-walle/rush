@@ -10,6 +10,7 @@ Rush creates the boilerplate code and allows you to concentrate on the business 
 ## Table of contents
 - [Features](#features)
 - [Get Started](#get-started)
+- [Developer Tools](#developer-tools)
 - [The rh command](#the-rh-command)
 - [Generators](#generators)
   * [App](#app)
@@ -77,6 +78,13 @@ $ cd <project-folder>
 Run `yarn start` and open [http://localhost:3000/](http://localhost:3000/) in your favorite browser.
 
 Everything is setup and you can start developing!
+
+## Developer Tools
+It is highly recommended to use Rush in combination with the following Chrome extensions:
+
+ * [Redux DevTools](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd?hl=en)
+ * [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en)
+
 
 ## The rh command
 Rush uses [yeoman](http://yeoman.io/) for the scaffolding. But to save you some typing it wraps the yeoman command 
