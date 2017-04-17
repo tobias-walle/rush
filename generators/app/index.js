@@ -22,7 +22,7 @@ module.exports = class extends Generator {
 
   prompting() {
     // Greet user
-    this.log(chalk.blue(getLogo()));
+    // this.log(chalk.blue(getLogo()));
     this.log(chalk.bold('  Welcome to the ') + chalk.bold(chalk.blue('rush') + ' generator! \n'));
 
     // Setup the available prompts
