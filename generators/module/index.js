@@ -35,6 +35,7 @@ module.exports = class extends Generator {
     this.composeWith(require.resolve('../component'),
       {
         arguments: [name],
+        noBasePath: true,
         destination: this.settings.destination,
         flat: true
       }
