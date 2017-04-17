@@ -30,7 +30,7 @@ Rush creates the boilerplate code and allows you to concentrate on the business 
   Rush provides you with an extreme modular architecture, which allows you to add features without sacrificing
   control.
   
-### SSO you Single Page Application with Server Side Rendering
+### SSO your Single Page Application with Server Side Rendering
   Combine the speed of Single Page Applications with the advantages of classic Websites. Rush renders everything
   on the server and after it reaches the client, it becomes a single page application. This allows you to do search
   engine optimization, while providing the best possible experience for the user!
@@ -110,7 +110,7 @@ or
 ```bash
 $ rh app <arguments> <option>
 ```
-Setups the app and generates all the boilerplate for you.
+Set up the app and generates all the boilerplate for you.
 
 _Options:_
 
