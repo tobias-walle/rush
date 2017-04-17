@@ -18,6 +18,7 @@ Rush creates the boilerplate code and allows you to concentrate on the business 
   * [Component](#component)
   * [Container](#container)
   * [Duck](#duck)
+- [Logging](#logging)
 - [Scripts](#scripts)
   * [NPM Scripts](#npm-scripts)
   * [Build Script](#build-script)
@@ -224,6 +225,29 @@ _Options:_
   
   `-d --destination` Set's the destination folder of the duck relative to the current folder. You don't need
   to set this if the `module` option is already defined.
+  
+## Logging
+Per default, the generated project has a tslint rule which forbids the use `console.log`. This is to prevent that
+verbose console logs are forgotten and included in the production build.
+
+To have more control we included [Typescript Logging](https://github.com/mreuvers/typescript-logging). You can use
+it like the following:
+
+```typescript
+import { loggerFactory } from '@src/logging';
+
+const logger = loggerFactory.getLogger('logger-name');
+
+logger.debug('This is a debug message');
+logger.info('This is an info message');
+logger.warn('This is an warning');
+logger.fatal('This is a fatal message');
+logger.error('This is an error');
+```
+
+Debug messages not be printed in the production build. You can control the logging levels in the `./src/logging.ts` 
+file. For more information, please refer to the 
+[official documentation](https://github.com/mreuvers/typescript-logging).
  
 ## Scripts
 
