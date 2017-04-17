@@ -9,6 +9,7 @@
     ],
     "baseUrl": "./src",
     "paths": {
+      "@src/*": ["*"],
       "@app/*": ["app/*"],
       "@modules/*": ["app/modules/*"],
       "@api/*": ["api/*"]
