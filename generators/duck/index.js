@@ -73,12 +73,20 @@ module.exports = class extends Generator {
       });
     });
     const actionCreators = elements.map(element => getActionCreatorName(element, name));
+    const duckName = `${utils.fromLispToCamelCase(name)}Duck`;
 
     this.fs.copyTpl(
       this.templatePath('name.duck.ts'),
       path.join(destination, `${name}.duck.ts`),
       {
         stateClass, reducer, epic, actionCreators, ducks
+      }
+    );
+    this.fs.copyTpl(
+      this.templatePath('name.duck.spec.ts'),
+      path.join(destination, `${name}.duck.spec.ts`),
+      {
+        duckName
       }
     );
   }
