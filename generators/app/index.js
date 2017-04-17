@@ -6,7 +6,6 @@ const mkdirp = require('mkdirp');
 const fs = require('fs');
 const validate = require('../../utils/validate-utils');
 const utils = require('../../utils/general-utils');
-const getLogo = require('../../utils/ascii-helpers').getLogo;
 
 module.exports = class extends Generator {
   constructor(args, opts) {
@@ -22,7 +21,6 @@ module.exports = class extends Generator {
 
   prompting() {
     // Greet user
-    // this.log(chalk.blue(getLogo()));
     this.log(chalk.bold('  Welcome to the ') + chalk.bold(chalk.blue('rush') + ' generator! \n'));
 
     // Setup the available prompts
