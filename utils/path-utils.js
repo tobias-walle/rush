@@ -25,6 +25,11 @@ function setupDestinationOptions(generatorInstance, generatorName) {
     type: String,
     desc: `The destination folder of the ${generatorName}`
   });
+
+  generatorInstance.option('noBasePath', {
+    type: Boolean,
+    desc: 'Ignore the base path from the config'
+  });
 }
 
 /**
@@ -40,7 +45,12 @@ function updateDestinationOption(generatorInstance, generatorName) {
     this.env.error(`Only lower case characters and hyphens are allowed in the ${generatorName} name`);
   }
 
-  const basePath = generatorInstance.config.get(`${generatorName}sBasePath`) || '';
+  let basePath;
+  if (options.noBasePath) {
+    basePath = '';
+  } else {
+    basePath = generatorInstance.config.get(`${generatorName}sBasePath`) || '';
+  }
   // Split name from path
   const pathFragments = options.name.split('/');
   options.name = pathFragments.splice(pathFragments.length - 1, 1)[0];
