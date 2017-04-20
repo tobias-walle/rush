@@ -14,7 +14,8 @@
     "bin"
   ],
   "bin": {
-    "rh": "./bin/rh.js"
+    "rh": "./bin/rh.js",
+    "rush": "./bin/rh.js"
   },
   "main": "generators/index.js",
   "keywords": [
