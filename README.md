@@ -1,4 +1,4 @@
-# <img src="https://cdn.rawgit.com/TobiasWalle/rush/227f186f/media/logo.svg" width="500">
+# <img src="https://cdn.rawgit.com/TobiasWalle/rush/8bd3f868/media/logo.svg" width="500">
 
 [![Build Status](https://travis-ci.org/TobiasWalle/typed-react-base.svg?branch=master)](https://travis-ci.org/TobiasWalle/typed-react-base)
 [![npm version](https://badge.fury.io/js/generator-rush.svg)](https://badge.fury.io/js/generator-rush)
