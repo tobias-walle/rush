@@ -50,7 +50,7 @@
   },
   "scripts": {
     "prepublish": "nsp check && npm test",
-    "pretest": "eslint . --ignore-path .gitignore --ignore-pattern 'generators/**/templates/*' --fix",
+    "pretest": "eslint . --ignore-path .gitignore --ignore-pattern \"generators/**/templates/**/*\"",
     "test": "jest",
     "update": "npm run update-readme & npm run update-app",
     "update-readme": "git fetch && git checkout origin/master -- README.md",
