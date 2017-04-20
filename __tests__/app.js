@@ -20,6 +20,10 @@ describe('generator-trb:app', () => {
       '.gitignore',
       'README.md'
     ]);
+    assert.noFile([
+      '.git',
+      'media'
+    ]);
   });
 
   it('should create yo-rc', () => {
