@@ -33,7 +33,7 @@ module.exports = (config) => {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: [],
+    browsers: ['Chrome'],
     singleRun: false
   });
 };
