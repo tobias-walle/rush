@@ -27,6 +27,7 @@
     "jsx": "react",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
     "sourceMap": true,
     "removeComments": true,
     "noEmitHelpers": true,

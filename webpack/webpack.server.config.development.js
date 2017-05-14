@@ -45,7 +45,7 @@ module.exports = {
         test: /\.scss?$/, loaders: [
         'isomorphic-style-loader',
         'css-loader?sourceMap&modules&localIdentName=[name]_[local]_[hash:base64:5]',
-        'postcss-loader',
+        'postcss-loader?sourceMap',
         'sass-loader?sourceMap']
       },
       {
