@@ -1,5 +1,8 @@
 {
-  "generator-trb": {
-    "modulesPath": "src/app/modules"
+  "generator-rush": {
+    "modulesPath": "src/app/modules",
+    "componentsBasePath": "components",
+    "containersBasePath": "container",
+    "ducksBasePath": ""
   }
 }
