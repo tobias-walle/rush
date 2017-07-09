@@ -20,6 +20,7 @@ import { Observable } from 'rxjs';
 import createMemoryHistory from 'history/createMemoryHistory';
 
 const STATIC_PATH = '/static';
+const FAVICON_PATH = '/favicon.ico';
 const logger = loggerFactory.getLogger('server.ui');
 
 export class UIServerOptions {
@@ -72,6 +73,7 @@ export class UIServer {
     } else {
       this.setupStaticRoutes();
     }
+    this.setupFaviconRoutes();
     this.setupHtmlRoutes();
   }
 
@@ -102,8 +104,8 @@ export class UIServer {
     // Http Proxy
     this.app.use('/api', (req, res) => {
       this.httpProxy.web(req, res, {
-          target: `http://${this.options.apiHost}:${this.options.apiPort}/`,
-        }
+        target: `http://${this.options.apiHost}:${this.options.apiPort}/`,
+      }
       );
     });
 
@@ -124,6 +126,15 @@ export class UIServer {
    */
   setupStaticRoutes() {
     this.app.use(STATIC_PATH, express.static(this.publicPath));
+  }
+
+  /**
+   * Setup the favicon.
+   */
+  setupFaviconRoutes() {
+    this.app.get(FAVICON_PATH, (req, res, next) => {
+      res.redirect(`${STATIC_PATH}/assets${FAVICON_PATH}`);
+    });
   }
 
   /**
@@ -154,9 +165,9 @@ export class UIServer {
       if (DISABLE_SERVER_SIDE_RENDERING) {
         // Just provider Html without SSR
         renderToString(
-          <HtmlComponent scripts={scriptPaths} store={store}/>,
+          <HtmlComponent scripts={scriptPaths} store={store} />,
         )
-          .then(({html}) => {
+          .then(({ html }) => {
             res.status(200).send(html);
           })
           .catch(err => {
@@ -176,7 +187,7 @@ export class UIServer {
               url={req.url}
               context={context}
             >
-              <EntryComponent/>
+              <EntryComponent />
             </ServerWrapperComponent>
           </WithStylesContext>
         );
@@ -188,7 +199,7 @@ export class UIServer {
             styles={!DISABLE_SERVER_SIDE_STYLE_RENDERING ? css : []}
           />,
         )
-          .then(({html}) => {
+          .then(({ html }) => {
             if (context.url) {
               res.writeHead(302, {
                 Location: context.url

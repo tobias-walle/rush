@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const createRules = require('./rules.config-creator');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const {CheckerPlugin} = require('awesome-typescript-loader');
 const {TsConfigPathsPlugin} = require('awesome-typescript-loader');
 
@@ -38,6 +39,10 @@ module.exports = (isProduction) => {
     },
 
     plugins: [
+      new CopyWebpackPlugin([{
+        from: './src/app/assets',
+        to: 'assets'
+      }]),
       new webpack.DefinePlugin({
         'process.env.IS_SERVER_SIDE': JSON.stringify(false),
         'process.env.NODE_ENV': isProduction ? JSON.stringify('production') : JSON.stringify('development'),
