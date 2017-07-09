@@ -55,15 +55,11 @@
       "check-open-brace",
       "check-whitespace"
     ],
-    "comment-format": [
-      true,
-      "check-space"
-    ],
     "jsdoc-format": true,
     "no-angle-bracket-type-assertion": true,
     "no-consecutive-blank-lines": false,
     "no-unnecessary-initializer": true,
-    "object-literal-key-quotes": "consistent-as-needed",
+    "object-literal-key-quotes": [true, "consistent-as-needed"],
     "object-literal-shorthand": true,
     "no-console": [true, "log", "error"],
     "member-ordering": [
