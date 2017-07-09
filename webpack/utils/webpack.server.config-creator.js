@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const fs = require('fs');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
+const createRules = require('./rules.config-creator');
 const {
   CheckerPlugin
 } = require('awesome-typescript-loader');
@@ -22,7 +23,7 @@ module.exports = (isProduction) => {
       path: path.resolve(rootDir, 'dist/server/'),
     },
 
-    devtool: 'eval-inline-source-map',
+    devtool: 'inline-source-map',
     cache: true,
 
     resolve: {
@@ -35,34 +36,7 @@ module.exports = (isProduction) => {
     },
 
     module: {
-      rules: [{
-          test: /\.tsx?$/,
-          use: {
-            loader: 'awesome-typescript-loader',
-            options: {
-              silent: true,
-              configFileName: 'tsconfig.server.json'
-            }
-          }
-        },
-        {
-          test: /\.scss?$/,
-          loaders: [
-            'isomorphic-style-loader',
-            'css-loader?sourceMap&modules&localIdentName=[name]_[local]_[hash:base64:5]',
-            'postcss-loader?sourceMap',
-            'sass-loader?sourceMap'
-          ]
-        },
-        {
-          test: /\.(png|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-          loader: 'file-loader?name=[name].[hash].[ext]'
-        },
-        {
-          test: /\.json$/,
-          use: 'json-loader'
-        }
-      ]
+      rules: createRules(false, 'tsconfig.server.json'), // Always create rules for development, because source maps should always available on the server
     },
 
     externals: [nodeExternals()],

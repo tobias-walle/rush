@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const ManifestPlugin = require('webpack-manifest-plugin');
+const createRules = require('./rules.config-creator');
 const {CheckerPlugin} = require('awesome-typescript-loader');
 const {TsConfigPathsPlugin} = require('awesome-typescript-loader');
 
@@ -20,8 +21,9 @@ module.exports = (isProduction) => {
       publicPath: '/static/',
     },
 
-    devtool: 'eval-source-maps',
+    devtool: 'source-maps',
     cache: true,
+
     resolve: {
       extensions: [
         '.ts', '.tsx', '.js', '.jsx'
@@ -32,45 +34,7 @@ module.exports = (isProduction) => {
     },
 
     module: {
-      rules: [{
-          test: /\.tsx?$/,
-          use: {
-            loader: 'awesome-typescript-loader',
-            options: {
-              silent: true,
-              configFileName: 'tsconfig.client.json'
-            }
-          }
-        },
-        {
-          test: /\.scss?$/,
-          loaders: [
-            'isomorphic-style-loader',
-            ...(isProduction ? [
-              'css-loader?modules&localIdentName=[name]_[local]_[hash:base64:5]',
-              'postcss-loader',
-              'sass-loader'
-            ] : [
-              'css-loader?sourceMap&modules&localIdentName=[name]_[local]_[hash:base64:5]',
-              'postcss-loader?sourceMap',
-              'sass-loader?sourceMap'
-            ])
-          ]
-        },
-        {
-          test: /\.(png|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-          loader: 'file-loader?name=[name].[hash].[ext]'
-        },
-        {
-          test: /\.json$/,
-          use: 'json-loader'
-        },
-        ...(isProduction ? [] : [{
-          test: /\.js$/,
-          loader: 'source-map-loader',
-          enforce: 'pre'
-        }])
-      ],
+      rules: createRules(isProduction, 'tsconfig.client.json'),
     },
 
     plugins: [

@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const merge = require('webpack-merge');
+const createRules = require('./rules.config-creator');
 
 module.exports = (isProduction) => {
   const webpackConfig = isProduction 
@@ -9,19 +10,10 @@ module.exports = (isProduction) => {
   return merge.smart({
     resolve: webpackConfig.resolve,
     module: webpackConfig.module,
-    devtool: 'eval-inline-source-map'
+    devtool: 'inline-source-map'
   }, {
     module: {
-      rules: [{
-        test: /\.tsx?$/,
-        use: {
-          loader: 'awesome-typescript-loader',
-          options: {
-            silent: true,
-            configFileName: 'tsconfig.spec.json'
-          }
-        }
-      }]
+      rules: createRules(isProduction, 'tsconfig.api.json')
     },
     plugins: [
       new webpack.SourceMapDevToolPlugin({

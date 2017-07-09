@@ -1,5 +1,6 @@
 const webpackServerDevConfig = require('../webpack.server.config.development');
 const webpackServerProdConfig = require('../webpack.server.config.development');
+const createRules = require('./rules.config-creator');
 const path = require('path');
 const merge = require('webpack-merge');
 
@@ -17,15 +18,6 @@ module.exports = (isProduction) => merge.smartStrategy({
       path: path.resolve(rootDir, 'dist/api/'),
     },
     module: {
-      rules: [{
-        test: /\.tsx?$/,
-        use: {
-          loader: 'awesome-typescript-loader',
-          options: {
-            silent: true,
-            configFileName: 'tsconfig.api.json'
-          }
-        }
-      }]
+      rules: createRules(isProduction, 'tsconfig.api.json')
     },
   });
