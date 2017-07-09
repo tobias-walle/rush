@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Store } from 'redux';
-import { Provider } from 'react-redux';
 import { WithStyles } from 'isomorphic-style-loader-utils';
-import { ConnectedRouter } from 'react-router-redux';
 import { History } from 'history';
+const ConnectedRouter = require('react-router-redux').ConnectedRouter;
+const Provider = require('react-redux').Provider;
 const mainStyles = require('../styles/main.scss');
 
 export interface ClientWrapperComponentProps {

@@ -5,7 +5,7 @@ const serialize = require('serialize-javascript');
 export class HtmlProps {
   store: any;
   scripts?: string[];
-  component?: React.ReactElement<any>;
+  component?: JSX.Element;
   styles?: string[];
 }
 

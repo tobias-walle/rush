@@ -6,12 +6,12 @@ import { AppComponent } from './app/app.component';
 
 // Combine all modules to the global state interface
 export interface GlobalState {
-  routing: RouterState;
+  router: RouterState;
 }
 
 // Combine the reducers
 export const reducer = combineReducers({
-  router: routerReducer,
+  router: routerReducer as any,
 });
 
 // Combine the epics (redux-observables)

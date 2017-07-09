@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Store } from 'redux';
 import { StaticRouter } from 'react-router';
-import { Provider } from 'react-redux';
 import { WithStyles } from 'isomorphic-style-loader-utils';
+const Provider = require('react-redux').Provider;
 const mainStyles = require('../styles/main.scss');
 
 export interface ServerWrapperComponentProps {
