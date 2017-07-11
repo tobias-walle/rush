@@ -117,7 +117,7 @@ module.exports = class extends Generator {
   writing() {
     // Copy files
     this.fs.copy(
-      this.templatePath('typed-react-base/**/*'),
+      this.templatePath('rush/**/*'),
       this.destinationPath(),
       {
         globOptions: {
