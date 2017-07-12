@@ -65,6 +65,21 @@ describe('GeneratorOption', () => {
       }
       generatorOption.applyOptions(generatorMock, generatorName);
     });
+
+    it('should work with arguments', (done) => {
+      expect.assertions(2);
+      generatorOption.options.type = 'argument';
+      const generatorMock = {
+        argument: (name, options) => {
+          expect(name).toBe(defaultName);
+          expect(options).toEqual(defaultOptions.cliOptions);
+          done();
+        }
+      }
+      generatorOption.applyOptions(generatorMock, generatorName);
+    });
+
+
   });
 
   describe('validate', () => {

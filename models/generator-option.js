@@ -16,7 +16,11 @@ class GeneratorOption {
       cliOptions[key] = property;
     }
 
-    generatorInstance.option(this.name, cliOptions);
+    if (this.options.type === 'argument') {
+      generatorInstance.argument(this.name, cliOptions);
+    } else {
+      generatorInstance.option(this.name, cliOptions);
+    }
   }
 
   validate(generatorInstance, generatorName) {
