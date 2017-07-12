@@ -11,6 +11,13 @@ class GeneratorOptionCollection {
       option.applyOptions(generatorInstance, generatorName);
     }
   }
+
+  mergeWith(otherCollection) {
+    this.options = [
+      ...this.options,
+      ...otherCollection.options
+    ];
+  }
 }
 
 module.exports = {
