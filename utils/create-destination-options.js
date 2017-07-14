@@ -9,14 +9,15 @@ const validate = require('./validate-utils');
 function createDestinationOptions(generatorName) {
   return new GeneratorOptionCollection([
     new GeneratorOption('name', {
+      type: 'argument',
       cliOptions: {
         type: String,
-        required: true,
+        required: false,
         desc: generatorName => `The name of the ${generatorName}`
       },
       validate: value => {
         if (!validate.validateName(value)) {
-          return `Only lower case characters and hyphens are allowed in the ${generatorName} name`;
+          return `Only lower case characters and hyphens are allowed in the ${generatorName} name. Got "${value}"`;
         }
       }
     }),

@@ -4,13 +4,15 @@ function SubGenerator(ClassReference, generatorName, options) {
   return class extends ClassReference {
     constructor(...args) {
       super(...args);
+      console.log('KEYS', Object.keys(args[1]));
       options.applyOptions(this, generatorName);
     }
 
     default() {
       options.validate(this, generatorName);
       pathUtils.updateDestinationOption(this, generatorName);
-      super.default.apply(this);
+
+      super.default && super.default();
     }
   }
 }

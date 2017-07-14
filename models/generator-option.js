@@ -12,7 +12,6 @@ class GeneratorOption {
       }
       let property = this.options.cliOptions[key];
       if (property instanceof Function && key !== 'type') {
-        console.log('PROPERTY', property);
         // Functions will be resolved this the generatorInstance and name
         property = property(generatorName, generatorInstance);
       }

@@ -4,35 +4,7 @@ const path = require('path');
 const utils = require('../../utils/general-utils');
 const pathUtils = require('../../utils/path-utils');
 
-const generatorName = 'component';
-
-module.exports = class extends Generator {
-  constructor(args, opts) {
-    super(args, opts);
-
-    pathUtils.setupDestinationOptions(this, generatorName);
-
-    this.option('flat', {
-      alias: 'f',
-      type: Boolean,
-      desc: 'Generates the component files directly into the destination folder, without generating a subfolder ' +
-      'with the component name.',
-      default: false
-    });
-
-    this.option('stateless', {
-      alias: 's',
-      type: Boolean,
-      desc: 'Generates a stateless component instead of a stateful one. This also means there will be' +
-      ' no styles generated for this component',
-      default: false
-    });
-  }
-
-  default() {
-    pathUtils.updateDestinationOption(this, generatorName);
-  }
-
+class ComponentGenerator extends Generator {
   writing() {
     const {name, stateless} = this.options;
     const upperCamelCaseName = utils.fromLispToUpperCamelCase(name);
@@ -61,3 +33,8 @@ module.exports = class extends Generator {
     }
   }
 };
+
+const SubGenerator = require('../../decorator/sub-generator.decorator');
+const options = require('../../configuration/component-options');
+const componentName = 'component';
+module.exports = SubGenerator(ComponentGenerator, componentName, options);

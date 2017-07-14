@@ -5,25 +5,19 @@ const utils = require('../../utils/general-utils');
 const pathUtils = require('../../utils/path-utils');
 const validate = require('../../utils/validate-utils');
 const moduleUtils = require('../../utils/module-utils');
+const options = require('../../configuration/container-options');
 
 const generatorName = 'container';
 
 module.exports = class extends Generator {
   constructor(args, opts) {
     super(args, opts);
-    pathUtils.setupDestinationOptions(this, generatorName);
-
-    this.option('componentName', {
-      type: String,
-      desc: `The name of the component this container extends. If not set, this will be the same as the container name`
-    });
+    options.applyOptions(this, generatorName);
   }
 
   default() {
     const componentName = this.options.componentName || this.options.name;
-    if (!validate.validateName(componentName)) {
-      this.env.error('Only lower case characters and hyphens are allowed in the component name');
-    }
+    options.validate(this, generatorName);
     this.options.componentName = componentName || this.options.name;
     pathUtils.updateDestinationOption(this, generatorName);
   }

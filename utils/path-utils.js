@@ -42,7 +42,7 @@ function updateDestinationOption(generatorInstance, generatorName) {
 
   // Validate
   if (!validate.validateName(options.name)) {
-    generatorInstance.env.error(`Only lower case characters and hyphens are allowed in the ${generatorName} name`);
+    generatorInstance.env.error(`Only lower case characters and hyphens are allowed in the ${generatorName} name. Got "${options.name}"`);
   }
 
   let basePath;
