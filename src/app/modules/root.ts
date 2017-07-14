@@ -1,3 +1,4 @@
+import { GlobalState } from './root';
 import { combineReducers } from 'redux';
 
 import { routerReducer, RouterState } from 'react-router-redux';
@@ -12,7 +13,7 @@ export interface GlobalState {
 // Combine the reducers
 export const reducer = combineReducers({
   router: routerReducer as any,
-});
+} as {[key in keyof GlobalState]: any});
 
 // Combine the epics (redux-observables)
 export const epic = combineEpics(
