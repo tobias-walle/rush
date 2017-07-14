@@ -9,7 +9,9 @@ describe('generator-trb:component', () => {
 
   it('creates files', () => {
     return helpers.run(path.join(__dirname, '../generators/component'))
-      .withOptions({destination: '.'})
+      .withOptions({
+        destination: '.'
+      })
       .withArguments([COMPONENT_NAME])
       .then(() => {
         assert.file([
@@ -19,15 +21,13 @@ describe('generator-trb:component', () => {
           path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.spec.tsx`)
         ]);
 
+        const componentFileName = path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.tsx`);
+        const componentSpecFileName = path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.tsx`);
         assert.fileContent([
-          [
-            path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.tsx`),
-            new RegExp(`.*${utils.fromLispToUpperCamelCase(COMPONENT_NAME)}Component.*`)
-          ],
-          [
-            path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.spec.tsx`),
-            new RegExp(`.*${utils.fromLispToUpperCamelCase(COMPONENT_NAME)}Component.*`)
-          ]
+          [componentFileName, new RegExp(`.*${utils.fromLispToUpperCamelCase(COMPONENT_NAME)}Component.*`)],
+          [componentFileName, new RegExp(`.*${utils.fromLispToUpperCamelCase(COMPONENT_NAME)}ComponentState.*`)],
+          [componentFileName, new RegExp(`.*${utils.fromLispToUpperCamelCase(COMPONENT_NAME)}ComponentProps.*`)],
+          [componentSpecFileName, new RegExp(`.*${utils.fromLispToUpperCamelCase(COMPONENT_NAME)}Component.*`)]
         ]);
         return Promise.resolve();
       });
@@ -35,9 +35,13 @@ describe('generator-trb:component', () => {
 
   it('creates files flat', () => {
     helpers.run(path.join(__dirname, '../generators/component'))
-      .withOptions({destination: '.'})
+      .withOptions({
+        destination: '.'
+      })
       .withArguments([COMPONENT_NAME])
-      .withOptions({flat: true})
+      .withOptions({
+        flat: true
+      })
       .then(() => {
         assert.file([
           COMPONENT_NAME,
@@ -48,5 +52,4 @@ describe('generator-trb:component', () => {
         return Promise.resolve();
       });
   });
-})
-;
+});
