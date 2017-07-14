@@ -1,4 +1,6 @@
-const {GeneratorOptionCollection} = require('./generator-option-collection');
+const {
+  GeneratorOptionCollection
+} = require('./generator-option-collection');
 
 describe('GeneratorOptionsCollection', () => {
   describe('applyOptions', () => {
@@ -23,17 +25,35 @@ describe('GeneratorOptionsCollection', () => {
 
   describe('mergeWith', () => {
     it('should work', () => {
-      const collection1 = new GeneratorOptionCollection([
-        {test: 1}
-      ]);
-      const collection2 = new GeneratorOptionCollection([
-        {test: 2}
-      ]);
+      const collection1 = new GeneratorOptionCollection([{
+        test: 1
+      }]);
+      const collection2 = new GeneratorOptionCollection([{
+        test: 2
+      }]);
       collection1.mergeWith(collection2);
-      expect(collection1.options).toEqual([
-        {test: 1},
-        {test: 2}
+      expect(collection1.options).toEqual([{
+          test: 1
+        },
+        {
+          test: 2
+        }
       ]);
+    });
+  });
+
+  describe('validate', () => {
+    it('should be called', () => {
+      expect.assertions(2);
+      const collection = new GeneratorOptionCollection([
+        {
+          validate: () => expect(true).toBe(true)
+        },
+        {
+          validate: () => expect(true).toBe(true)
+        }
+      ]);
+      collection.validate();
     });
   });
 });

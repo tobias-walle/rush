@@ -16,6 +16,12 @@ class GeneratorOptionCollection {
       ...otherCollection.options
     ];
   }
+
+  validate(generatorInstance, generatorName) {
+    for (let option of this.options) {
+      option.validate(generatorInstance, generatorName);
+    }
+  }
 }
 
 module.exports = {
