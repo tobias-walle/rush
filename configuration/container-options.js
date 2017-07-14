@@ -16,6 +16,6 @@ module.exports = buildSubGeneratorOptions(
         type: String,
         desc: `The name of the component this container extends. If not set, this will be the same as the container name`
       }
-    }),
+    })
   ])
 );

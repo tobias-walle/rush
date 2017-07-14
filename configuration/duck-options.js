@@ -22,13 +22,13 @@ module.exports = buildSubGeneratorOptions(
           ' reducers.',
         default: ''
       },
-      validate: (value) => {
+      validate: elements => {
         if (!validate.isLispCase(elements, {
-            withSpaces: true
-          })) {
+          withSpaces: true
+        })) {
           return 'Only lowercase characters, hyphens and spaces are allowed.';
         }
       }
-    }),
+    })
   ])
 );

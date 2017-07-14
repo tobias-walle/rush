@@ -12,3 +12,7 @@ class SubGenerator extends Generator {
 
   }
 }
+
+module.exports = {
+  SubGenerator
+};

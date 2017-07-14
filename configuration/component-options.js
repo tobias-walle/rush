@@ -16,7 +16,7 @@ module.exports = buildSubGeneratorOptions(
         alias: 'f',
         type: Boolean,
         desc: 'Generates the component files directly into the destination folder, without generating a subfolder ' +
-          'with the component name',
+        'with the component name',
         default: false
       }
     }),
@@ -25,9 +25,9 @@ module.exports = buildSubGeneratorOptions(
         alias: 's',
         type: Boolean,
         desc: 'Generates a stateless component instead of a stateful one. This also means there will be' +
-          ' no styles generated for this component',
+        ' no styles generated for this component',
         default: false
       }
-    }),
+    })
   ])
 );

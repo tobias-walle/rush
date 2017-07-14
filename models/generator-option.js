@@ -7,6 +7,9 @@ class GeneratorOption {
   applyOptions(generatorInstance, generatorName) {
     const cliOptions = {};
     for (let key in this.options.cliOptions) {
+      if (!Object.prototype.hasOwnProperty.call(this.options.cliOptions, key)) {
+        return;
+      }
       let property = this.options.cliOptions[key];
       if (property instanceof Function && key !== 'type') {
         console.log('PROPERTY', property);
@@ -25,14 +28,18 @@ class GeneratorOption {
 
   validate(generatorInstance, generatorName) {
     const validate = this.options.validate;
-    if (!validate) return;
+    if (!validate) {
+      return;
+    }
 
     const value = generatorInstance.options[this.name];
     const errorMessage = validate(value, generatorName);
-    if (errorMessage) generatorInstance.env.error(errorMessage);
+    if (errorMessage) {
+      generatorInstance.env.error(errorMessage);
+    }
   }
 }
 
 module.exports = {
   GeneratorOption
-}
+};

@@ -16,7 +16,7 @@ describe('generator-trb:component', () => {
           COMPONENT_NAME,
           path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.scss`),
           path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.tsx`),
-          path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.spec.tsx`),
+          path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.spec.tsx`)
         ]);
 
         assert.fileContent([
@@ -43,7 +43,7 @@ describe('generator-trb:component', () => {
           COMPONENT_NAME,
           path.join(`${COMPONENT_NAME}.component.scss`),
           path.join(`${COMPONENT_NAME}.component.tsx`),
-          path.join(`${COMPONENT_NAME}.component.spec.tsx`),
+          path.join(`${COMPONENT_NAME}.component.spec.tsx`)
         ]);
         return Promise.resolve();
       });

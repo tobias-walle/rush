@@ -12,9 +12,9 @@ function createDestinationOptions(generatorName) {
       cliOptions: {
         type: String,
         required: true,
-        desc: (generatorName) => `The name of the ${generatorName}`
+        desc: generatorName => `The name of the ${generatorName}`
       },
-      validate: (value) => {
+      validate: value => {
         if (!validate.validateName(value)) {
           return `Only lower case characters and hyphens are allowed in the ${generatorName} name`;
         }
@@ -24,14 +24,14 @@ function createDestinationOptions(generatorName) {
       cliOptions: {
         alias: 'm',
         type: String,
-        desc: (generatorName) => `The destination module of the ${generatorName}`
+        desc: generatorName => `The destination module of the ${generatorName}`
       }
     }),
     new GeneratorOption('destination', {
       cliOptions: {
         alias: 'd',
         type: String,
-        desc: (generatorName) => `The destination folder of the ${generatorName}`
+        desc: generatorName => `The destination folder of the ${generatorName}`
       }
     }),
     new GeneratorOption('noBasePath', {
@@ -39,10 +39,10 @@ function createDestinationOptions(generatorName) {
         type: String,
         desc: 'Ignore the base path from the .yo-rc configuration'
       }
-    }),
+    })
   ]);
 }
 
 module.exports = {
   createDestinationOptions
-}
+};

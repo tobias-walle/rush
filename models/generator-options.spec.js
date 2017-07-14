@@ -17,8 +17,8 @@ describe('GeneratorOption', () => {
         type: String,
         desc: 'This is a description',
         default: false
-      },
-    }
+      }
+    };
     generatorName = 'testGenerator';
     generatorOption = new GeneratorOption(defaultName, defaultOptions);
   });
@@ -30,7 +30,7 @@ describe('GeneratorOption', () => {
   });
 
   describe('applyOptions', () => {
-    it('should work with default options', (done) => {
+    it('should work with default options', done => {
       expect.assertions(2);
       const generatorMock = {
         option: (name, options) => {
@@ -38,18 +38,18 @@ describe('GeneratorOption', () => {
           expect(options).toEqual(defaultOptions.cliOptions);
           done();
         }
-      }
+      };
       generatorOption.applyOptions(generatorMock, generatorName);
     });
 
-    it('should work with function options', (done) => {
+    it('should work with function options', done => {
       expect.assertions(2);
       const cliOptions = defaultOptions.cliOptions;
       // Set function as cli options
-      cliOptions.alias = (name, generatorInstance) => name;
+      cliOptions.alias = name => name;
       // .type is not supported
-      cliOptions.desc = (name, generatorInstance) => `Description: ${name}`;
-      cliOptions.default = (name, generatorInstance) => !!generatorInstance;
+      cliOptions.desc = name => `Description: ${name}`;
+      cliOptions.default = (name, generatorInstance) => Boolean(generatorInstance);
 
       const expectedCliOptions = Object.assign({}, cliOptions, {
         alias: generatorName,
@@ -62,11 +62,11 @@ describe('GeneratorOption', () => {
           expect(options).toEqual(expectedCliOptions);
           done();
         }
-      }
+      };
       generatorOption.applyOptions(generatorMock, generatorName);
     });
 
-    it('should work with arguments', (done) => {
+    it('should work with arguments', done => {
       expect.assertions(2);
       generatorOption.options.type = 'argument';
       const generatorMock = {
@@ -75,11 +75,9 @@ describe('GeneratorOption', () => {
           expect(options).toEqual(defaultOptions.cliOptions);
           done();
         }
-      }
+      };
       generatorOption.applyOptions(generatorMock, generatorName);
     });
-
-
   });
 
   describe('validate', () => {
@@ -92,31 +90,31 @@ describe('GeneratorOption', () => {
           error: null
         },
         options: {}
-      }
+      };
 
-      defaultOptions.validate = (value, generatorName) => {
+      defaultOptions.validate = value => {
         if (value !== 'test') {
           return ERROR_MESSAGE;
         }
-      }
+      };
     });
 
-    it('should work on fail', (done) => {
+    it('should work on fail', done => {
       expect.assertions(1);
-      mockGenerator.env.error = (message) => {
+      mockGenerator.env.error = message => {
         expect(message).toEqual(ERROR_MESSAGE);
         done();
-      }
+      };
       mockGenerator.options[defaultName] = '123';
       generatorOption.validate(mockGenerator, generatorName);
     });
 
     it('should work on success', () => {
-      mockGenerator.env.error = (message) => {
-        fail();
-      }
+      mockGenerator.env.error = () => {
+        expect(false).toBe(true);
+      };
       mockGenerator.options[defaultName] = 'test';
       generatorOption.validate(mockGenerator, generatorName);
-    })
+    });
   });
 });

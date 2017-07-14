@@ -1,5 +1,3 @@
-const GeneratorOption = require('./generator-option').GeneratorOption;
-
 class GeneratorOptionCollection {
 
   constructor(options) {
@@ -22,4 +20,4 @@ class GeneratorOptionCollection {
 
 module.exports = {
   GeneratorOptionCollection
-}
+};

@@ -28,7 +28,7 @@ options.mergeWith(new GeneratorOptionCollection([
         ' no styles generated for this component',
       default: false
     }
-  }),
+  })
 ]));
 
 module.exports = options;

@@ -1,4 +1,4 @@
-const { GeneratorOptionCollection } = require('./generator-option-collection');
+const {GeneratorOptionCollection} = require('./generator-option-collection');
 
 describe('GeneratorOptionsCollection', () => {
   describe('applyOptions', () => {
@@ -15,7 +15,7 @@ describe('GeneratorOptionsCollection', () => {
       const generatorOptionCollection = new GeneratorOptionCollection([
         generatorOption,
         generatorOption,
-        generatorOption,
+        generatorOption
       ]);
       generatorOptionCollection.applyOptions(generatorInstance, generatorName);
     });
@@ -24,16 +24,16 @@ describe('GeneratorOptionsCollection', () => {
   describe('mergeWith', () => {
     it('should work', () => {
       const collection1 = new GeneratorOptionCollection([
-        { test: 1 }
+        {test: 1}
       ]);
       const collection2 = new GeneratorOptionCollection([
-        { test: 2 },
+        {test: 2}
       ]);
       collection1.mergeWith(collection2);
       expect(collection1.options).toEqual([
-        { test: 1},
-        { test: 2},
-      ])
+        {test: 1},
+        {test: 2}
+      ]);
     });
   });
 });
