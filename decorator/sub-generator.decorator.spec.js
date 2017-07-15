@@ -13,7 +13,7 @@ const {
 
 describe('SubGeneratorDecorator', () => {
   it('should work', async() => {
-    expect.assertions(2);
+    expect.assertions(3);
     const optionNames = ['test1', 'test2'];
     const values = ['123', '456'];
     debugger;
@@ -32,13 +32,16 @@ describe('SubGeneratorDecorator', () => {
         }
       }),
     ]));
-    const generatorName = 'test';
     class TestGenerator extends Generator {
       writing() {
         const optionKeys = Object.keys(this.options);
         for (let name of optionNames) {
           expect(optionKeys.includes(name)).toBeTruthy();
         }
+      }
+
+      default() {
+        expect(this.options).toBeDefined();
       }
     }
 

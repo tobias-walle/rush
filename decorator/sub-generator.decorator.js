@@ -9,7 +9,7 @@ module.exports = function(func, generatorName, options) {
       options.validate(this, generatorName);
       pathUtils.updateDestinationOption(this, generatorName);
 
-      originalDefault && originalDefault();
+      originalDefault && originalDefault.bind(this)();
   }
 
   return NewFunction;
