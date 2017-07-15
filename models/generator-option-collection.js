@@ -22,6 +22,10 @@ class GeneratorOptionCollection {
       option.validate(generatorInstance, generatorName);
     }
   }
+
+  get(name) {
+    return this.options.find(option => option.name === name);
+  }
 }
 
 module.exports = {

@@ -37,6 +37,12 @@ class GeneratorOption {
       generatorInstance.env.error(errorMessage);
     }
   }
+
+  setDefault(value) {
+    if (this.options && this.options.cliOptions) {
+      this.options.cliOptions.default = value;
+    }
+  }
 }
 
 module.exports = {

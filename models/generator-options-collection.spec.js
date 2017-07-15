@@ -56,4 +56,15 @@ describe('GeneratorOptionsCollection', () => {
       collection.validate();
     });
   });
+
+  describe('get', () => {
+    it('should find an option', () => {
+      const NAME = 'name';
+      const option = {name: NAME};
+      const collection = new GeneratorOptionCollection([
+        option
+      ]);
+      expect(collection.get(NAME)).toEqual(option);
+    });
+  });
 });

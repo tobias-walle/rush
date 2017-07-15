@@ -58,7 +58,8 @@ describe('GeneratorOptionsDecorator', () => {
         type: 'argument',
         cliOptions: {
           type: String,
-          required: false
+          required: false,
+          default: 'invalid'
         }
       }),
       new GeneratorOption(optionNames[1], {
