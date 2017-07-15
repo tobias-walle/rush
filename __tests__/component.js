@@ -7,49 +7,43 @@ const utils = require('../utils/general-utils');
 describe('generator-trb:component', () => {
   const COMPONENT_NAME = 'hello-world';
 
-  it('creates files', () => {
-    return helpers.run(path.join(__dirname, '../generators/component'))
+  it('creates files', async() => {
+    await helpers.run(path.join(__dirname, '../generators/component'))
       .withOptions({
         destination: '.'
       })
-      .withArguments([COMPONENT_NAME])
-      .then(() => {
-        assert.file([
-          COMPONENT_NAME,
-          path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.scss`),
-          path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.tsx`),
-          path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.spec.tsx`)
-        ]);
+      .withArguments([COMPONENT_NAME]);
 
-        const componentFileName = path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.tsx`);
-        const componentSpecFileName = path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.tsx`);
-        assert.fileContent([
-          [componentFileName, new RegExp(`.*${utils.fromLispToUpperCamelCase(COMPONENT_NAME)}Component.*`)],
-          [componentFileName, new RegExp(`.*${utils.fromLispToUpperCamelCase(COMPONENT_NAME)}ComponentState.*`)],
-          [componentFileName, new RegExp(`.*${utils.fromLispToUpperCamelCase(COMPONENT_NAME)}ComponentProps.*`)],
-          [componentSpecFileName, new RegExp(`.*${utils.fromLispToUpperCamelCase(COMPONENT_NAME)}Component.*`)]
-        ]);
-        return Promise.resolve();
-      });
+    const COMPONENT_FILE_NAME = path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.tsx`);
+    const COMPONENT_SPEC_FILE_NAME = path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.spec.tsx`);
+    const COMPONENT_STYLES_FILE_NAME = path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.tsx`);
+    assert.file([
+      COMPONENT_FILE_NAME,
+      COMPONENT_SPEC_FILE_NAME,
+      COMPONENT_STYLES_FILE_NAME
+    ]);
+
+    assert.fileContent([
+      [COMPONENT_FILE_NAME, new RegExp(`.*${utils.fromLispToUpperCamelCase(COMPONENT_NAME)}Component.*`)],
+      [COMPONENT_FILE_NAME, new RegExp(`.*${utils.fromLispToUpperCamelCase(COMPONENT_NAME)}ComponentState.*`)],
+      [COMPONENT_FILE_NAME, new RegExp(`.*${utils.fromLispToUpperCamelCase(COMPONENT_NAME)}ComponentProps.*`)],
+      [COMPONENT_SPEC_FILE_NAME, new RegExp(`.*${utils.fromLispToUpperCamelCase(COMPONENT_NAME)}Component.*`)]
+    ]);
   });
 
-  it('creates files flat', () => {
-    helpers.run(path.join(__dirname, '../generators/component'))
+  it('creates files flat', async() => {
+    await helpers.run(path.join(__dirname, '../generators/component'))
       .withOptions({
         destination: '.'
       })
       .withArguments([COMPONENT_NAME])
       .withOptions({
         flat: true
-      })
-      .then(() => {
-        assert.file([
-          COMPONENT_NAME,
-          path.join(`${COMPONENT_NAME}.component.scss`),
-          path.join(`${COMPONENT_NAME}.component.tsx`),
-          path.join(`${COMPONENT_NAME}.component.spec.tsx`)
-        ]);
-        return Promise.resolve();
       });
+    assert.file([
+      path.join(`${COMPONENT_NAME}.component.scss`),
+      path.join(`${COMPONENT_NAME}.component.tsx`),
+      path.join(`${COMPONENT_NAME}.component.spec.tsx`)
+    ]);
   });
 });
