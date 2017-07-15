@@ -6,6 +6,7 @@ const mkdirp = require('mkdirp');
 const fs = require('fs');
 const validate = require('../../utils/validate-utils');
 const utils = require('../../utils/general-utils');
+const yoRcUtils = require('../../utils/yo-rc-utils');
 
 module.exports = class extends Generator {
   constructor(args, opts) {
@@ -160,7 +161,8 @@ module.exports = class extends Generator {
       appGeneratorSettings: this.props,
       componentsBasePath: 'components',
       containersBasePath: 'container',
-      ducksBasePath: ''
+      ducksBasePath: '',
+      defaults: yoRcUtils.createInitialDefaultConfiguration()
     });
   }
 
