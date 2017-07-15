@@ -36,5 +36,5 @@ class ComponentGenerator extends Generator {
 
 const decorateSubGenerator = require('../../decorator/sub-generator.decorator');
 const options = require('../../configuration/component-options');
-const componentName = 'component';
-module.exports = decorateSubGenerator(ComponentGenerator, componentName, options);
+const generatorName = 'component';
+module.exports = decorateSubGenerator(ComponentGenerator, generatorName, options);

@@ -3,17 +3,6 @@ const Generator = require('yeoman-generator');
 const ejs = require('ejs');
 const path = require('path');
 const utils = require('../../utils/general-utils');
-const validate = require('../../utils/validate-utils');
-const pathUtils = require('../../utils/path-utils');
-
-const generatorName = 'duck';
-
-function validateElements(elements) {
-  if (!validate.isLispCase(elements, {withSpaces: true})) {
-    return 'Only lowercase characters, hyphens and spaces are allowed.';
-  }
-  return true;
-}
 
 function getActionCreatorName(element, duckName) {
   const name = [duckName, element].join('-');
@@ -67,5 +56,5 @@ const DuckGenerator = class extends Generator {
 
 const decorateSubGenerator = require('../../decorator/sub-generator.decorator');
 const options = require('../../configuration/duck-options');
-const componentName = 'duck';
-module.exports = decorateSubGenerator(DuckGenerator, componentName, options);
+const generatorName = 'duck';
+module.exports = decorateSubGenerator(DuckGenerator, generatorName, options);

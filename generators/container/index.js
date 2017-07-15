@@ -2,24 +2,17 @@
 const Generator = require('yeoman-generator');
 const path = require('path');
 const utils = require('../../utils/general-utils');
-const pathUtils = require('../../utils/path-utils');
-const validate = require('../../utils/validate-utils');
 const moduleUtils = require('../../utils/module-utils');
-const options = require('../../configuration/container-options');
 
-const generatorName = 'container';
-
-module.exports = class extends Generator {
+class ContainerGenerator extends Generator {
   constructor(args, opts) {
     super(args, opts);
-    options.applyOptions(this, generatorName);
   }
 
   default() {
     const componentName = this.options.componentName || this.options.name;
-    options.validate(this, generatorName);
     this.options.componentName = componentName || this.options.name;
-    pathUtils.updateDestinationOption(this, generatorName);
+    console.log('NAME', componentName);
   }
 
   writing() {
@@ -40,3 +33,8 @@ module.exports = class extends Generator {
     );
   }
 };
+
+const decorateSubGenerator = require('../../decorator/sub-generator.decorator');
+const options = require('../../configuration/container-options');
+const generatorName = 'container';
+module.exports = decorateSubGenerator(ContainerGenerator, generatorName, options);
