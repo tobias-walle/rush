@@ -65,7 +65,7 @@ const DuckGenerator = class extends Generator {
 
 };
 
-const SubGenerator = require('../../decorator/sub-generator.decorator');
+const decorateSubGenerator = require('../../decorator/sub-generator.decorator');
 const options = require('../../configuration/duck-options');
 const componentName = 'duck';
-module.exports = SubGenerator(DuckGenerator, componentName, options);
+module.exports = decorateSubGenerator(DuckGenerator, componentName, options);
