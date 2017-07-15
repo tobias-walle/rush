@@ -75,7 +75,6 @@ module.exports = class extends Generator {
           this.props[promptKey] = generatorConfig[promptKey];
         }
       }
-      console.log(this.props);
     } else {
       // Other just show all prompts
       promptsToShow = promptOrder;

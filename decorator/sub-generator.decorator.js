@@ -1,20 +1,41 @@
 const pathUtils = require('./../utils/path-utils');
 
-function SubGenerator(ClassReference, generatorName, options) {
-  return class extends ClassReference {
-    constructor(...args) {
-      super(...args);
-      console.log('KEYS', Object.keys(args[1]));
-      options.applyOptions(this, generatorName);
-    }
+module.exports = function(func, generatorName, options) {
+  const prototype = func.prototype;
+  NewFunction.prototype = prototype;
 
-    default() {
+  const originalDefault = getDeepPrototypeProperty(func, 'default');
+  prototype.default = function() {
       options.validate(this, generatorName);
       pathUtils.updateDestinationOption(this, generatorName);
 
-      super.default && super.default();
-    }
+      originalDefault && originalDefault();
+  }
+
+  return NewFunction;
+
+  function NewFunction(...args) {
+    const instance = instantiate(func, args);
+    options.applyOptions(instance, generatorName);
+    return instance;
   }
 }
 
-module.exports = SubGenerator;
+
+const getDeepPrototypeProperty = (func, prop) => {
+  let prototype = func.prototype;
+  while (prototype !== undefined) {
+    const value = prototype[prop];
+    if (value) return value;
+    prototype = prototype.__prop__;
+  }
+  return undefined;
+}
+
+const bind = Function.bind;
+const unbind = bind.bind(bind);
+
+function instantiate(constructor, args) {
+    return new (unbind(constructor, null).apply(null, args));
+}
+
