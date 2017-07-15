@@ -2,7 +2,6 @@
 const path = require('path');
 const assert = require('yeoman-assert');
 const helpers = require('yeoman-test');
-const utils = require('../utils/general-utils');
 const testUtils = require('../utils/test-utils');
 
 describe('generator-trb:duck', () => {
@@ -17,7 +16,7 @@ describe('generator-trb:duck', () => {
     `app/hello-world/A`,
     `app/hello-world/B`,
     `app/hello-world/C`,
-  ]
+  ];
 
 
   beforeAll(() => {
@@ -41,6 +40,6 @@ describe('generator-trb:duck', () => {
         EPIC_NAME,
         ...ACTION_TYPES
       ]
-    )
+    );
   });
 });

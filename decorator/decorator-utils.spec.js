@@ -41,7 +41,7 @@ describe('decorator-utils', () => {
             expect(this.name).toBe(NAME);
           }
         }
-      })
+      });
 
       const test = new Test();
       test.newStuff();
@@ -76,7 +76,7 @@ describe('decorator-utils', () => {
 
       Test.prototype.getName = function() {
         return this.name;
-      }
+      };
 
       Test = decorate(Test);
       const test = new Test(NAME);

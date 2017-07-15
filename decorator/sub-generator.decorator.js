@@ -10,4 +10,4 @@ module.exports = (func, generatorName, options) => (
       }
     }
   })
-)
+);

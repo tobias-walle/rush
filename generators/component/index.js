@@ -2,7 +2,6 @@
 const Generator = require('yeoman-generator');
 const path = require('path');
 const utils = require('../../utils/general-utils');
-const pathUtils = require('../../utils/path-utils');
 
 class ComponentGenerator extends Generator {
   writing() {

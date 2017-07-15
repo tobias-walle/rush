@@ -11,4 +11,4 @@ function assertFileContains(pathName, content) {
 
 module.exports = {
   assertFileContains
-}
+};

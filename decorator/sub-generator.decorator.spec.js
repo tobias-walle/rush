@@ -44,7 +44,7 @@ describe('SubGeneratorDecorator', () => {
       }
     }
 
-    TestGenerator = SubGenerator(TestGenerator, 'test', options)
+    TestGenerator = SubGenerator(TestGenerator, 'test', options);
     await helpers.run(TestGenerator)
       .withOptions({
         destination: '.',

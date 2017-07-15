@@ -37,7 +37,7 @@ describe('GeneratorOptionsDecorator', () => {
       }
     }
 
-    TestGenerator = decorateGeneratorOptions(TestGenerator, 'test', options)
+    TestGenerator = decorateGeneratorOptions(TestGenerator, 'test', options);
     await helpers.run(TestGenerator);
   });
 
@@ -72,11 +72,11 @@ describe('GeneratorOptionsDecorator', () => {
       writing() {
         optionNames.forEach((key, i) => {
           expect(this.options[key]).toBe(defaults[i]);
-        })
+        });
       }
     };
 
-    TestGenerator = decorateGeneratorOptions(TestGenerator, 'test', options)
+    TestGenerator = decorateGeneratorOptions(TestGenerator, 'test', options);
     await helpers.run(TestGenerator);
   });
 
@@ -111,11 +111,11 @@ describe('GeneratorOptionsDecorator', () => {
       writing() {
         optionNames.forEach((key, i) => {
           expect(this.options[key]).toBe(values[i]);
-        })
+        });
       }
     };
 
-    TestGenerator = decorateGeneratorOptions(TestGenerator, 'test', options)
+    TestGenerator = decorateGeneratorOptions(TestGenerator, 'test', options);
     await helpers.run(TestGenerator)
       .withArguments([values[0]])
       .withOptions({

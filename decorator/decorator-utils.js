@@ -11,15 +11,15 @@ module.exports = {
     }
     return func;
   }
-}
+};
 
 const prependToFunction = (func, property, newFunction) => {
   const original = getDeepPrototypeProperty(func, property);
   func.prototype[property] = function (...params) {
     newFunction.bind(this)(...params);
     original && original.bind(this)(...params);
-  }
-}
+  };
+};
 
 const createExtendedConstructor = (func, newConstructor) => {
   NewFunction.prototype = func.prototype;
@@ -30,7 +30,7 @@ const createExtendedConstructor = (func, newConstructor) => {
     newConstructor.bind(instance)(...args);
     return instance;
   }
-}
+};
 
 const getDeepPrototypeProperty = (func, prop) => {
   let prototype = func.prototype;
@@ -40,7 +40,7 @@ const getDeepPrototypeProperty = (func, prop) => {
     prototype = prototype.__prop__;
   }
   return undefined;
-}
+};
 
 function instantiate(constructor, args) {
   const bind = Function.bind;

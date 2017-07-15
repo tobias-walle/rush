@@ -18,8 +18,9 @@
         "no-this-before-super": "error",
         "no-undef": "error",
         "no-unreachable": "error",
-        "no-unused-vars": "warn",
+        "no-unused-vars": "error",
         "constructor-super": "error",
-        "valid-typeof": "error"
+        "valid-typeof": "error",
+        "semi": "error"
     }
 }
