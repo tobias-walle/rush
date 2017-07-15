@@ -20,38 +20,10 @@ function getActionCreatorName(element, duckName) {
   return `${utils.fromLispToCamelCase(name)}Duck`;
 }
 
-module.exports = class extends Generator {
-  constructor(args, opts) {
-    super(args, opts);
-    pathUtils.setupDestinationOptions(this, generatorName);
-
-    this.argument('elements', {
-      type: String,
-      desc: 'What actions should the duck have (lowercase, separated by a space)? ' +
-      'For example "get get-all delete" will create the actions "app/<module>/GET", ' +
-      '"app/<module>/GET_ALL" and "app/<module>/DELETE" and the associated action creators and' +
-      ' reducers.',
-      default: ''
-    });
-  }
-
+const DuckGenerator = class extends Generator {
   default() {
-    // Elements
     const elements = this.options.elements;
-
-    const error = validateElements(elements);
-    if (error !== true) {
-      this.env.error(error);
-    }
-
-    if (elements === '') {
-      this.options.elements = [];
-    } else {
-      this.options.elements = elements.split(' ');
-    }
-
-    // Destination Path
-    pathUtils.updateDestinationOption(this, generatorName);
+    this.options.elements = elements === '' ? [] : elements.split(' ');
   }
 
   writing() {
@@ -92,3 +64,8 @@ module.exports = class extends Generator {
   }
 
 };
+
+const SubGenerator = require('../../decorator/sub-generator.decorator');
+const options = require('../../configuration/duck-options');
+const componentName = 'duck';
+module.exports = SubGenerator(DuckGenerator, componentName, options);
