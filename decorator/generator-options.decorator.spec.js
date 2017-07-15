@@ -1,4 +1,4 @@
-const SubGenerator = require('./sub-generator.decorator');
+const decorateGeneratorOptions = require('./generator-options.decorator');
 const Generator = require('yeoman-generator');
 const {
   GeneratorOptionCollection
@@ -7,16 +7,13 @@ const {
   GeneratorOption
 } = require('../models/generator-option');
 const helpers = require('yeoman-test');
-const {
-  buildSubGeneratorOptions
-} = require('../utils/build-sub-generator-options');
 
-describe('SubGeneratorDecorator', () => {
-  it('should work', async() => {
-    expect.assertions(3);
+describe('GeneratorOptionsDecorator', () => {
+  it('should work', async () => {
+    expect.assertions(2);
     const optionNames = ['test1', 'test2'];
     const values = ['123', '456'];
-    const options = buildSubGeneratorOptions('test', new GeneratorOptionCollection([
+    const options = new GeneratorOptionCollection([
       new GeneratorOption(optionNames[0], {
         type: 'argument',
         cliOptions: {
@@ -30,7 +27,7 @@ describe('SubGeneratorDecorator', () => {
           default: values[1],
         }
       }),
-    ]));
+    ]);
     class TestGenerator extends Generator {
       writing() {
         const optionKeys = Object.keys(this.options);
@@ -38,18 +35,9 @@ describe('SubGeneratorDecorator', () => {
           expect(optionKeys.includes(name)).toBeTruthy();
         }
       }
-
-      default() {
-        expect(this.options).toBeDefined();
-      }
     }
 
-    TestGenerator = SubGenerator(TestGenerator, 'test', options)
-    await helpers.run(TestGenerator)
-      .withOptions({
-        destination: '.',
-      })
-      .withArguments(['test-name'])
-    ;
+    TestGenerator = decorateGeneratorOptions(TestGenerator, 'test', options)
+    await helpers.run(TestGenerator);
   });
 });

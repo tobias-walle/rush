@@ -1,16 +1,13 @@
 const pathUtils = require('./../utils/path-utils');
 const {decorate} = require('./decorator-utils');
+const decorateGenerator = require('./generator-options.decorator');
 
-module.exports = function (func, generatorName, options) {
-  return decorate(func, {
+module.exports = (func, generatorName, options) => (
+  decorate(decorateGenerator(func, generatorName, options), {
     prepend: {
       default: function () {
-        options.validate(this, generatorName);
         pathUtils.updateDestinationOption(this, generatorName);
       }
-    },
-    constructor: function () {
-      options.applyOptions(this, generatorName);
     }
-  });
-}
+  })
+)
