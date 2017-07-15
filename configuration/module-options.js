@@ -23,6 +23,20 @@ const options = new GeneratorOptionCollection([
       }
     }
   }),
+  new GeneratorOption('component', {
+    cliOptions: {
+      type: Boolean,
+      default: true,
+      desc: 'Generate an component for this module'
+    }
+  }),
+  new GeneratorOption('duck', {
+    cliOptions: {
+      type: Boolean,
+      default: true,
+      desc: 'Generate a duck file for this module'
+    }
+  }),
 ]);
 
 module.exports = options;

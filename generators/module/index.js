@@ -3,27 +3,31 @@ const Generator = require('yeoman-generator');
 
 const ModuleGenerator = class extends Generator {
   initializing() {
-    const name = this.options.name;
+    const {
+      name,
+      component,
+      duck
+    } = this.options;
 
     // Setup destination
     const destination = this.destinationPath('src', 'app', 'modules', name);
 
     // Setup other Generators
-    this.composeWith(require.resolve('../component'),
-      {
+    if (component) {
+      this.composeWith(require.resolve('../component'), {
         arguments: [name],
         noBasePath: true,
         destination: destination,
         flat: true
-      }
-    );
-    this.composeWith(require.resolve('../duck'),
-      {
+      });
+    }
+    if (duck) {
+      this.composeWith(require.resolve('../duck'), {
         arguments: [name],
         moduleName: name,
         destination: destination
-      }
-    );
+      });
+    }
   }
 };
 
