@@ -12,7 +12,6 @@ class ContainerGenerator extends Generator {
   default() {
     const componentName = this.options.componentName || this.options.name;
     this.options.componentName = componentName || this.options.name;
-    console.log('NAME', componentName);
   }
 
   writing() {

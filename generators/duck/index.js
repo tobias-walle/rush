@@ -23,7 +23,7 @@ const DuckGenerator = class extends Generator {
     const duckTemplate = this.fs.read(this.templatePath('duck.ts'));
     const stateClass = `${utils.fromLispToUpperCamelCase(name)}State`;
     const reducer = `${utils.fromLispToCamelCase(name)}Reducer`;
-    const epic = `$${utils.fromLispToCamelCase(name)}Epic`;
+    const epic = `${utils.fromLispToCamelCase(name)}Epic`;
     const ducks = elements.map(element => {
       const action = `app/${name}/${utils.fromLispToUpperCase(element)}`;
       const actionCreator = getActionCreatorName(element, name);
