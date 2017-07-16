@@ -25,6 +25,7 @@
     "build:api:prod": "node ./scripts/build.js production --target api",
     "build:client:dev": "node ./scripts/build.js development --target client",
     "build:client:prod": "node ./scripts/build.js production --target client",
+    "analyze": "ANALYZE=true npm run --silent build:client:prod",
     "test": "npm run --silent test:dev",
     "test:dev": "karma start --single-run",
     "test:prod": "NODE_ENV=production karma start --single-run",

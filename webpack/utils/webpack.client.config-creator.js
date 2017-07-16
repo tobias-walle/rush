@@ -2,9 +2,9 @@ const webpack = require('webpack');
 const path = require('path');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const createRules = require('./rules.config-creator');
+const createResolve = require('./resolve.config-creator');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const {CheckerPlugin} = require('awesome-typescript-loader');
-const {TsConfigPathsPlugin} = require('awesome-typescript-loader');
 const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 
 const rootDir = path.resolve(__dirname, '..', '..');
@@ -26,14 +26,7 @@ module.exports = (isProduction) => {
     devtool: 'source-maps',
     cache: true,
 
-    resolve: {
-      extensions: [
-        '.ts', '.tsx', '.js', '.jsx'
-      ],
-      plugins: [
-        new TsConfigPathsPlugin()
-      ]
-    },
+    resolve: createResolve(isProduction),
 
     module: {
       rules: createRules(isProduction, 'tsconfig.client.json'),

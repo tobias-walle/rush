@@ -2,7 +2,9 @@ import * as sourceMapSupport from 'source-map-support';
 sourceMapSupport.install();
 import '@src/polyfills';
 import { loggerFactory } from '../logging';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/interval';
+import 'rxjs/add/operator/filter';
 
 const loggerHmr = loggerFactory.getLogger('server.api.HMR');
 

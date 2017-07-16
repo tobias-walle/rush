@@ -3,11 +3,9 @@ const fs = require('fs');
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const createRules = require('./rules.config-creator');
+const createResolve = require('./resolve.config-creator');
 const {
   CheckerPlugin
-} = require('awesome-typescript-loader');
-const {
-  TsConfigPathsPlugin
 } = require('awesome-typescript-loader');
 
 let rootDir = path.resolve(__dirname, '..', '..');
@@ -26,14 +24,7 @@ module.exports = (isProduction) => {
     devtool: 'inline-source-map',
     cache: true,
 
-    resolve: {
-      extensions: [
-        '.ts', '.tsx', '.js', '.jsx'
-      ],
-      plugins: [
-        new TsConfigPathsPlugin(),
-      ]
-    },
+    resolve: createResolve(isProduction),
 
     module: {
       rules: createRules(false, 'tsconfig.server.json'), // Always create rules for development, because source maps should always available on the server
