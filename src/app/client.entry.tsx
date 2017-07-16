@@ -1,5 +1,5 @@
 import '../polyfills';
-import 'rxjs';
+import 'rxjs/Observable';
 import * as React from 'react';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { render } from 'react-dom';

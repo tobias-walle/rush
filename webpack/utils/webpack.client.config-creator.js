@@ -5,6 +5,7 @@ const createRules = require('./rules.config-creator');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const {CheckerPlugin} = require('awesome-typescript-loader');
 const {TsConfigPathsPlugin} = require('awesome-typescript-loader');
+const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 
 const rootDir = path.resolve(__dirname, '..', '..');
 
@@ -53,6 +54,7 @@ module.exports = (isProduction) => {
           return module.context && module.context.indexOf('node_modules') !== -1;
         }
       }),
+      ...(process.env.ANALYZE ? [new BundleAnalyzerPlugin()] : []), // Activate the bundle anlyzer with the ANALYZE environment variable
       new CheckerPlugin(),
       ...(isProduction ? [
         new ManifestPlugin(),
@@ -74,7 +76,7 @@ module.exports = (isProduction) => {
         new webpack.HotModuleReplacementPlugin(),
         new webpack.LoaderOptionsPlugin({
           debug: true
-        })
+        }),
       ])
     ],
   }
