@@ -1,7 +1,14 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "./dist/spec"
+    "outDir": "./dist/spec",
+    "module": "commonjs",
+    "skipLibCheck": true,
+    "sourceMap": false,
+    "removeComments": false,
+    "noEmitHelpers": false,
+    "importHelpers": false,
+    "pretty": true
   },
   "include": [
     "./src/**/*.ts",

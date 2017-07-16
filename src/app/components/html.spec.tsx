@@ -20,13 +20,6 @@ describe('Html', () => {
     const inputText = 'This is a test string';
     const wrapper = shallow(<Html store={store} component={<p>{inputText}</p>}/>);
 
-    expect(wrapper.html().indexOf(inputText)).toBeGreaterThan(-1, 'Input Component is not in element.');
-  });
-
-  it('should render styles input', () => {
-    const inputStyles = ['.test { color: red };'];
-    const wrapper = shallow(<Html store={store} styles={inputStyles}/>);
-
-    expect(wrapper.html().indexOf(inputStyles[0])).toBeGreaterThan(-1, 'Styles not in element');
+    expect(wrapper.html().includes(inputText)).toBeTruthy();
   });
 });
