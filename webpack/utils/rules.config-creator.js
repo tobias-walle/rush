@@ -32,9 +32,6 @@ module.exports = (isProduction, tsConfigFileName) => {
       test: /\.(png|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
       use: {
         loader: 'url-loader',
-        options: {
-          limit: 8192
-        }
       }
     },
     {
