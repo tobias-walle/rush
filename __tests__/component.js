@@ -14,12 +14,14 @@ describe('generator-trb:component', () => {
       })
       .withArguments([COMPONENT_NAME]);
 
+    const COMPONENT_STYLES_FILE_NAME = path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.scss`);
     const COMPONENT_FILE_NAME = path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.tsx`);
     const COMPONENT_SPEC_FILE_NAME = path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.spec.tsx`);
-    const COMPONENT_STYLES_FILE_NAME = path.join(COMPONENT_NAME, `${COMPONENT_NAME}.component.tsx`);
     assert.file([
       COMPONENT_FILE_NAME,
       COMPONENT_SPEC_FILE_NAME,
+    ]);
+    assert.noFile([
       COMPONENT_STYLES_FILE_NAME
     ]);
 
@@ -27,7 +29,6 @@ describe('generator-trb:component', () => {
       [COMPONENT_FILE_NAME, new RegExp(`.*${utils.fromLispToUpperCamelCase(COMPONENT_NAME)}Component.*`)],
       [COMPONENT_FILE_NAME, new RegExp(`.*${utils.fromLispToUpperCamelCase(COMPONENT_NAME)}ComponentState.*`)],
       [COMPONENT_FILE_NAME, new RegExp(`.*${utils.fromLispToUpperCamelCase(COMPONENT_NAME)}ComponentProps.*`)],
-      [COMPONENT_SPEC_FILE_NAME, new RegExp(`.*${utils.fromLispToUpperCamelCase(COMPONENT_NAME)}Component.*`)]
     ]);
   });
 
@@ -41,9 +42,11 @@ describe('generator-trb:component', () => {
         flat: true
       });
     assert.file([
-      path.join(`${COMPONENT_NAME}.component.scss`),
       path.join(`${COMPONENT_NAME}.component.tsx`),
       path.join(`${COMPONENT_NAME}.component.spec.tsx`)
+    ]);
+    assert.noFile([
+      path.join(`${COMPONENT_NAME}.component.scss`),
     ]);
   });
 });

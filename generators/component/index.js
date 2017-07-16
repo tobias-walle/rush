@@ -23,13 +23,6 @@ class ComponentGenerator extends Generator {
       path.join(destination, `${name}.component.spec.tsx`),
       {name, upperCamelCaseName}
     );
-    if (!stateless) {
-      // Stateless components don't have styles
-      this.fs.copy(
-        this.templatePath('template.component.scss'),
-        path.join(destination, `${name}.component.scss`)
-      );
-    }
   }
 };
 

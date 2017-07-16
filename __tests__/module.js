@@ -19,7 +19,6 @@ describe('generator-trb:module', () => {
       MODULE_PATH,
       COMPONENT_PATH,
       COMPONENT_SPEC_PATH,
-      COMPONENT_STYLES_PATH,
       DUCK_PATH,
     ]);
   });
@@ -53,10 +52,10 @@ describe('generator-trb:module', () => {
       MODULE_PATH,
       COMPONENT_PATH,
       COMPONENT_SPEC_PATH,
-      COMPONENT_STYLES_PATH,
     ]);
     assert.noFile([
-      DUCK_PATH
+      DUCK_PATH,
+      COMPONENT_STYLES_PATH,
     ]);
   });
 });
