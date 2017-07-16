@@ -16,8 +16,8 @@ before_script:
   - sh -e /etc/init.d/xvfb start
 
 script:
-  - npm run lint
-  - ./node_modules/.bin/karma start --browsers Firefox --single-run
-  - NODE_ENV=production ./node_modules/.bin/karma start --browsers Firefox --single-run
-  - npm run build:prod
+  - yarn lint
+  - yarn test:dev
+  - NODE_ENV=production yarn test:prod
+  - yarn build:prod
 
