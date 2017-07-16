@@ -1,72 +1,76 @@
-require('source-map-support').install();
-import '../polyfills';
+import * as sourceMapSupport from 'source-map-support';
+sourceMapSupport.install();
+import '@src/polyfills';
 import { Observable } from 'rxjs';
-import { UIServer, UIServerOptions } from './server/ui-server';
-import { loggerFactory } from '../logging';
+import { UIServer, UIServerOptions } from '@app/server/ui-server';
+import { loggerFactory } from '@src/logging';
+import * as config from '@src/config';
 
 const loggerHmr = loggerFactory.getLogger('server.HMR');
 
 // Start Server
 let server: UIServer;
 let options: UIServerOptions;
-let config = require('./../config');
-const updateOptions = () => {
-  config = require('./../config');
+const updateOptions = async () => {
+  const { HOST, PORT, WEBPACK_DEV_HOST, WEBPACK_DEV_PORT, API_HOST, API_PORT } = await import('@src/config');
   options = {
-    host: config.HOST,
-    port: config.PORT,
-    webpackDevHost: config.WEBPACK_DEV_HOST,
-    webpackDevPort: config.WEBPACK_DEV_PORT,
-    apiHost: config.API_HOST,
-    apiPort: config.API_PORT,
+    host: HOST,
+    port: PORT,
+    webpackDevHost: WEBPACK_DEV_HOST,
+    webpackDevPort: WEBPACK_DEV_PORT,
+    apiHost: API_HOST,
+    apiPort: API_PORT,
   };
 };
-updateOptions();
-server = new UIServer(options);
-if (config.DEVELOPMENT) {
-  server.startWebpackDevServer();
-}
 
-server.start();
+(async () => {
 
-// -- HOT RELOAD SETUP --
-if (config.DEVELOPMENT && module && module['hot']) {
-  const hot = module['hot'];
+  await updateOptions();
+  server = new UIServer(options);
+  if (config.DEVELOPMENT) {
+    server.startWebpackDevServer();
+  }
 
-  // Check for changes in backend server
-  loggerHmr.debug('Hot Module Replacement is activated');
-  hot.accept([
-    require.resolve('../polyfills'),
-    require.resolve('./server/ui-server.tsx'),
-    require.resolve('../config')
-  ], () => {
-    loggerHmr.debug('Reload Backend Server');
-    try {
-      // Create a new server
-      updateOptions();
-      const NewUIServer = require('./server/ui-server').UIServer;
-      const newServer = new NewUIServer(options);
+  server.start();
 
-      // Stop old server
-      server.stop().subscribe(() => {
-        // Copy webpack server to the new server
-        newServer.webpackDevServer = server.webpackDevServer;
+  // -- HOT RELOAD SETUP --
+  if (config.DEVELOPMENT && module && module['hot']) {
+    const hot = module['hot'];
 
-        // Set new server as the primary server
-        server = newServer;
+    // Check for changes in backend server
+    loggerHmr.debug('Hot Module Replacement is activated');
+    hot.accept([
+      require.resolve('@src/polyfills'),
+      require.resolve('@app/server/ui-server.tsx'),
+      require.resolve('@src/config')
+    ], async () => {
+      loggerHmr.debug('Reload Backend Server');
+      try {
+        // Create a new server
+        updateOptions();
+        const { UIServer: NewUIServer } = await import('@app/server/ui-server');
+        const newServer = new NewUIServer(options);
 
-        // Start server again
-        server.start();
-      });
-    } catch (err) {
-      loggerHmr.error('Hot Reload failed:', err);
-    }
-  });
+        // Stop old server
+        server.stop().subscribe(() => {
+          // Copy webpack server to the new server
+          newServer.webpackDevServer = server.webpackDevServer;
 
-  // Check for changes
-  Observable.interval(1000)
-    .filter(() => hot.status() === 'idle')
-    .subscribe(() => {
+          // Set new server as the primary server
+          server = newServer;
+
+          // Start server again
+          server.start();
+        });
+      } catch (err) {
+        loggerHmr.error('Hot Reload failed:', err);
+      }
+    });
+
+    // Check for changes
+    Observable.interval(1000)
+      .filter(() => hot.status() === 'idle')
+      .subscribe(() => {
         try {
           hot.check({
             ignoreDeclined: true,
@@ -79,4 +83,5 @@ if (config.DEVELOPMENT && module && module['hot']) {
         }
       },
     );
-}
+  }
+})();

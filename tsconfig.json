@@ -21,7 +21,7 @@
       "@modules/*": [ "app/modules/*" ],
       "@api/*": [ "api/*" ]
     },
-    "module": "es2015",
+    "module": "esnext",
     "target": "es5",
     "moduleResolution": "node",
     "jsx": "react",
@@ -31,6 +31,7 @@
     "sourceMap": true,
     "removeComments": true,
     "noEmitHelpers": true,
+    "importHelpers": true,
     "pretty": true
   },
   "awesomeTypescriptLoaderOptions": {

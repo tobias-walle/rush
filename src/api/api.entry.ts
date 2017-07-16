@@ -1,17 +1,18 @@
-import '../polyfills';
+import * as sourceMapSupport from 'source-map-support';
+sourceMapSupport.install();
+import '@src/polyfills';
 import { loggerFactory } from '../logging';
 import { Observable } from 'rxjs';
-require('source-map-support').install();
 
 const loggerHmr = loggerFactory.getLogger('server.api.HMR');
 
 let apiServer;
-const startServer = () => {
-  const config = require('../config');
-  const NewApiServer = require('./server/api-server').ApiServer;
+const startServer = async () => {
+  const {API_HOST, API_PORT} = await import('@src/config');
+  const {ApiServer: NewApiServer} = await import('@api/server/api-server');
 
   const start = () => {
-    apiServer = new NewApiServer(config.API_HOST, config.API_PORT);
+    apiServer = new NewApiServer(API_HOST, API_PORT);
     apiServer.start();
   };
 
@@ -31,11 +32,11 @@ if (module['hot']) {
   loggerHmr.debug('Hot Module Replacement is activated');
   const hot = module['hot'];
   hot.accept([
-    require.resolve('../config'),
-    require.resolve('./server/api-server'),
-  ], () => {
+    require.resolve('@src/config'),
+    require.resolve('@api/server/api-server'),
+  ], async () => {
     loggerHmr.debug('Reload Api Server');
-    startServer();
+    await startServer();
   });
 
   // Check for changes

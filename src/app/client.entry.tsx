@@ -13,11 +13,11 @@ import { DEVELOPMENT } from '../config';
 // Load initial state
 let store: any;
 const history: History = createBrowserHistory();
-const setupStore = (reload = false) => {
+const setupStore = async (reload = false) => {
   // Imports
   const initialState = window['__data'];
-  const reducer = require('./modules/root').reducer;
-  const getStoreMiddleware = require('./utils/redux-helper').getStoreMiddleware;
+  const { reducer } = await import('./modules/root');
+  const { getStoreMiddleware } = await import('./utils/redux-helper');
 
   let middleware = getStoreMiddleware(history);
   if (DEVELOPMENT) {
@@ -31,12 +31,11 @@ const setupStore = (reload = false) => {
     store = createStore(reducer, initialState, middleware);
   }
 };
-setupStore();
 
 // Render
-const renderApp = () => {
-  const {Entry} = require('./modules/root');
-  const {ClientWrapper} = require('./client/client-wrapper');
+const renderApp = async () => {
+  const { Entry } = await import('./modules/root');
+  const { ClientWrapper } = await import('./client/client-wrapper');
   render(
     <AppContainer>
       <WithStylesContext onInsertCss={styles => styles._insertCss()}>
@@ -44,23 +43,29 @@ const renderApp = () => {
           store={store}
           history={history}
         >
-          <Entry/>
+          <Entry />
         </ClientWrapper>
       </WithStylesContext>
     </AppContainer>, document.getElementById('container'),
   );
 };
-renderApp();
 
-if (module['hot']) {
-  module['hot'].accept(['./client/client-wrapper.tsx'], () => {
-    renderApp();
-  });
+(async () => {
+  await setupStore();
+  await renderApp();
 
-  module['hot'].accept(['./modules/root.ts', './utils/redux-helper.ts'], () => {
-    setupStore(true);
-    renderApp();
-  });
+  if (module['hot']) {
+    module['hot'].accept(['./client/client-wrapper.tsx'], async () => {
+      await renderApp();
+    });
 
-  module['hot'].accept();
-}
+    module['hot'].accept(['./modules/root.ts', './utils/redux-helper.ts'], async () => {
+      await Promise.all([
+        setupStore(true),
+        renderApp()
+      ]);
+    });
+
+    module['hot'].accept();
+  }
+})();
