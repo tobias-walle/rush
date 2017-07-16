@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { WithStyles } from 'isomorphic-style-loader-utils';
 import { NotFound } from './not-found';
 import { Route, Switch } from 'react-router';
+import styled from 'styled-components';
+import { loadGlobalStyles } from '../global-styles';
+loadGlobalStyles();
 
 export interface AppProps {
 }

@@ -26,7 +26,8 @@
     "no-var-keyword": true,
     "no-unused-expression": [
       true,
-      "allow-fast-null-checks"
+      "allow-fast-null-checks",
+      "allow-tagged-template"
     ],
     "radix": true,
     "typeof-compare": true,

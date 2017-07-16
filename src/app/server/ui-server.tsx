@@ -10,7 +10,6 @@ import { Server } from 'http';
 import { renderToString } from 'react-router-server';
 import { createStore } from 'redux';
 import createMemoryHistory from 'history/createMemoryHistory';
-import { WithStylesContext } from 'isomorphic-style-loader-utils';
 
 import { Html } from '@app/components/html';
 import { Entry } from '@modules/root';
@@ -19,6 +18,7 @@ import { loggerFactory } from '@src/logging';
 import { DEVELOPMENT, DISABLE_SERVER_SIDE_RENDERING, DISABLE_SERVER_SIDE_STYLE_RENDERING } from '@src/config';
 import { ServerWrapper } from './server-wrapper';
 import { WebServer } from './webpack-dev-server';
+import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
 
 const STATIC_PATH = '/static';
 const FAVICON_PATH = '/favicon.ico';
@@ -175,13 +175,10 @@ export class UIServer {
             res.status(500).send(err.toString());
           });
       } else {
-        // Load styles
-        const css: string[] = [];
-        // Wrap app with style context
-        // Send the result
         const context: any = {};
+        const sheet = new ServerStyleSheet();
         const component = (
-          <WithStylesContext onInsertCss={styles => css.push(styles._getCss())}>
+          <StyleSheetManager sheet={sheet['instance']}>
             <ServerWrapper
               store={store}
               url={req.url}
@@ -189,14 +186,15 @@ export class UIServer {
             >
               <Entry />
             </ServerWrapper>
-          </WithStylesContext>
+          </StyleSheetManager>
         );
+        const styles: JSX.Element[] =  sheet.getStyleElement();
         renderToString(
           <Html
             store={store}
             scripts={scriptPaths}
             component={component}
-            styles={!DISABLE_SERVER_SIDE_STYLE_RENDERING ? css : []}
+            styles={DISABLE_SERVER_SIDE_RENDERING ? null : styles}
           />,
         )
           .then(({ html }) => {

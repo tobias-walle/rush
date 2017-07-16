@@ -4,7 +4,6 @@ import * as React from 'react';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { render } from 'react-dom';
 import { createStore } from 'redux';
-import { WithStylesContext } from 'isomorphic-style-loader-utils';
 import { AppContainer } from 'react-hot-loader';
 import { History } from 'history';
 import createBrowserHistory from 'history/createBrowserHistory';
@@ -38,14 +37,12 @@ const renderApp = async () => {
   const { ClientWrapper } = await import('./client/client-wrapper');
   render(
     <AppContainer>
-      <WithStylesContext onInsertCss={styles => styles._insertCss()}>
-        <ClientWrapper
-          store={store}
-          history={history}
-        >
-          <Entry />
-        </ClientWrapper>
-      </WithStylesContext>
+      <ClientWrapper
+        store={store}
+        history={history}
+      >
+        <Entry />
+      </ClientWrapper>
     </AppContainer>, document.getElementById('container'),
   );
 };

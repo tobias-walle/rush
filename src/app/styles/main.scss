@@ -1,9 +1,0 @@
-@import "fonts-init";
-
-@import "config/module";
-
-:global {
-  @import "vendors";
-  @import "global";
-}
-

@@ -6,18 +6,17 @@ export class HtmlProps {
   store: any;
   scripts?: string[];
   component?: JSX.Element;
-  styles?: string[];
+  styles?: JSX.Element[];
 }
 
 export const Html = ({component, store, scripts = [], styles = []}: HtmlProps) => {
   const content: string = component ? ReactDOM.renderToString(component) : '';
 
   let head: JSX.Element;
-  const stylesElement = <style type='text/css' dangerouslySetInnerHTML={{__html: styles.join('  ')}}/>;
   head = (
     <head>
       <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=no'/>
-      {stylesElement}
+      {styles}
     </head>
   );
 
