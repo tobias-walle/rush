@@ -6,14 +6,14 @@ const ConnectedRouter = require('react-router-redux').ConnectedRouter;
 const Provider = require('react-redux').Provider;
 const mainStyles = require('../styles/main.scss');
 
-export interface ClientWrapperComponentProps {
+export interface ClientWrapperProps {
   store: Store<any>;
   history: History;
   children?: any;
 }
 
 @WithStyles(mainStyles)
-export class ClientWrapperComponent extends React.Component<ClientWrapperComponentProps, {}> {
+export class ClientWrapper extends React.Component<ClientWrapperProps, {}> {
   render() {
     const {store, history} = this.props;
     return (

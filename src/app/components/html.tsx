@@ -9,7 +9,7 @@ export class HtmlProps {
   styles?: string[];
 }
 
-export const HtmlComponent = ({component, store, scripts = [], styles = []}: HtmlProps) => {
+export const Html = ({component, store, scripts = [], styles = []}: HtmlProps) => {
   const content: string = component ? ReactDOM.renderToString(component) : '';
 
   let head: JSX.Element;

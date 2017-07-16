@@ -1,9 +1,12 @@
 import * as React from 'react';
 
-export interface NotFoundComponentProps {
+export interface NotFoundProps {
 }
 
-export class NotFoundComponent extends React.Component<NotFoundComponentProps, {}> {
+export interface NotFoundState {
+}
+
+export class NotFound extends React.Component<NotFoundProps, NotFoundState> {
   public render(): JSX.Element {
     return (
       <div>

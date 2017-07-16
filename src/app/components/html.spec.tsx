@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { Store } from 'react-redux';
 import { shallow } from 'enzyme';
-import { HtmlComponent } from './html.component';
+import { Html } from './html';
 import configureStore from 'redux-mock-store';
 const mockStore = configureStore();
 
-describe('HtmlComponent', () => {
+describe('Html', () => {
   let store: Store<any>;
 
   beforeEach(() => {
@@ -13,19 +13,19 @@ describe('HtmlComponent', () => {
   });
 
   it('should render', () => {
-    expect(shallow(<HtmlComponent store={store}/>).exists()).toBeTruthy();
+    expect(shallow(<Html store={store}/>).exists()).toBeTruthy();
   });
 
   it('should render component input', () => {
-    const inputComponentText = 'This is a test string';
-    const wrapper = shallow(<HtmlComponent store={store} component={<p>{inputComponentText}</p>}/>);
+    const inputText = 'This is a test string';
+    const wrapper = shallow(<Html store={store} component={<p>{inputText}</p>}/>);
 
-    expect(wrapper.html().indexOf(inputComponentText)).toBeGreaterThan(-1, 'Input Component is not in element.');
+    expect(wrapper.html().indexOf(inputText)).toBeGreaterThan(-1, 'Input Component is not in element.');
   });
 
   it('should render styles input', () => {
     const inputStyles = ['.test { color: red };'];
-    const wrapper = shallow(<HtmlComponent store={store} styles={inputStyles}/>);
+    const wrapper = shallow(<Html store={store} styles={inputStyles}/>);
 
     expect(wrapper.html().indexOf(inputStyles[0])).toBeGreaterThan(-1, 'Styles not in element');
   });

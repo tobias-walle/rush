@@ -1,23 +1,24 @@
 import * as http from 'http';
 import * as path from 'path';
 import * as React from 'react';
-import { Server } from 'http';
-import { WebServer } from './webpack-dev-server';
-import { createStore } from 'redux';
-import { WithStylesContext } from 'isomorphic-style-loader-utils';
-import { DEVELOPMENT, DISABLE_SERVER_SIDE_RENDERING, DISABLE_SERVER_SIDE_STYLE_RENDERING } from '../../config';
-import { HtmlComponent } from '../components/html.component';
-import { EntryComponent } from '../modules/root';
-import { ServerWrapperComponent } from './server-app-wrapper.component';
-import { renderToString } from 'react-router-server';
-import { getStoreMiddleware } from '../utils/redux-helper';
 import * as fs from 'fs';
 import * as morgan from 'morgan';
 import * as express from 'express';
 import * as enableDestroy from 'server-destroy';
-import { loggerFactory } from '../../logging';
 import { Observable } from 'rxjs';
+import { Server } from 'http';
+import { renderToString } from 'react-router-server';
+import { createStore } from 'redux';
 import createMemoryHistory from 'history/createMemoryHistory';
+import { WithStylesContext } from 'isomorphic-style-loader-utils';
+
+import { Html } from '@app/components/html';
+import { Entry } from '@modules/root';
+import { getStoreMiddleware } from '@app/utils/redux-helper';
+import { loggerFactory } from '@src/logging';
+import { DEVELOPMENT, DISABLE_SERVER_SIDE_RENDERING, DISABLE_SERVER_SIDE_STYLE_RENDERING } from '@src/config';
+import { ServerWrapper } from './server-wrapper';
+import { WebServer } from './webpack-dev-server';
 
 const STATIC_PATH = '/static';
 const FAVICON_PATH = '/favicon.ico';
@@ -33,17 +34,16 @@ export class UIServerOptions {
 }
 
 export class UIServer {
-  private rootDir = path.resolve();
-  private publicPath = path.resolve(this.rootDir + '/dist/client');
-
-  private app: any;
-  private httpProxy: any;
-
   options: UIServerOptions;
 
   httpServer: Server;
   webpackDevServer: any;
 
+  private rootDir = path.resolve();
+  private publicPath = path.resolve(this.rootDir + '/dist/client');
+
+  private app: any;
+  private httpProxy: any;
   constructor(options: UIServerOptions) {
     this.setOptions(options);
   }
@@ -165,7 +165,7 @@ export class UIServer {
       if (DISABLE_SERVER_SIDE_RENDERING) {
         // Just provider Html without SSR
         renderToString(
-          <HtmlComponent scripts={scriptPaths} store={store} />,
+          <Html scripts={scriptPaths} store={store} />,
         )
           .then(({ html }) => {
             res.status(200).send(html);
@@ -182,17 +182,17 @@ export class UIServer {
         const context: any = {};
         const component = (
           <WithStylesContext onInsertCss={styles => css.push(styles._getCss())}>
-            <ServerWrapperComponent
+            <ServerWrapper
               store={store}
               url={req.url}
               context={context}
             >
-              <EntryComponent />
-            </ServerWrapperComponent>
+              <Entry />
+            </ServerWrapper>
           </WithStylesContext>
         );
         renderToString(
-          <HtmlComponent
+          <Html
             store={store}
             scripts={scriptPaths}
             component={component}

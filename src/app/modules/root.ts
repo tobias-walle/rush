@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 
 import { routerReducer, RouterState } from 'react-router-redux';
 import { combineEpics } from 'redux-observable';
-import { AppComponent } from './app/app.component';
+import { App } from '@modules/app/components/app';
 
 // Combine all modules to the global state interface
 export interface GlobalState {
@@ -20,4 +20,4 @@ export const epic = combineEpics(
 );
 
 // The entry component
-export const EntryComponent = AppComponent;
+export const Entry = App;

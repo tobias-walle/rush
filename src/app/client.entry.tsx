@@ -35,17 +35,17 @@ setupStore();
 
 // Render
 const renderApp = () => {
-  const EntryComponent = require('./modules/root').EntryComponent;
-  const ClientWrapperComponent = require('./client/client-wrapper.component').ClientWrapperComponent;
+  const {Entry} = require('./modules/root');
+  const {ClientWrapper} = require('./client/client-wrapper');
   render(
     <AppContainer>
       <WithStylesContext onInsertCss={styles => styles._insertCss()}>
-        <ClientWrapperComponent
+        <ClientWrapper
           store={store}
           history={history}
         >
-          <EntryComponent/>
-        </ClientWrapperComponent>
+          <Entry/>
+        </ClientWrapper>
       </WithStylesContext>
     </AppContainer>, document.getElementById('container'),
   );
@@ -53,7 +53,7 @@ const renderApp = () => {
 renderApp();
 
 if (module['hot']) {
-  module['hot'].accept(['./client/client-wrapper.component.tsx'], () => {
+  module['hot'].accept(['./client/client-wrapper.tsx'], () => {
     renderApp();
   });
 

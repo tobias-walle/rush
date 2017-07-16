@@ -5,15 +5,18 @@ import { WithStyles } from 'isomorphic-style-loader-utils';
 const Provider = require('react-redux').Provider;
 const mainStyles = require('../styles/main.scss');
 
-export interface ServerWrapperComponentProps {
+export interface ServerWrapperProps {
   store: Store<any>;
   url: string;
   context: any;
   children?: any;
 }
 
+export interface ServerWrapperState {
+}
+
 @WithStyles(mainStyles)
-export class ServerWrapperComponent extends React.Component<ServerWrapperComponentProps, {}> {
+export class ServerWrapper extends React.Component<ServerWrapperProps, ServerWrapperState> {
   render() {
     const {store, url} = this.props;
     const context = this.props.context || {};

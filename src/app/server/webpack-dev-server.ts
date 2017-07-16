@@ -6,12 +6,12 @@ import { loggerFactory } from '../../logging';
 const logger = loggerFactory.getLogger('server.webpack');
 
 export class WebServer {
-  private server: Server;
-  private bundler: any;
-
   readonly url: string;
   readonly host: string;
   readonly port: number;
+
+  private server: Server;
+  private bundler: any;
 
   constructor(host: string, port: number) {
     const url = this.url = `http://${host}:${port}`;
