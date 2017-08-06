@@ -4,6 +4,7 @@
     "outDir": "./dist/client"
   },
   "files": [
-    "./src/app/client.entry.tsx"
+    "custom-types/index.d.ts",
+    "src/app/client.entry.tsx"
   ]
 }

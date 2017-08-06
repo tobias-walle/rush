@@ -8,13 +8,14 @@ import { AppContainer } from 'react-hot-loader';
 import { History } from 'history';
 import createBrowserHistory from 'history/createBrowserHistory';
 import { DEVELOPMENT } from '../config';
+import { GlobalState } from '@src/app/modules/root';
 
 // Load initial state
 let store: any;
 const history: History = createBrowserHistory();
 const setupStore = async (reload = false) => {
   // Imports
-  const initialState = window['__data'];
+  const initialState: GlobalState = window.__data;
   const { reducer } = await import('./modules/root');
   const { getStoreMiddleware } = await import('./utils/redux-helper');
 
@@ -51,18 +52,18 @@ const renderApp = async () => {
   await setupStore();
   await renderApp();
 
-  if (module['hot']) {
-    module['hot'].accept(['./client/client-wrapper.tsx'], async () => {
+  if (module.hot) {
+    module.hot.accept(['./client/client-wrapper.tsx'], async () => {
       await renderApp();
     });
 
-    module['hot'].accept(['./modules/root.ts', './utils/redux-helper.ts'], async () => {
+    module.hot.accept(['./modules/root.ts', './utils/redux-helper.ts'], async () => {
       await Promise.all([
         setupStore(true),
         renderApp()
       ]);
     });
 
-    module['hot'].accept();
+    module.hot.accept();
   }
 })();

@@ -33,6 +33,13 @@
   dependencies:
     "@types/babel-types" "*"
 
+"@types/body-parser@^1.16.4":
+  version "1.16.4"
+  resolved "https://registry.yarnpkg.com/@types/body-parser/-/body-parser-1.16.4.tgz#96f3660e6f88a677fee7250f5a5e6d6bda3c76bb"
+  dependencies:
+    "@types/express" "*"
+    "@types/node" "*"
+
 "@types/cheerio@*":
   version "0.22.1"
   resolved "https://registry.yarnpkg.com/@types/cheerio/-/cheerio-0.22.1.tgz#740c4cd8c4d3f3074f83b9ab62e711eac2c764ce"
@@ -93,6 +100,12 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-hot-loader@^3.0.3":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@types/react-hot-loader/-/react-hot-loader-3.0.3.tgz#ee02b1999c22713418e198cc3eb090b7e76ce592"
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-redux@^4.4.45":
   version "4.4.45"
   resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-4.4.45.tgz#afad851d8592119225aa6bcc402c7f6b9c7e4106"
@@ -126,6 +139,13 @@
 "@types/react@*", "@types/react@15.0.4":
   version "15.0.4"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-15.0.4.tgz#97aedbba00448a137331aa8450232124aeb8d426"
+
+"@types/redux-mock-store@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@types/redux-mock-store/-/redux-mock-store-0.0.9.tgz#0081c362a249776e7016c79c8949923c08c5d14d"
+  dependencies:
+    redux "^3.6.0"
+    redux-mock-store "^1.2.3"
 
 "@types/selenium-webdriver@^2.53.35", "@types/selenium-webdriver@~2.53.39":
   version "2.53.42"

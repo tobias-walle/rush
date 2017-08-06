@@ -1,12 +1,12 @@
 import { loggerFactory } from '../../logging';
 import * as express from 'express';
 import * as http from 'http';
-import * as enableDestroy from 'server-destroy';
 import { ApiRouter } from './api-router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/publishReplay';
+import enableDestroy = require('server-destroy');
 
 const logger = loggerFactory.getLogger('server.api');
 

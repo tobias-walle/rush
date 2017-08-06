@@ -4,6 +4,7 @@
     "outDir": "./dist/server"
   },
   "files": [
+    "custom-types/index.d.ts",
     "./src/app/server.entry.tsx"
   ]
 }

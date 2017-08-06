@@ -4,6 +4,7 @@
     "outDir": "./dist/api"
   },
   "files": [
+    "custom-types/index.d.ts",
     "./src/api/api.entry.tsx"
   ]
 }

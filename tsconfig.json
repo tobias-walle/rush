@@ -25,6 +25,8 @@
     "target": "es5",
     "moduleResolution": "node",
     "jsx": "react",
+    "strict": true,
+    "noImplicitReturns": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,

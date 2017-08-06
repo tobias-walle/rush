@@ -11,8 +11,9 @@
     "pretty": true
   },
   "include": [
-    "./src/**/*.ts",
-    "./src/**/*.tsx"
+    "custom-types/**/*",
+    "src/**/*.ts",
+    "src/**/*.tsx"
   ],
   "exclude": [
     "dist",

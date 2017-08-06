@@ -4,13 +4,11 @@ import * as React from 'react';
 import * as fs from 'fs';
 import * as morgan from 'morgan';
 import * as express from 'express';
-import * as enableDestroy from 'server-destroy';
 import { Observable } from 'rxjs';
 import { Server } from 'http';
 import { renderToString } from 'react-router-server';
 import { createStore } from 'redux';
 import createMemoryHistory from 'history/createMemoryHistory';
-
 import { Html } from '@app/components/html';
 import { Entry } from '@modules/root';
 import { getStoreMiddleware } from '@app/utils/redux-helper';
@@ -19,6 +17,7 @@ import { DEVELOPMENT, DISABLE_SERVER_SIDE_RENDERING, DISABLE_SERVER_SIDE_STYLE_R
 import { ServerWrapper } from './server-wrapper';
 import { WebServer } from './webpack-dev-server';
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
+import enableDestroy = require('server-destroy');
 
 const STATIC_PATH = '/static';
 const FAVICON_PATH = '/favicon.ico';
@@ -42,7 +41,7 @@ export class UIServer {
   private rootDir = path.resolve();
   private publicPath = path.resolve(this.rootDir + '/dist/client');
 
-  private app: any;
+  private app: express.Application;
   private httpProxy: any;
   constructor(options: UIServerOptions) {
     this.setOptions(options);
@@ -178,7 +177,7 @@ export class UIServer {
         const context: any = {};
         const sheet = new ServerStyleSheet();
         const component = (
-          <StyleSheetManager sheet={sheet['instance']}>
+          <StyleSheetManager sheet={(sheet as any).instance}>
             <ServerWrapper
               store={store}
               url={req.url}
@@ -194,7 +193,7 @@ export class UIServer {
             store={store}
             scripts={scriptPaths}
             component={component}
-            styles={DISABLE_SERVER_SIDE_RENDERING ? null : styles}
+            styles={DISABLE_SERVER_SIDE_RENDERING ? undefined : styles}
           />,
         )
           .then(({ html }) => {

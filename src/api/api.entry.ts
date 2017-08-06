@@ -5,10 +5,11 @@ import { loggerFactory } from '../logging';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/filter';
+import { ApiServer } from '@src/api/server/api-server';
 
 const loggerHmr = loggerFactory.getLogger('server.api.HMR');
 
-let apiServer;
+let apiServer: ApiServer;
 const startServer = async () => {
   const {API_HOST, API_PORT} = await import('@src/config');
   const {ApiServer: NewApiServer} = await import('@api/server/api-server');
@@ -51,7 +52,7 @@ if (module['hot']) {
             ignoreUnaccepted: true,
           }).then(() => {
           })
-            .catch((err) => loggerHmr.error(err.toString()));
+            .catch((err: Error) => loggerHmr.error(err.toString()));
         } catch (err) {
           loggerHmr.error(err);
         }

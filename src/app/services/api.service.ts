@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs/Observable';
 import { ajax } from 'rxjs/observable/dom/ajax';
+import { AjaxCreationMethod } from 'rxjs/observable/dom/AjaxObservable';
 import { AjaxResponse } from 'rxjs/observable/dom/AjaxObservable';
 
 export type HttpMethod =
@@ -19,10 +20,12 @@ export type HttpOptions = {
 
 export class ApiService {
 
-  readonly ajax;
+  readonly ajax: AjaxCreationMethod;
 
   constructor(
-    dependencies = {
+    dependencies: {
+      ajax: AjaxCreationMethod
+    } = {
       ajax,
     },
     private readonly options: {

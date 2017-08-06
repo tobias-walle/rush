@@ -1,19 +1,17 @@
 import * as sourceMapSupport from 'source-map-support';
-sourceMapSupport.install();
 import '@src/polyfills';
 import { Observable } from 'rxjs';
 import { UIServer, UIServerOptions } from '@app/server/ui-server';
 import { loggerFactory } from '@src/logging';
 import * as config from '@src/config';
 
+sourceMapSupport.install();
+
 const loggerHmr = loggerFactory.getLogger('server.HMR');
 
-// Start Server
-let server: UIServer;
-let options: UIServerOptions;
-const updateOptions = async () => {
-  const { HOST, PORT, WEBPACK_DEV_HOST, WEBPACK_DEV_PORT, API_HOST, API_PORT } = await import('@src/config');
-  options = {
+async function createServerOptions(): Promise<UIServerOptions> {
+  const {HOST, PORT, WEBPACK_DEV_HOST, WEBPACK_DEV_PORT, API_HOST, API_PORT} = await import('@src/config');
+  return {
     host: HOST,
     port: PORT,
     webpackDevHost: WEBPACK_DEV_HOST,
@@ -21,12 +19,11 @@ const updateOptions = async () => {
     apiHost: API_HOST,
     apiPort: API_PORT,
   };
-};
+}
 
 (async () => {
-
-  await updateOptions();
-  server = new UIServer(options);
+  let server: UIServer;
+  server = new UIServer(await createServerOptions());
   if (config.DEVELOPMENT) {
     server.startWebpackDevServer();
   }
@@ -47,9 +44,8 @@ const updateOptions = async () => {
       loggerHmr.debug('Reload Backend Server');
       try {
         // Create a new server
-        updateOptions();
-        const { UIServer: NewUIServer } = await import('@app/server/ui-server');
-        const newServer = new NewUIServer(options);
+        const {UIServer: NewUIServer} = await import('@app/server/ui-server');
+        const newServer = new NewUIServer(await createServerOptions());
 
         // Stop old server
         server.stop().subscribe(() => {
@@ -71,17 +67,17 @@ const updateOptions = async () => {
     Observable.interval(1000)
       .filter(() => hot.status() === 'idle')
       .subscribe(() => {
-        try {
-          hot.check({
-            ignoreDeclined: true,
-            ignoreUnaccepted: true,
-          }).then(() => {
-          })
-            .catch((err) => loggerHmr.error(err.toString()));
-        } catch (err) {
-          loggerHmr.error(err);
-        }
-      },
-    );
+          try {
+            hot.check({
+              ignoreDeclined: true,
+              ignoreUnaccepted: true,
+            }).then(() => {
+            })
+              .catch((err: Error) => loggerHmr.error(err.toString()));
+          } catch (err) {
+            loggerHmr.error(err);
+          }
+        },
+      );
   }
 })();

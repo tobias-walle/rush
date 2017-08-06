@@ -2,6 +2,7 @@ import { injectGlobal } from 'styled-components';
 const Roboto = require('@app/assets/fonts/roboto-v15-latin-regular.woff');
 
 export const loadGlobalStyles = () => {
+  //language=PostCSS
   injectGlobal`
     @font-face {
       font-family: 'Roboto';
