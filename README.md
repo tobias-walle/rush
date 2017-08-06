@@ -1,6 +1,6 @@
 # <img src="https://cdn.rawgit.com/TobiasWalle/rush/8bd3f868/media/logo.svg" width="500">
 
-[![Build Status](https://travis-ci.org/TobiasWalle/rush.svg?branch=generator)](https://travis-ci.org/TobiasWalle/typed-react-base)
+[![Build Status](https://travis-ci.org/TobiasWalle/rush.svg?branch=master)](https://travis-ci.org/TobiasWalle/typed-react-base)
 [![npm version](https://badge.fury.io/js/generator-rush.svg)](https://badge.fury.io/js/generator-rush)
 
 Scaffolding generator for the development of modern Web Applications with React, Typescript and Webpack.

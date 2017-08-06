@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { shallow } from 'enzyme';
-import { <%=upperCamelCaseName%>Component } from './<%=name%>.component';
+import { <%=upperCamelCaseName%> } from './<%=name%>.component';
 
-describe('<%=upperCamelCaseName%>Component', () => {
+describe('<%=upperCamelCaseName%>', () => {
   it('should render', () => {
-    expect(shallow(<<%=upperCamelCaseName%>Component/>).exists()).toBeTruthy();
+    expect(shallow(<<%=upperCamelCaseName%>/>).exists()).toBeTruthy();
   });
 });

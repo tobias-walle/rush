@@ -1,7 +1,7 @@
 'use strict';
-var path = require('path');
-var assert = require('yeoman-assert');
-var helpers = require('yeoman-test');
+const path = require('path');
+const assert = require('yeoman-assert');
+const helpers = require('yeoman-test');
 
 describe('generator-trb:module', () => {
   const GENERATOR_PATH = path.join(__dirname, '../generators/module');

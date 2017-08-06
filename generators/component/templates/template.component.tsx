@@ -1,15 +1,15 @@
 import * as React from 'react';
 
-export interface <%=upperCamelCaseName%>ComponentProps {
+export interface <%=upperCamelCaseName%>Props {
 }
 
-export interface <%=upperCamelCaseName%>ComponentState {
+export interface <%=upperCamelCaseName%>State {
 }
 
-export class <%=upperCamelCaseName%>Component extends React.Component<<%=upperCamelCaseName%>ComponentProps, <%=upperCamelCaseName%>ComponentState> {
+export class <%=upperCamelCaseName%> extends React.Component<<%=upperCamelCaseName%>Props, <%=upperCamelCaseName%>State> {
   public render(): JSX.Element {
     return (
-      <div><%=upperCamelCaseName%>Component works!</div>
+      <div><%=upperCamelCaseName%> works!</div>
     );
   }
 }

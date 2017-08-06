@@ -26,9 +26,9 @@ describe('generator-trb:component', () => {
     ]);
 
     assert.fileContent([
-      [COMPONENT_FILE_NAME, new RegExp(`.*${utils.fromLispToUpperCamelCase(COMPONENT_NAME)}Component.*`)],
-      [COMPONENT_FILE_NAME, new RegExp(`.*${utils.fromLispToUpperCamelCase(COMPONENT_NAME)}ComponentState.*`)],
-      [COMPONENT_FILE_NAME, new RegExp(`.*${utils.fromLispToUpperCamelCase(COMPONENT_NAME)}ComponentProps.*`)],
+      [COMPONENT_FILE_NAME, new RegExp(`.*${utils.fromLispToUpperCamelCase(COMPONENT_NAME)}.*`)],
+      [COMPONENT_FILE_NAME, new RegExp(`.*${utils.fromLispToUpperCamelCase(COMPONENT_NAME)}State.*`)],
+      [COMPONENT_FILE_NAME, new RegExp(`.*${utils.fromLispToUpperCamelCase(COMPONENT_NAME)}Props.*`)],
     ]);
   });
 

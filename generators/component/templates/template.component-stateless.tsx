@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-export interface <%=upperCamelCaseName%>ComponentProps {
+export interface <%=upperCamelCaseName%>Props {
 }
 
-export const <%=upperCamelCaseName%>Component = (props: <%=upperCamelCaseName%>ComponentProps) => {
+export const <%=upperCamelCaseName%> = (props: <%=upperCamelCaseName%>Props) => {
   return (
-    <div><%=upperCamelCaseName%>Component works!</div>
+    <div><%=upperCamelCaseName%> works!</div>
   );
 };

@@ -1,4 +1,4 @@
-var assert = require('yeoman-assert');
+const assert = require('yeoman-assert');
 
 function assertFileContains(pathName, content) {
   if (!content instanceof Array) {
