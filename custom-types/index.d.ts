@@ -1,2 +1,2 @@
 import './global';
-import './server-destory';
+import './server-destroy';

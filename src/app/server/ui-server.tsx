@@ -1,11 +1,11 @@
 import * as http from 'http';
+import { Server } from 'http';
 import * as path from 'path';
 import * as React from 'react';
 import * as fs from 'fs';
 import * as morgan from 'morgan';
 import * as express from 'express';
 import { Observable } from 'rxjs';
-import { Server } from 'http';
 import { renderToString } from 'react-router-server';
 import { createStore } from 'redux';
 import createMemoryHistory from 'history/createMemoryHistory';
@@ -13,11 +13,11 @@ import { Html } from '@app/components/html';
 import { Entry } from '@modules/root';
 import { getStoreMiddleware } from '@app/utils/redux-helper';
 import { loggerFactory } from '@src/logging';
-import { DEVELOPMENT, DISABLE_SERVER_SIDE_RENDERING, DISABLE_SERVER_SIDE_STYLE_RENDERING } from '@src/config';
+import { DEVELOPMENT, DISABLE_SERVER_SIDE_RENDERING } from '@src/config';
 import { ServerWrapper } from './server-wrapper';
 import { WebServer } from './webpack-dev-server';
 import { ServerStyleSheet, StyleSheetManager } from 'styled-components';
-import enableDestroy = require('server-destroy');
+import * as enableDestroy from 'server-destroy';
 
 const STATIC_PATH = '/static';
 const FAVICON_PATH = '/favicon.ico';
@@ -43,6 +43,7 @@ export class UIServer {
 
   private app: express.Application;
   private httpProxy: any;
+
   constructor(options: UIServerOptions) {
     this.setOptions(options);
   }
@@ -103,8 +104,8 @@ export class UIServer {
     // Http Proxy
     this.app.use('/api', (req, res) => {
       this.httpProxy.web(req, res, {
-        target: `http://${this.options.apiHost}:${this.options.apiPort}/`,
-      }
+          target: `http://${this.options.apiHost}:${this.options.apiPort}/`,
+        }
       );
     });
 
@@ -164,9 +165,9 @@ export class UIServer {
       if (DISABLE_SERVER_SIDE_RENDERING) {
         // Just provider Html without SSR
         renderToString(
-          <Html scripts={scriptPaths} store={store} />,
+          <Html scripts={scriptPaths} store={store}/>,
         )
-          .then(({ html }) => {
+          .then(({html}) => {
             res.status(200).send(html);
           })
           .catch(err => {
@@ -183,11 +184,11 @@ export class UIServer {
               url={req.url}
               context={context}
             >
-              <Entry />
+              <Entry/>
             </ServerWrapper>
           </StyleSheetManager>
         );
-        const styles: JSX.Element[] =  sheet.getStyleElement();
+        const styles: JSX.Element[] = sheet.getStyleElement();
         renderToString(
           <Html
             store={store}
@@ -196,7 +197,7 @@ export class UIServer {
             styles={DISABLE_SERVER_SIDE_RENDERING ? undefined : styles}
           />,
         )
-          .then(({ html }) => {
+          .then(({html}) => {
             if (context.url) {
               res.writeHead(302, {
                 Location: context.url
