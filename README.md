@@ -1,4 +1,4 @@
-> This project is not actively developed anymore. Please use other alternatives for now.
+> This project is not maintained anymore. Please use other alternatives for now.
 > In the future I plan a rewrite of this library as I think that the current version is far too complicated.
 
 # <img src="https://cdn.rawgit.com/TobiasWalle/rush/8bd3f868/media/logo.svg" width="500">
